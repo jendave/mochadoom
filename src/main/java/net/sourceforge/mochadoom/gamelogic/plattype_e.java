@@ -6,5 +6,4 @@ public enum plattype_e {
     raiseAndChange,
     raiseToNearestAndChange,
     blazeDWUS
-
 }

@@ -79,7 +79,6 @@ import static net.sourceforge.mochadoom.utils.C2JUtils.pointer;
  *
  * @author admin
  */
-
 public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
         IWritableDoomObject, IPackableDoomObject, IReadableDoomObject {
 
@@ -194,7 +193,6 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
      * Additional info record for player avatars only. Only valid if type ==
      * MT_PLAYER struct player_s* player;
      */
-
     public player_t player;
 
     /**
@@ -210,7 +208,6 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     /**
      * Thing being chased/attacked for tracers.
      */
-
     public mobj_t tracer; // MAES: was a pointer
 
     // // MF_ flags for mobjs.
@@ -342,7 +339,6 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     /**
      * P_ZMovement
      */
-
     public void ZMovement() {
         // fixed_t
         int dist;
@@ -583,5 +579,4 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     public final int getZ() {
         return z;
     }
-
 }

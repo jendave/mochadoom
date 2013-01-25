@@ -1,4 +1,4 @@
-Orginal page is located at: http://mochadoom.sourceforge.net
+Original page is located at: http://mochadoom.sourceforge.net
 
 Hello, and welcome to the Mocha Doom's official project page!
 I will introduce the project to you via a series of Questions and Answers, which I felt would better anticipate the many questions that arise as concepts and facts are introduced. Have fun ;-)
