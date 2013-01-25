@@ -3,7 +3,6 @@ package net.sourceforge.mochadoom.automap;
 /**
  * used only in automap
  */
-
 public class mline_t {
     public mline_t() {
         this(0, 0, 0, 0);

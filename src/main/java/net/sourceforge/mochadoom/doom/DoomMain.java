@@ -1,5 +1,17 @@
 package net.sourceforge.mochadoom.doom;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import net.sourceforge.mochadoom.automap.IAutoMap;
 import net.sourceforge.mochadoom.automap.Map;
 import net.sourceforge.mochadoom.awt.AWTDoom;
@@ -22,37 +34,24 @@ import net.sourceforge.mochadoom.demo.VanillaTiccmd;
 import net.sourceforge.mochadoom.finale.EndLevel;
 import net.sourceforge.mochadoom.finale.Finale;
 import net.sourceforge.mochadoom.finale.Wiper;
+import net.sourceforge.mochadoom.gamelogic.Actions;
+import net.sourceforge.mochadoom.gamelogic.BoomLevelLoader;
+import net.sourceforge.mochadoom.gamelogic.mobj_t;
 import net.sourceforge.mochadoom.hud.HU;
-import net.sourceforge.mochadoom.system.DiskDrawer;
-import net.sourceforge.mochadoom.system.DoomStatusAware;
-import net.sourceforge.mochadoom.system.DoomSystem;
-import net.sourceforge.mochadoom.system.DoomVideoInterface;
-import net.sourceforge.mochadoom.system.Strings;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import net.sourceforge.mochadoom.menu.DoomRandom;
 import net.sourceforge.mochadoom.menu.Menu;
 import net.sourceforge.mochadoom.menu.MenuMisc;
 import net.sourceforge.mochadoom.menu.Settings;
 import net.sourceforge.mochadoom.network.DummyNetworkDriver;
-import net.sourceforge.mochadoom.gamelogic.Actions;
-import net.sourceforge.mochadoom.gamelogic.BoomLevelLoader;
-import net.sourceforge.mochadoom.gamelogic.mobj_t;
 import net.sourceforge.mochadoom.rendering.Renderer;
 import net.sourceforge.mochadoom.rendering.UnifiedRenderer;
 import net.sourceforge.mochadoom.rendering.ViewVars;
 import net.sourceforge.mochadoom.rendering.parallel.ParallelRenderer;
 import net.sourceforge.mochadoom.rendering.subsector_t;
+import net.sourceforge.mochadoom.savegame.IDoomSaveGame;
+import net.sourceforge.mochadoom.savegame.IDoomSaveGameHeader;
+import net.sourceforge.mochadoom.savegame.VanillaDSG;
+import net.sourceforge.mochadoom.savegame.VanillaDSGHeader;
 import net.sourceforge.mochadoom.sound.AbstractDoomAudio;
 import net.sourceforge.mochadoom.sound.ClassicDoomSoundDriver;
 import net.sourceforge.mochadoom.sound.ClipSFXModule;
@@ -63,11 +62,12 @@ import net.sourceforge.mochadoom.sound.DummySFX;
 import net.sourceforge.mochadoom.sound.DummySoundDriver;
 import net.sourceforge.mochadoom.sound.SpeakerDoomSoundDriver;
 import net.sourceforge.mochadoom.sound.SuperDoomSoundDriver;
-import net.sourceforge.mochadoom.savegame.IDoomSaveGame;
-import net.sourceforge.mochadoom.savegame.IDoomSaveGameHeader;
-import net.sourceforge.mochadoom.savegame.VanillaDSG;
-import net.sourceforge.mochadoom.savegame.VanillaDSGHeader;
 import net.sourceforge.mochadoom.statusbar.StatusBar;
+import net.sourceforge.mochadoom.system.DiskDrawer;
+import net.sourceforge.mochadoom.system.DoomStatusAware;
+import net.sourceforge.mochadoom.system.DoomSystem;
+import net.sourceforge.mochadoom.system.DoomVideoInterface;
+import net.sourceforge.mochadoom.system.Strings;
 import net.sourceforge.mochadoom.timing.FastTicker;
 import net.sourceforge.mochadoom.timing.ITicker;
 import net.sourceforge.mochadoom.timing.MilliTicker;
@@ -120,6 +120,9 @@ import static net.sourceforge.mochadoom.data.dstrings.DEVMAPS;
 import static net.sourceforge.mochadoom.data.dstrings.SAVEGAMENAME;
 import static net.sourceforge.mochadoom.data.info.mobjinfo;
 import static net.sourceforge.mochadoom.data.info.states;
+import static net.sourceforge.mochadoom.doom.English.D_CDROM;
+import static net.sourceforge.mochadoom.doom.English.D_DEVSTR;
+import static net.sourceforge.mochadoom.doom.English.GGSAVED;
 import static net.sourceforge.mochadoom.doom.NetConsts.CMD_GET;
 import static net.sourceforge.mochadoom.doom.NetConsts.CMD_SEND;
 import static net.sourceforge.mochadoom.doom.NetConsts.DOOMCOM_ID;
@@ -128,9 +131,6 @@ import static net.sourceforge.mochadoom.doom.NetConsts.NCMD_EXIT;
 import static net.sourceforge.mochadoom.doom.NetConsts.NCMD_KILL;
 import static net.sourceforge.mochadoom.doom.NetConsts.NCMD_RETRANSMIT;
 import static net.sourceforge.mochadoom.doom.NetConsts.NCMD_SETUP;
-import static net.sourceforge.mochadoom.doom.English.D_CDROM;
-import static net.sourceforge.mochadoom.doom.English.D_DEVSTR;
-import static net.sourceforge.mochadoom.doom.English.GGSAVED;
 import static net.sourceforge.mochadoom.game.Keys.KEY_CAPSLOCK;
 import static net.sourceforge.mochadoom.game.Keys.KEY_ESCAPE;
 import static net.sourceforge.mochadoom.game.Keys.KEY_F12;
@@ -190,7 +190,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * D_PostEvent
      * Called by the I/O functions when input is detected
      */
-
     public void PostEvent(event_t ev) {
         // TODO create a pool of reusable messages?
         // NEVERMIND we can use the original system.
@@ -238,7 +237,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      *
      * @throws IOException
      */
-
     public void Display() throws IOException {
         int nowtime;
         int tics;
@@ -399,7 +397,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      *
      * @throws IOException
      */
-
     public void DoomLoop() throws IOException {
         if (demorecording)
             BeginRecording();
@@ -479,7 +476,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     /**
      * D_PageDrawer
      */
-
     public final void PageDrawer() {
 
         // FIXME: this check wasn't necessary in vanilla, since pagename was 
@@ -493,16 +489,15 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * D_AdvanceDemo
      * Called after each demo or intro demosequence finishes
      */
-
     public void AdvanceDemo() {
         advancedemo = true;
     }
 
 
-    //
-    // This cycles through the demo sequences.
-    // FIXME - version dependant demo numbers?
-    //
+    /**
+     * This cycles through the demo sequences.
+     * FIXME - version dependant demo numbers?
+     */
     public void DoAdvanceDemo() {
         players[consoleplayer].playerstate = PST_LIVE;  // not reborn
         advancedemo = false;
@@ -578,7 +573,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     /**
      * D_StartTitle
      */
-
     public void StartTitle() {
         gameaction = gameaction_t.ga_nothing;
         demosequence = -1;
@@ -617,7 +611,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * to determine whether registered/commercial features
      * should be executed (notably loading PWAD's).
      */
-
     public String IdentifyVersion() {
 
         String home;
@@ -789,7 +782,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * stuff. Here everything priority-critical is
      * called and created in more detail.
      */
-
     public void Start() throws IOException {
         int p;
         StringBuffer file = new StringBuffer();
@@ -1339,8 +1331,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                 i.initScaling();
             }
         }
-
-
     }
 
 
@@ -1499,7 +1489,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * gamekeydown etc. arrays by the Responder method.
      * So look there for any fuckups in constructing them.
      */
-
     private void BuildTiccmd(ticcmd_t cmd) {
         int i;
         boolean strafe;
@@ -1805,7 +1794,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * G_Responder
      * Get info needed to make ticcmd_ts for the players.
      */
-
     public boolean Responder(event_t ev) {
         // allow spy mode changes even during the demo
         if (gamestate == gamestate_t.GS_LEVEL && ev.type == evtype_t.ev_keydown
@@ -1934,7 +1922,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * G_Ticker
      * Make ticcmd_ts for the players.
      */
-
     public void Ticker() {
         int i;
         int buf;
@@ -2086,7 +2073,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * <p/>
      * MAES: looks like dead code. It's never called.
      */
-
     protected void InitPlayer(int player) {
         player_t p;
 
@@ -2394,7 +2380,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     /**
      * G_WorldDone
      */
-
     public void WorldDone() {
         gameaction = gameaction_t.ga_worlddone;
 
@@ -2445,7 +2430,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * This is fugly. Making a "savegame object" will make at least certain comparisons
      * easier, and avoid writing code twice.
      */
-
     protected void DoLoadGame() {
         try {
             int i;
@@ -2823,7 +2807,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     /**
      * G_PlayDemo
      */
-
     public void DeferedPlayDemo(String name) {
         defdemoname = name;
         gameaction = gameaction_t.ga_playdemo;
@@ -2900,7 +2883,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * Called after a death or level completion to allow demos to be cleaned up
      * Returns true if a new demo loop action will take place
      */
-
     public boolean CheckDemoStatus() {
         int endtime;
 
@@ -4259,7 +4241,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
          * current palette from VI (otherwise gamma settings and palette effects
          * don't show up).
          */
-
         public void ScreenShot() {
             int i;
             int[] linear;
