@@ -4277,35 +4277,3 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     }
 
 }
-
-//$Log: DoomMain.java,v $
-//Revision 1.109  2012/11/06 16:04:58  velktron
-//Variables manager less tightly integrated.
-//
-//Revision 1.108  2012/11/05 17:25:29  velktron
-//Fixed tinting system according to SodaHolic's advice.
-//
-//Revision 1.107  2012/09/27 16:53:46  velktron
-//Stupid brokeness prevented -loadgame from working.
-//
-//Revision 1.106  2012/09/26 23:15:20  velktron
-//Parallel renderer restored...sort of.
-//
-//Revision 1.105  2012/09/26 15:54:22  velktron
-//Spritemanager is set up by renderer.
-//
-//Revision 1.104  2012/09/24 22:36:49  velktron
-//Fixed HOM detection.
-//
-//Revision 1.103  2012/09/24 17:16:22  velktron
-//Massive merge between HiColor and HEAD. There's no difference from now on, and development continues on HEAD.
-//
-//Revision 1.101.2.11  2012/09/24 16:58:06  velktron
-//TrueColor, Generics.
-//
-//Revision 1.101.2.10  2012/09/21 16:17:25  velktron
-//More generic.
-//
-//Revision 1.101.2.9  2012/09/20 14:25:13  velktron
-//Unified DOOM!!!
-//

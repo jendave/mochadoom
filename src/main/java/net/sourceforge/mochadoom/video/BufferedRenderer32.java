@@ -52,13 +52,9 @@ import net.sourceforge.mochadoom.menu.BBox;
  */
 
 public class BufferedRenderer32 extends SoftwareVideoRenderer32 {
-
-    static final String rcsid = "$Id: BufferedRenderer32.java,v 1.3 2012/11/06 16:07:00 velktron Exp $";
-
     /**
      * Buffered Renderer has a bunch of images "pegged" to the underlying arrays
      */
-
     public BufferedImage[] screenbuffer = new BufferedImage[5];
 
     public BufferedRenderer32(int w, int h) {

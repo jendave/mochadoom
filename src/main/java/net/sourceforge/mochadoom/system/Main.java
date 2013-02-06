@@ -1,9 +1,9 @@
 package net.sourceforge.mochadoom.system;
 
+import java.io.IOException;
 import net.sourceforge.mochadoom.doom.CommandLine;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.ICommandLineManager;
-import java.io.IOException;
 import net.sourceforge.mochadoom.menu.IVariablesManager;
 import net.sourceforge.mochadoom.menu.VarsManager;
 
@@ -33,57 +33,55 @@ import net.sourceforge.mochadoom.menu.VarsManager;
 
 
 public class Main {
-    static final String rcsid = "$Id: Main.java,v 1.13 2012/11/06 16:05:17 velktron Exp $";
-
     public static BppMode bpp;
 
     public static void main(String[] argv) throws IOException {
 
         //First, get the command line parameters.
-        ICommandLineManager CLM = new CommandLine(argv);
+        ICommandLineManager clm = new CommandLine(argv);
 
         // Handles variables and settings from default.cfg
-        IVariablesManager VM = new VarsManager(CLM);
+        IVariablesManager vm = new VarsManager(clm);
 
         // load before initing other systems, but don't apply them yet.
         System.out.print("M_LoadDefaults: Load system defaults.\n");
-        VM.LoadDefaults(VM.getDefaultFile());
+        vm.LoadDefaults(vm.getDefaultFile());
 
         bpp = BppMode.Indexed;
 
-        if (VM.isSettingLiteral("color_depth", "hicolor"))
+        if (vm.isSettingLiteral("color_depth", "hicolor"))
             bpp = BppMode.HiColor;
-        if (VM.isSettingLiteral("color_depth", "truecolor"))
+        if (vm.isSettingLiteral("color_depth", "truecolor"))
             bpp = BppMode.TrueColor;
 
-        if (CLM.CheckParmBool("-hicolor")) bpp = BppMode.HiColor;
-        else if (CLM.CheckParmBool("-truecolor")) bpp = BppMode.TrueColor;
+        if (clm.CheckParmBool("-hicolor")) bpp = BppMode.HiColor;
+        else if (clm.CheckParmBool("-truecolor")) bpp = BppMode.TrueColor;
 
 
         // Here we create DOOM
-        DoomMain<?, ?> DM = null;
+        DoomMain<?, ?> dm = null;
         // Create a dummy. This will force static init to run.
 
         switch (bpp) {
             case Indexed:
                 System.out.println("Indexed 8-bit mode selected...");
-                DM = new DoomMain.Indexed();
+                dm = new DoomMain.Indexed();
                 break;
             case HiColor:
                 System.out.println("HiColor (Alpha) 16-bit mode selected...");
-                DM = new DoomMain.HiColor();
+                dm = new DoomMain.HiColor();
                 break;
             case TrueColor:
                 System.out.println("TrueColor (extended colormaps) 24-bit mode selected...");
-                DM = new DoomMain.TrueColor();
+                dm = new DoomMain.TrueColor();
                 break;
 
         }
 
-        DM.setCommandLineArgs(CLM);
-        DM.registerVariableManager(VM);
-        DM.Init();
-        DM.Start();
+        dm.setCommandLineArgs(clm);
+        dm.registerVariableManager(vm);
+        dm.Init();
+        dm.Start();
 
         return;
     }

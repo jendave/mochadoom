@@ -3,14 +3,6 @@ package net.sourceforge.mochadoom.system;
 public final class Strings {
     public static final String MOCHA_DOOM_TITLE = "Mocha Doom Alpha 1.6";
 
-    public static final String MODIFIED_GAME =
-            ("===========================================================================\n" +
-                    "ATTENTION:  This version of DOOM has been modified.  If you would like to\n" +
-                    "get a copy of the original game, call 1-800-IDGAMES or see the readme file.\n" +
-                    "        You will not receive technical support for modified games.\n" +
-                    "                      press enter to continue\n" +
-                    "===========================================================================\n");
-
     public static final String MODIFIED_GAME_TITLE = "Modified game alert";
 
     public static final String MODIFIED_GAME_DIALOG =
