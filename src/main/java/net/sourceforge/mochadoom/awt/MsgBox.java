@@ -39,8 +39,8 @@ public class MsgBox extends Dialog implements ActionListener {
       *
       * @param okcan true : ok cancel buttons, false : ok button only
       */
-    public MsgBox(Frame frame, String title, String msg, boolean okcan) {
-        super(frame, title, true);
+    public MsgBox(Frame frame, String boxTitle, String msg, boolean okcan) {
+        super(frame, boxTitle, true);
         setLayout(new BorderLayout());
         add("Center", new JLabel(msg));
         addOKCancelPanel(okcan);

@@ -23,6 +23,7 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import javax.swing.JFrame;
 import net.sourceforge.mochadoom.timing.ITicker;
@@ -190,7 +191,7 @@ public abstract class DoomFrame<V> extends JFrame implements DoomVideoInterface<
 
         // Try setting the locale the US, otherwise there will be problems
         // with non-US keyboards.
-        if (this.getInputContext() == null || !this.getInputContext().selectInputMethod(java.util.Locale.US)) {
+        if (this.getInputContext() == null || !this.getInputContext().selectInputMethod(Locale.ENGLISH)) {
             System.err.println("Could not set the input context to US! Keyboard input will be glitchy!");
         } else {
             System.err.println("Input context successfully set to US.");

@@ -22,10 +22,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 import static net.sourceforge.mochadoom.game.Keys.KEY_ALT;
 import static net.sourceforge.mochadoom.game.Keys.KEY_BACKSPACE;
@@ -421,7 +418,7 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
         robby.mouseMove(offset.x + win_w2, offset.y + win_h2);
 
 
-        canvas.getInputContext().selectInputMethod(java.util.Locale.US);
+        canvas.getInputContext().selectInputMethod(Locale.ENGLISH);
         canvas.setCursor(hidden);
         if (D) System.err.printf("Jake 2 method: offset MOVED to %d %d\n", offset.x, offset.y);
 

@@ -581,7 +581,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
 
     //      print title for every printed line
-    StringBuffer title = new StringBuffer();
+    StringBuffer titleBuffer = new StringBuffer();
 
 
     /**
@@ -829,7 +829,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             System.out.println("ITicker: Using nanosecond accuracy timer.");
         }
 
-        System.out.println(title.toString());
+        System.out.println(titleBuffer.toString());
 
         if (devparm)
             System.out.println(D_DEVSTR);
@@ -1408,70 +1408,70 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     protected void GenerateTitle() {
         switch (getGameMode()) {
             case retail:
-                title.append("                         ");
-                title.append("The Ultimate DOOM Startup v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                         ");
+                titleBuffer.append("The Ultimate DOOM Startup v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
             case shareware:
-                title.append("                            ");
-                title.append("DOOM Shareware Startup v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("DOOM Shareware Startup v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
             case registered:
-                title.append("                            ");
-                title.append("DOOM Registered Startup v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("DOOM Registered Startup v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
             case commercial:
-                title.append("                            ");
-                title.append("DOOM 2: Hell on Earth v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("DOOM 2: Hell on Earth v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
 
                 break;
             case pack_plut:
-                title.append("                            ");
-                title.append("DOOM 2: Plutonia Experiment v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("DOOM 2: Plutonia Experiment v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
             case pack_tnt:
-                title.append("                            ");
-                title.append("DOOM 2: TNT - Evilution v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("DOOM 2: TNT - Evilution v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
             case pack_xbla:
-                title.append("                            ");
-                title.append("DOOM 2: No Rest for the Living v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("DOOM 2: No Rest for the Living v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
 
             default:
-                title.append("                            ");
-                title.append("Public DOOM - v");
-                title.append(VERSION / 100);
-                title.append(".");
-                title.append(VERSION % 100);
-                title.append("                           ");
+                titleBuffer.append("                            ");
+                titleBuffer.append("Public DOOM - v");
+                titleBuffer.append(VERSION / 100);
+                titleBuffer.append(".");
+                titleBuffer.append(VERSION % 100);
+                titleBuffer.append("                           ");
                 break;
         }
     }
