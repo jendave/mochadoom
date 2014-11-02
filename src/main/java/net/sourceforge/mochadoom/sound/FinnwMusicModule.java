@@ -477,7 +477,7 @@ public class FinnwMusicModule implements IMusic {
         }
 
         private float score(MidiDevice.Info info) {
-            String lcName = info.getName().toLowerCase(Locale.ENGLISH);
+            String lcName = info.getName().toLowerCase(Locale.US);
             float result = 0f;
             if (lcName.contains("mapper")) {
                 // "Midi Mapper" is ideal, because the user can select the default output device in the control panel

@@ -12,6 +12,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import net.sourceforge.mochadoom.automap.IAutoMap;
 import net.sourceforge.mochadoom.automap.Map;
 import net.sourceforge.mochadoom.awt.AWTDoom;
@@ -586,7 +587,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     /**
      * D_AddFile
-     * <p/>
+     * <p>
      * Adds file to the end of the wadfiles[] list.
      * Quite crude, we could use a listarray instead.
      *
@@ -693,7 +694,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             setGameMode(GameMode_t.commercial);
             devparm = true;
             /* I don't bother
-	if(plutonia)
+    if(plutonia)
 	    D_AddFile (DEVDATA"plutonia.wad");
 	else if(tnt)
 	    D_AddFile (DEVDATA"tnt.wad");
@@ -704,6 +705,26 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             AddFile(dstrings.DEVMAPS + "cdata/pnames.lmp");
             Settings.basedefault = dstrings.DEVDATA + "default.cfg";
             return (dstrings.DEVDATA + "doom2.wad");
+        }
+
+        if (eval(CM.CheckParm("-fr1dev"))) {
+            setGameMode(GameMode_t.shareware);
+            devparm = true;
+            AddFile(dstrings.DEVDATA + "freedoom1.wad");
+            AddFile(dstrings.DEVMAPS + "data_se/texture1.lmp");
+            AddFile(dstrings.DEVMAPS + "data_se/pnames.lmp");
+            Settings.basedefault = dstrings.DEVDATA + "default.cfg";
+            return (dstrings.DEVDATA + "freedoom1.wad");
+        }
+
+        if (eval(CM.CheckParm("-fr2dev"))) {
+            setGameMode(GameMode_t.shareware);
+            devparm = true;
+            AddFile(dstrings.DEVDATA + "freedoom2.wad");
+            AddFile(dstrings.DEVMAPS + "data_se/texture1.lmp");
+            AddFile(dstrings.DEVMAPS + "data_se/pnames.lmp");
+            Settings.basedefault = dstrings.DEVDATA + "default.cfg";
+            return (dstrings.DEVDATA + "freedoom2.wad");
         }
 
 
@@ -762,6 +783,18 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             return vcheck.doom1wad;
         }
 
+        if (testReadAccess(vcheck.freedoom1wad)) {
+            setGameMode(GameMode_t.commercial);
+            AddFile(vcheck.doom2wad);
+            return vcheck.doom2wad;
+        }
+
+        if (testReadAccess(vcheck.freedoom2wad)) {
+            setGameMode(GameMode_t.commercial);
+            AddFile(vcheck.doom2wad);
+            return vcheck.doom2wad;
+        }
+
         // MAES: Maybe we should add FreeDoom here later.
 
         System.out.println("Game mode indeterminate.\n");
@@ -776,7 +809,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     /**
      * D_DoomMain
-     * <p/>
+     * <p>
      * Completes the job started by Init, which only created the
      * instances of the various stuff and registered the "status aware"
      * stuff. Here everything priority-critical is
@@ -1484,7 +1517,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * Builds a ticcmd from all of the available inputs
      * or reads it from the demo buffer.
      * If recording a demo, write it out .
-     * <p/>
+     * <p>
      * The CURRENT event to process is written to the various
      * gamekeydown etc. arrays by the Responder method.
      * So look there for any fuckups in constructing them.
@@ -2070,7 +2103,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * G_InitPlayer
      * Called at the start.
      * Called by the game initialization functions.
-     * <p/>
+     * <p>
      * MAES: looks like dead code. It's never called.
      */
     protected void InitPlayer(int player) {
@@ -2570,7 +2603,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     }
 
-
     skill_t d_skill;
     int d_episode;
     int d_map;
@@ -2879,7 +2911,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     /**
      * G_CheckDemoStatus
-     * <p/>
+     * <p>
      * Called after a death or level completion to allow demos to be cleaned up
      * Returns true if a new demo loop action will take place
      */
@@ -3082,7 +3114,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     /**
      * HSendPacket
-     * <p/>
+     * <p>
      * Will send out a packet to all involved parties. A special
      * case is the rebound storage, which acts as a local "echo"
      * which is then picked up by the host itself. This is
@@ -3821,9 +3853,9 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * etc. which however are now completely independent of each other
      * (well, ALMOST), and are typically only passed context when
      * instantiated.
-     * <p/>
+     * <p>
      * If you instantiate one too early, it will have null context.
-     * <p/>
+     * <p>
      * The trick is to construct objects in the correct order. Some of
      * them have Init() methods which are NOT yet safe to call.
      */
@@ -3984,10 +4016,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         /**
          * M_Screenshot
-         * <p/>
+         * <p>
          * Currently saves PCX screenshots, and only in devparm.
          * Very oldschool ;-)
-         * <p/>
+         * <p>
          * TODO: add non-devparm hotkey for screenshots, sequential screenshot
          * messages, option to save as either PCX or PNG. Also, request
          * current palette from VI (otherwise gamma settings and palette effects
@@ -4108,10 +4140,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         /**
          * M_Screenshot
-         * <p/>
+         * <p>
          * Currently saves PCX screenshots, and only in devparm.
          * Very oldschool ;-)
-         * <p/>
+         * <p>
          * TODO: add non-devparm hotkey for screenshots, sequential screenshot
          * messages, option to save as either PCX or PNG. Also, request
          * current palette from VI (otherwise gamma settings and palette effects
@@ -4232,10 +4264,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         /**
          * M_Screenshot
-         * <p/>
+         * <p>
          * Currently saves PCX screenshots, and only in devparm.
          * Very oldschool ;-)
-         * <p/>
+         * <p>
          * TODO: add non-devparm hotkey for screenshots, sequential screenshot
          * messages, option to save as either PCX or PNG. Also, request
          * current palette from VI (otherwise gamma settings and palette effects

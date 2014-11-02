@@ -105,7 +105,7 @@ public class VolumeScalingReceiver implements Receiver {
          * Guess how suitable a MidiDevice is for music output.
          */
         private float score(MidiDevice.Info info) {
-            String lcName = info.getName().toLowerCase(Locale.ENGLISH);
+            String lcName = info.getName().toLowerCase(Locale.US);
             float result = 0f;
             try {
                 MidiDevice dev = MidiSystem.getMidiDevice(info);

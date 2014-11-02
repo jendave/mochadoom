@@ -1,7 +1,9 @@
 package net.sourceforge.mochadoom.doom;
 
 import net.sourceforge.mochadoom.defines.GameMode_t;
+
 import java.util.Hashtable;
+
 import net.sourceforge.mochadoom.utils.C2JUtils;
 
 public class DoomVersions {
@@ -16,6 +18,8 @@ public class DoomVersions {
         VersionChecker.put("plutonia.wad", GameMode_t.pack_plut);
         VersionChecker.put("doom1.wad", GameMode_t.shareware);
         VersionChecker.put("xbla.wad", GameMode_t.pack_xbla);
+        VersionChecker.put("freedoom1.wad", GameMode_t.freedoom1);
+        VersionChecker.put("freedoom2.wad", GameMode_t.freedoom2);
     }
 
     public DoomVersions() {
@@ -39,6 +43,10 @@ public class DoomVersions {
         // Shareware.
         doom1wad = (doomwaddir + "/doom1.wad");
 
+        freedoom1wad = (doomwaddir + "/freedoom1.wad");
+
+        freedoom2wad = (doomwaddir + "/freedoom2.wad");
+
         // Bug, dear Shawn.
         // Insufficient malloc, caused spurious realloc errors.
         plutoniawad = (doomwaddir + "/plutonia.wad");
@@ -59,7 +67,9 @@ public class DoomVersions {
             doom2fwad,
             plutoniawad,
             tntwad,
-            xblawad;
+            xblawad,
+            freedoom1wad,
+            freedoom2wad;
 
     /**
      * Try only one IWAD.

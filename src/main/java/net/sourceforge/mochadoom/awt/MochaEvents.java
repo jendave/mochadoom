@@ -418,7 +418,7 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
         robby.mouseMove(offset.x + win_w2, offset.y + win_h2);
 
 
-        canvas.getInputContext().selectInputMethod(Locale.ENGLISH);
+        canvas.getInputContext().selectInputMethod(Locale.US);
         canvas.setCursor(hidden);
         if (D) System.err.printf("Jake 2 method: offset MOVED to %d %d\n", offset.x, offset.y);
 

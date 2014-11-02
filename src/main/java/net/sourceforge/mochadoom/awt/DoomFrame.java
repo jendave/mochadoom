@@ -191,7 +191,7 @@ public abstract class DoomFrame<V> extends JFrame implements DoomVideoInterface<
 
         // Try setting the locale the US, otherwise there will be problems
         // with non-US keyboards.
-        if (this.getInputContext() == null || !this.getInputContext().selectInputMethod(Locale.ENGLISH)) {
+        if (this.getInputContext() == null || !this.getInputContext().selectInputMethod(Locale.US)) {
             System.err.println("Could not set the input context to US! Keyboard input will be glitchy!");
         } else {
             System.err.println("Input context successfully set to US.");
