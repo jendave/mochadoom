@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.demo;
 
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.wad.IWritableDoomObject;
 
 public interface IDoomDemo extends IWritableDoomObject {
@@ -33,9 +33,9 @@ public interface IDoomDemo extends IWritableDoomObject {
 
     void setVersion(int version);
 
-    skill_t getSkill();
+    Skill getSkill();
 
-    void setSkill(skill_t skill);
+    void setSkill(Skill skill);
 
     int getEpisode();
 

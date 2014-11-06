@@ -1,6 +1,7 @@
 package net.sourceforge.mochadoom.demo;
 
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -18,7 +19,7 @@ public class VanillaDoomDemo implements IDoomDemo, CacheableDoomObject {
     // This stuff is in the demo header, in the order it appears
     // However everything is byte-sized when read from disk or to memory.
     public int version;
-    public skill_t skill;
+    public Skill skill;
     public int episode;
     public int map;
     public boolean deathmatch;
@@ -64,7 +65,7 @@ public class VanillaDoomDemo implements IDoomDemo, CacheableDoomObject {
         version = b.get();
 
         try {
-            skill = skill_t.values()[b.get()];
+            skill = Skill.values()[b.get()];
         } catch (Exception e) {
             skill = null;
         }
@@ -119,12 +120,12 @@ public class VanillaDoomDemo implements IDoomDemo, CacheableDoomObject {
     }
 
     @Override
-    public skill_t getSkill() {
+    public Skill getSkill() {
         return skill;
     }
 
     @Override
-    public void setSkill(skill_t skill) {
+    public void setSkill(Skill skill) {
         this.skill = skill;
     }
 

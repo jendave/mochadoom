@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.doom;
 
-import net.sourceforge.mochadoom.defines.GameMode_t;
+import net.sourceforge.mochadoom.defines.GameMode;
 
 import java.util.Hashtable;
 
@@ -8,18 +8,18 @@ import net.sourceforge.mochadoom.utils.C2JUtils;
 
 public class DoomVersions {
 
-    public final static Hashtable<String, GameMode_t> VersionChecker = new Hashtable<String, GameMode_t>();
+    public final static Hashtable<String, GameMode> VersionChecker = new Hashtable<String, GameMode>();
 
     static {
-        VersionChecker.put("doom.wad", GameMode_t.registered);
-        VersionChecker.put("doom2.wad", GameMode_t.commercial);
-        VersionChecker.put("udoom.wad", GameMode_t.retail);
-        VersionChecker.put("tnt.wad", GameMode_t.pack_tnt);
-        VersionChecker.put("plutonia.wad", GameMode_t.pack_plut);
-        VersionChecker.put("doom1.wad", GameMode_t.shareware);
-        VersionChecker.put("xbla.wad", GameMode_t.pack_xbla);
-        VersionChecker.put("freedoom1.wad", GameMode_t.freedoom1);
-        VersionChecker.put("freedoom2.wad", GameMode_t.freedoom2);
+        VersionChecker.put("doom.wad", GameMode.registered);
+        VersionChecker.put("doom2.wad", GameMode.commercial);
+        VersionChecker.put("udoom.wad", GameMode.retail);
+        VersionChecker.put("tnt.wad", GameMode.pack_tnt);
+        VersionChecker.put("plutonia.wad", GameMode.pack_plut);
+        VersionChecker.put("doom1.wad", GameMode.shareware);
+        VersionChecker.put("xbla.wad", GameMode.pack_xbla);
+        VersionChecker.put("freedoom1.wad", GameMode.freedoom1);
+        VersionChecker.put("freedoom2.wad", GameMode.freedoom2);
     }
 
     public DoomVersions() {
@@ -78,10 +78,10 @@ public class DoomVersions {
      * @return
      */
 
-    public GameMode_t tryOnlyOne(String iwad, String doomwaddir) {
+    public GameMode tryOnlyOne(String iwad, String doomwaddir) {
 
         // Is it a known and valid version?
-        GameMode_t tmp = VersionChecker.get(iwad.toLowerCase());
+        GameMode tmp = VersionChecker.get(iwad.toLowerCase());
         if (tmp != null) {
             // Can we read it?
             if (C2JUtils.testReadAccess(doomwaddir + iwad))

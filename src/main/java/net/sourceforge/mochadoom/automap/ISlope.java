@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.automap;
 
-public class islope_t {
+public class ISlope {
     /**
      * fixed_t
      */

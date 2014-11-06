@@ -1,6 +1,7 @@
 package net.sourceforge.mochadoom.savegame;
 
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class VanillaDSGHeader implements IDoomSaveGameHeader, IReadableDoomObjec
     public String name; // max size SAVEGAMENAME
     public String vcheck;
     // These are for DS
-    public skill_t gameskill;
+    public Skill gameskill;
     public int gameepisode;
     public int gamemap;
     public boolean[] playeringame;
@@ -65,7 +66,7 @@ public class VanillaDSGHeader implements IDoomSaveGameHeader, IReadableDoomObjec
         String vcheckb = ("version " + VERSION);
         // no more unpacking, and report it.
         if (wrongversion = !(vcheckb.equalsIgnoreCase(vcheck))) return;
-        gameskill = skill_t.values()[buf.get()];
+        gameskill = Skill.values()[buf.get()];
         gameepisode = buf.get();
         gamemap = buf.get();
 
@@ -127,7 +128,7 @@ public class VanillaDSGHeader implements IDoomSaveGameHeader, IReadableDoomObjec
             throws IOException {
         name = DoomIO.readNullTerminatedString(f, SAVESTRINGSIZE);
         vcheck = DoomIO.readNullTerminatedString(f, VERSIONSIZE);
-        gameskill = skill_t.values()[f.readUnsignedByte()];
+        gameskill = Skill.values()[f.readUnsignedByte()];
         gameepisode = f.readByte();
         gamemap = f.readByte();
         for (int i = 0; i < MAXPLAYERS; i++)
@@ -165,12 +166,12 @@ public class VanillaDSGHeader implements IDoomSaveGameHeader, IReadableDoomObjec
     }
 
     @Override
-    public skill_t getGameskill() {
+    public Skill getGameskill() {
         return gameskill;
     }
 
     @Override
-    public void setGameskill(skill_t gameskill) {
+    public void setGameskill(Skill gameskill) {
         this.gameskill = gameskill;
     }
 

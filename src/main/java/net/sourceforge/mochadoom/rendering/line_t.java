@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.rendering;
 
-import net.sourceforge.mochadoom.defines.slopetype_t;
+import net.sourceforge.mochadoom.defines.SlopeType;
 import net.sourceforge.mochadoom.doom.thinker_t;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class line_t
     public line_t() {
         sidenum = new char[2];
         bbox = new int[4];
-        slopetype = slopetype_t.ST_HORIZONTAL;
+        slopetype = SlopeType.ST_HORIZONTAL;
     }
 
     /**
@@ -72,7 +72,7 @@ public class line_t
     /**
      * To aid move clipping.
      */
-    public slopetype_t slopetype;
+    public SlopeType slopetype;
 
     /**
      * Front and back sector. Note: redundant? Can be retrieved from SideDefs.
@@ -302,7 +302,7 @@ public class line_t
         flags = special = tag = 0;
         Arrays.fill(sidenum, (char) 0);
         Arrays.fill(bbox, 0);
-        slopetype = slopetype_t.ST_HORIZONTAL;
+        slopetype = SlopeType.ST_HORIZONTAL;
         frontsector = backsector = null;
         frontsectorid = backsectorid = 0;
         validcount = 0;

@@ -8,8 +8,8 @@ import net.sourceforge.mochadoom.data.mapsidedef_t;
 import net.sourceforge.mochadoom.data.mapsubsector_t;
 import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mapvertex_t;
-import net.sourceforge.mochadoom.defines.skill_t;
-import net.sourceforge.mochadoom.defines.slopetype_t;
+import net.sourceforge.mochadoom.defines.Skill;
+import net.sourceforge.mochadoom.defines.SlopeType;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import java.io.IOException;
 import java.nio.ByteOrder;
@@ -366,14 +366,14 @@ public class LevelLoader extends AbstractLevelLoader {
             ld.assignVertexValues();
 
             if (ld.dx == 0)
-                ld.slopetype = slopetype_t.ST_VERTICAL;
+                ld.slopetype = SlopeType.ST_VERTICAL;
             else if (ld.dy == 0)
-                ld.slopetype = slopetype_t.ST_HORIZONTAL;
+                ld.slopetype = SlopeType.ST_HORIZONTAL;
             else {
                 if (FixedDiv(ld.dy, ld.dx) > 0)
-                    ld.slopetype = slopetype_t.ST_POSITIVE;
+                    ld.slopetype = SlopeType.ST_POSITIVE;
                 else
-                    ld.slopetype = slopetype_t.ST_NEGATIVE;
+                    ld.slopetype = SlopeType.ST_NEGATIVE;
             }
 
             if (v1.x < v2.x) {
@@ -675,7 +675,7 @@ public class LevelLoader extends AbstractLevelLoader {
             (int episode,
              int map,
              int playermask,
-             skill_t skill) {
+             Skill skill) {
         int i;
         String lumpname;
         int lumpnum;

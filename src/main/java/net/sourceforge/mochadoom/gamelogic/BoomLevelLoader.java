@@ -17,8 +17,8 @@ import net.sourceforge.mochadoom.data.mapsidedef_t;
 import net.sourceforge.mochadoom.data.mapsubsector_t;
 import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mapvertex_t;
-import net.sourceforge.mochadoom.defines.skill_t;
-import net.sourceforge.mochadoom.defines.slopetype_t;
+import net.sourceforge.mochadoom.defines.Skill;
+import net.sourceforge.mochadoom.defines.SlopeType;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -1380,10 +1380,10 @@ public class BoomLevelLoader
             ld.tranlump = -1; // killough 4/11/98: no translucency by default
 
             ld.slopetype =
-                    (ld.dx == 0) ? slopetype_t.ST_VERTICAL
-                            : (ld.dy == 0) ? slopetype_t.ST_HORIZONTAL
-                            : fixed_t.FixedDiv(ld.dy, ld.dx) > 0 ? slopetype_t.ST_POSITIVE
-                            : slopetype_t.ST_NEGATIVE;
+                    (ld.dx == 0) ? SlopeType.ST_VERTICAL
+                            : (ld.dy == 0) ? SlopeType.ST_HORIZONTAL
+                            : fixed_t.FixedDiv(ld.dy, ld.dx) > 0 ? SlopeType.ST_POSITIVE
+                            : SlopeType.ST_NEGATIVE;
 
             if (v1.x < v2.x) {
                 ld.bbox[BBox.BOXLEFT] = v1.x;
@@ -2050,7 +2050,7 @@ public class BoomLevelLoader
     //
     // killough 5/3/98: reformatted, cleaned up
 
-    public void SetupLevel(int episode, int map, int playermask, skill_t skill)
+    public void SetupLevel(int episode, int map, int playermask, Skill skill)
             throws IOException {
         int i;
         String lumpname;

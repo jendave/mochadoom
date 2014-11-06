@@ -2,8 +2,8 @@ package net.sourceforge.mochadoom.data;
 
 //import m.define;
 
+import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.ammotype_t;
-import net.sourceforge.mochadoom.defines.card_t;
 import net.sourceforge.mochadoom.doom.weapontype_t;
 import net.sourceforge.mochadoom.game.Keys;
 
@@ -99,7 +99,7 @@ public final class Defines {
     public static int MTF_AMBUSH = 8;
 
     //Maes: this makes it a bit less retarded.
-    public static final int NUMCARDS = card_t.NUMCARDS.ordinal();
+    public static final int NUMCARDS = Card.NUMCARDS.ordinal();
 
 
     //Maes: this makes it a bit less retarded.

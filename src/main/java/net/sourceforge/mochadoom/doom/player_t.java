@@ -3,9 +3,9 @@ package net.sourceforge.mochadoom.doom;
 import net.sourceforge.mochadoom.data.Tables;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
+import net.sourceforge.mochadoom.defines.Card;
+import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.defines.ammotype_t;
-import net.sourceforge.mochadoom.defines.card_t;
-import net.sourceforge.mochadoom.defines.skill_t;
 import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.system.DoomStatusAware;
 import net.sourceforge.mochadoom.system.IDoomSystem;
@@ -122,7 +122,7 @@ public class player_t /*extends mobj_t */
         ammo = new int[NUMAMMO];
         //maxammo = new int[NUMAMMO];
         maxammo = new int[NUMAMMO];
-        cards = new boolean[card_t.NUMCARDS.ordinal()];
+        cards = new boolean[Card.NUMCARDS.ordinal()];
         weaponowned = new boolean[NUMWEAPONS];
         psprites = new pspdef_t[NUMPSPRITES];
         C2JUtils.initArrayOfObjects(psprites);
@@ -453,8 +453,8 @@ public class player_t /*extends mobj_t */
         else
             num = clipammo[ammo] / 2;
 
-        if (DS.gameskill == skill_t.sk_baby
-                || DS.gameskill == skill_t.sk_nightmare) {
+        if (DS.gameskill == Skill.sk_baby
+                || DS.gameskill == Skill.sk_nightmare) {
             // give double ammo in trainer mode,
             // you'll need in nightmare
             num <<= 1;
@@ -603,7 +603,7 @@ public class player_t /*extends mobj_t */
      * P_GiveCard
      */
 
-    public void GiveCard(card_t crd) {
+    public void GiveCard(Card crd) {
         int card = crd.ordinal();
         if (cards[card])
             return;

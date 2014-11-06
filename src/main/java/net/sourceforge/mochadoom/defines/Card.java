@@ -3,7 +3,7 @@ package net.sourceforge.mochadoom.defines;
 /**
  * Key cards.
  */
-public enum card_t {
+public enum Card {
     it_bluecard,
     it_yellowcard,
     it_redcard,

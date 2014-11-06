@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.gamelogic;
 
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.system.DoomStatusAware;
 import java.io.IOException;
 import net.sourceforge.mochadoom.rendering.subsector_t;
@@ -81,7 +81,7 @@ public interface ILevelLoader extends DoomStatusAware {
      * @param skill
      * @throws IOException
      */
-    void SetupLevel(int episode, int map, int playermask, skill_t skill) throws IOException;
+    void SetupLevel(int episode, int map, int playermask, Skill skill) throws IOException;
 
     /**
      * P_SetThingPosition Links a thing into both a block and a subsector based

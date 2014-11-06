@@ -6,8 +6,8 @@ import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
+import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.ammotype_t;
-import net.sourceforge.mochadoom.defines.card_t;
 import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.DoomStatus;
@@ -2068,49 +2068,49 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             // cards
             // leave cards for everyone
             case SPR_BKEY:
-                if (!player.cards[card_t.it_bluecard.ordinal()])
+                if (!player.cards[Card.it_bluecard.ordinal()])
                     player.message = GOTBLUECARD;
-                player.GiveCard(card_t.it_bluecard);
+                player.GiveCard(Card.it_bluecard);
                 if (!DM.netgame)
                     break;
                 return;
 
             case SPR_YKEY:
-                if (!player.cards[card_t.it_yellowcard.ordinal()])
+                if (!player.cards[Card.it_yellowcard.ordinal()])
                     player.message = GOTYELWCARD;
-                player.GiveCard(card_t.it_yellowcard);
+                player.GiveCard(Card.it_yellowcard);
                 if (!DM.netgame)
                     break;
                 return;
 
             case SPR_RKEY:
-                if (!player.cards[card_t.it_redcard.ordinal()])
+                if (!player.cards[Card.it_redcard.ordinal()])
                     player.message = GOTREDCARD;
-                player.GiveCard(card_t.it_redcard);
+                player.GiveCard(Card.it_redcard);
                 if (!DM.netgame)
                     break;
                 return;
 
             case SPR_BSKU:
-                if (!player.cards[card_t.it_blueskull.ordinal()])
+                if (!player.cards[Card.it_blueskull.ordinal()])
                     player.message = GOTBLUESKUL;
-                player.GiveCard(card_t.it_blueskull);
+                player.GiveCard(Card.it_blueskull);
                 if (!DM.netgame)
                     break;
                 return;
 
             case SPR_YSKU:
-                if (!player.cards[card_t.it_yellowskull.ordinal()])
+                if (!player.cards[Card.it_yellowskull.ordinal()])
                     player.message = GOTYELWSKUL;
-                player.GiveCard(card_t.it_yellowskull);
+                player.GiveCard(Card.it_yellowskull);
                 if (!DM.netgame)
                     break;
                 return;
 
             case SPR_RSKU:
-                if (!player.cards[card_t.it_redskull.ordinal()])
+                if (!player.cards[Card.it_redskull.ordinal()])
                     player.message = GOTREDSKULL;
-                player.GiveCard(card_t.it_redskull);
+                player.GiveCard(Card.it_redskull);
                 if (!DM.netgame)
                     break;
                 return;

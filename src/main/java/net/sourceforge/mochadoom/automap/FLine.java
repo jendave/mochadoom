@@ -1,26 +1,26 @@
 package net.sourceforge.mochadoom.automap;
 
-public class fline_t {
+public class FLine {
 
     /*
-         * public fline_t(){
+         * public FLine(){
             a=new fpoint_t();
             b=new fpoint_t();
         }
 
-        public fline_t(fpoint_t a, fpoint_t b){
+        public FLine(fpoint_t a, fpoint_t b){
             this.a=a;
             this.b=b;
         }
     */
-    public fline_t(int ax, int ay, int bx, int by) {
+    public FLine(int ax, int ay, int bx, int by) {
         this.ay = ay;
         this.ax = ax;
         this.by = by;
         this.bx = bx;
     }
 
-    public fline_t() {
+    public FLine() {
         // TODO Auto-generated constructor stub
     }
 

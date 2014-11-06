@@ -6,9 +6,9 @@ import net.sourceforge.mochadoom.data.mobjinfo_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
-import net.sourceforge.mochadoom.defines.card_t;
-import net.sourceforge.mochadoom.defines.skill_t;
-import net.sourceforge.mochadoom.defines.slopetype_t;
+import net.sourceforge.mochadoom.defines.Card;
+import net.sourceforge.mochadoom.defines.Skill;
+import net.sourceforge.mochadoom.defines.SlopeType;
 import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.player_t;
@@ -935,7 +935,7 @@ public class Actions extends UnifiedGameMap {
             case 133:
 /*         if ( p==null )
              return false; */
-                if (!p.cards[card_t.it_bluecard.ordinal()] && !p.cards[card_t.it_blueskull.ordinal()]) {
+                if (!p.cards[Card.it_bluecard.ordinal()] && !p.cards[Card.it_blueskull.ordinal()]) {
                     p.message = PD_BLUEO;
                     S.StartSound(null, sfxenum_t.sfx_oof);
                     return false;
@@ -946,7 +946,7 @@ public class Actions extends UnifiedGameMap {
             case 135:
                 /*        if ( p==null )
              return false; */
-                if (!p.cards[card_t.it_redcard.ordinal()] && !p.cards[card_t.it_redskull.ordinal()]) {
+                if (!p.cards[Card.it_redcard.ordinal()] && !p.cards[Card.it_redskull.ordinal()]) {
                     p.message = PD_REDO;
                     S.StartSound(null, sfxenum_t.sfx_oof);
                     return false;
@@ -957,8 +957,8 @@ public class Actions extends UnifiedGameMap {
             case 137:
                 /*        if ( p==null )
              return false; */
-                if (!p.cards[card_t.it_yellowcard.ordinal()] &&
-                        !p.cards[card_t.it_yellowskull.ordinal()]) {
+                if (!p.cards[Card.it_yellowcard.ordinal()] &&
+                        !p.cards[Card.it_yellowskull.ordinal()]) {
                     p.message = PD_YELLOWO;
                     S.StartSound(null, sfxenum_t.sfx_oof);
                     return false;
@@ -1067,7 +1067,7 @@ public class Actions extends UnifiedGameMap {
                 if (player == null)
                     return;
 
-                if (!player.cards[card_t.it_bluecard.ordinal()] && !player.cards[card_t.it_blueskull.ordinal()]) {
+                if (!player.cards[Card.it_bluecard.ordinal()] && !player.cards[Card.it_blueskull.ordinal()]) {
                     player.message = PD_BLUEK;
                     S.StartSound(null, sfxenum_t.sfx_oof);
                     return;
@@ -1079,8 +1079,8 @@ public class Actions extends UnifiedGameMap {
                 if (player == null)
                     return;
 
-                if (!player.cards[card_t.it_yellowcard.ordinal()] &&
-                        !player.cards[card_t.it_yellowskull.ordinal()]) {
+                if (!player.cards[Card.it_yellowcard.ordinal()] &&
+                        !player.cards[Card.it_yellowskull.ordinal()]) {
                     player.message = PD_YELLOWK;
                     S.StartSound(null, sfxenum_t.sfx_oof);
                     return;
@@ -1092,7 +1092,7 @@ public class Actions extends UnifiedGameMap {
                 if (player == null)
                     return;
 
-                if (!player.cards[card_t.it_redcard.ordinal()] && !player.cards[card_t.it_redskull.ordinal()]) {
+                if (!player.cards[Card.it_redcard.ordinal()] && !player.cards[Card.it_redskull.ordinal()]) {
                     player.message = PD_REDK;
                     S.StartSound(null, sfxenum_t.sfx_oof);
                     return;
@@ -1528,7 +1528,7 @@ public class Actions extends UnifiedGameMap {
         mobj.flags = info.flags;
         mobj.health = info.spawnhealth;
 
-        if (DM.gameskill != skill_t.sk_nightmare)
+        if (DM.gameskill != Skill.sk_nightmare)
             mobj.reactiontime = info.reactiontime;
 
         mobj.lastlook = RND.P_Random() % MAXPLAYERS;
@@ -1729,9 +1729,9 @@ public class Actions extends UnifiedGameMap {
         if (!DM.netgame && eval(mthing.options & 16))
             return null;
 
-        if (DM.gameskill == skill_t.sk_baby)
+        if (DM.gameskill == Skill.sk_baby)
             bit = 1;
-        else if (DM.gameskill == skill_t.sk_nightmare)
+        else if (DM.gameskill == Skill.sk_nightmare)
             bit = 4;
         else
             bit = 1 << (DM.gameskill.ordinal() - 1);
@@ -1983,7 +1983,7 @@ public class Actions extends UnifiedGameMap {
         }
 
         player = target.player;
-        if ((player != null) && DM.gameskill == skill_t.sk_baby)
+        if ((player != null) && DM.gameskill == Skill.sk_baby)
             damage >>= 1;   // take half damage in trainer mode
 
 
@@ -3420,12 +3420,12 @@ public class Actions extends UnifiedGameMap {
         int movelen, newlen;
 
 
-        if (ld.slopetype == slopetype_t.ST_HORIZONTAL) {
+        if (ld.slopetype == SlopeType.ST_HORIZONTAL) {
             tmymove = 0;
             return;
         }
 
-        if (ld.slopetype == slopetype_t.ST_VERTICAL) {
+        if (ld.slopetype == SlopeType.ST_VERTICAL) {
             tmxmove = 0;
             return;
         }

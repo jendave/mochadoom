@@ -128,7 +128,7 @@ package net.sourceforge.mochadoom.finale;
 
 import net.sourceforge.mochadoom.data.sounds.musicenum_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.defines.Language_t;
+import net.sourceforge.mochadoom.defines.Language;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
@@ -1563,7 +1563,7 @@ public class EndLevel<T, V> extends AbstractEndLevel {
         sp_secret = (patch_t) W.CacheLumpName("WISCRT2", PU_STATIC, patch_t.class);
 
         // Yuck.
-        if (DS.language == Language_t.french) {
+        if (DS.language == Language.french) {
             // "items"
             if (DS.netgame && !DS.deathmatch)
                 items = (patch_t) W.CacheLumpName("WIOBJ", PU_STATIC, patch_t.class);

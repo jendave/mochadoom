@@ -5,7 +5,7 @@ package net.sourceforge.mochadoom.defines;
  * playing, gazing at the intermission screen,
  * the game final animation, or a demo.
  */
-public enum gamestate_t {
+public enum GameState {
     GS_LEVEL,
     GS_INTERMISSION,
     GS_FINALE,

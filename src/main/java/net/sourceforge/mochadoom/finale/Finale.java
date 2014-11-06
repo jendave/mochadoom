@@ -4,7 +4,7 @@ import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.musicenum_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
-import net.sourceforge.mochadoom.defines.gamestate_t;
+import net.sourceforge.mochadoom.defines.GameState;
 import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
@@ -132,7 +132,7 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
      */
     public void StartFinale() {
         DG.setGameAction(gameaction_t.ga_nothing);
-        DS.gamestate = gamestate_t.GS_FINALE;
+        DS.gamestate = GameState.GS_FINALE;
         DS.viewactive = false;
         DS.automapactive = false;
         String[] texts = null;
@@ -288,7 +288,7 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
                 && finalecount > finaletext.length() * TEXTSPEED + TEXTWAIT) {
             finalecount = 0;
             finalestage = 1;
-            DS.wipegamestate = gamestate_t.GS_MINUS_ONE; // force a wipe
+            DS.wipegamestate = GameState.GS_MINUS_ONE; // force a wipe
             if (DS.gameepisode == 3)
 
                 S.StartMusic(musicenum_t.mus_bunny);
@@ -382,10 +382,10 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
     //
     // F_StartCast
     //
-    // extern gamestate_t wipegamestate;
+    // extern GameState wipegamestate;
 
     public void StartCast() {
-        DS.wipegamestate = gamestate_t.GS_MINUS_ONE; // force a screen wipe
+        DS.wipegamestate = GameState.GS_MINUS_ONE; // force a screen wipe
         castnum = 0;
         caststate = states[mobjinfo[castorder[castnum].type.ordinal()].seestate
                 .ordinal()];

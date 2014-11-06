@@ -3,7 +3,7 @@ package net.sourceforge.mochadoom.defines;
 /**
  * Identify language to use, software localization.
  */
-public enum Language_t {
+public enum Language {
     english,
     french,
     german,

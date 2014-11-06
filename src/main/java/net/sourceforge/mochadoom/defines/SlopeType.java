@@ -4,7 +4,7 @@ package net.sourceforge.mochadoom.defines;
  * Move clipping aid for LineDefs.
  */
 
-public enum slopetype_t {
+public enum SlopeType {
     ST_HORIZONTAL,
     ST_VERTICAL,
     ST_POSITIVE,

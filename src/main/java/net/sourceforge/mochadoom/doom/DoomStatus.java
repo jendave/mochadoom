@@ -2,11 +2,8 @@ package net.sourceforge.mochadoom.doom;
 
 import net.sourceforge.mochadoom.automap.IAutoMap;
 import net.sourceforge.mochadoom.data.mapthing_t;
-import net.sourceforge.mochadoom.defines.GameMission_t;
-import net.sourceforge.mochadoom.defines.GameMode_t;
-import net.sourceforge.mochadoom.defines.Language_t;
-import net.sourceforge.mochadoom.defines.gamestate_t;
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.*;
+import net.sourceforge.mochadoom.defines.GameMode;
 import net.sourceforge.mochadoom.demo.IDoomDemo;
 import net.sourceforge.mochadoom.finale.Finale;
 import net.sourceforge.mochadoom.finale.Wiper;
@@ -79,18 +76,18 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
      * etc. can be handled more cleanly.
      */
 
-    private GameMode_t gamemode;
+    private GameMode gamemode;
 
-    public void setGameMode(GameMode_t mode) {
+    public void setGameMode(GameMode mode) {
         this.gamemode = mode;
     }
 
-    public GameMode_t getGameMode() {
+    public GameMode getGameMode() {
         return gamemode;
     }
 
     public boolean isShareware() {
-        return (gamemode == GameMode_t.shareware);
+        return (gamemode == GameMode.shareware);
     }
 
     /**
@@ -99,10 +96,11 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
      * @return
      */
     public boolean isCommercial() {
-        return (gamemode == GameMode_t.commercial ||
-                gamemode == GameMode_t.pack_plut ||
-                gamemode == GameMode_t.pack_tnt ||
-                gamemode == GameMode_t.pack_xbla);
+        return (gamemode == GameMode.commercial ||
+                gamemode == GameMode.pack_plut ||
+                gamemode == GameMode.pack_tnt ||
+                gamemode == GameMode.pack_xbla ||
+                gamemode == GameMode.freedoom2);
     }
 
     /**
@@ -111,7 +109,9 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
      * @return
      */
     public boolean isRetail() {
-        return (gamemode == GameMode_t.retail);
+
+        return (gamemode == GameMode.retail ||
+                gamemode == GameMode.freedoom1);
     }
 
     /**
@@ -121,10 +121,10 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
      */
 
     public boolean isRegistered() {
-        return (gamemode == GameMode_t.registered || gamemode == GameMode_t.retail);
+        return (gamemode == GameMode.registered || gamemode == GameMode.retail);
     }
 
-    public GameMission_t gamemission;
+    public GameMission gamemission;
 
     /**
      * Set if homebrew PWAD stuff has been added.
@@ -134,7 +134,7 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
     /**
      * Language.
      */
-    public Language_t language;
+    public Language language;
 
     // /////////// Normally found in d_main.c ///////////////
 
@@ -143,7 +143,7 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
     /**
      * Defaults for menu, methinks.
      */
-    public skill_t startskill;
+    public Skill startskill;
 
     public int startepisode;
 
@@ -154,7 +154,7 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
     /**
      * Selected by user
      */
-    public skill_t gameskill;
+    public Skill gameskill;
 
     public int gameepisode;
 
@@ -289,7 +289,7 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
     /**
      * Set this to GS_DEMOSCREEN upon init, else it will be null
      */
-    public gamestate_t gamestate = gamestate_t.GS_DEMOSCREEN;
+    public GameState gamestate = GameState.GS_DEMOSCREEN;
 
     // -----------------------------
     // Internal parameters, fixed.
@@ -344,7 +344,7 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
     // wipegamestate can be set to -1
     // to force a wipe on the next draw
     // wipegamestate can be set to -1 to force a wipe on the next draw
-    public gamestate_t wipegamestate = gamestate_t.GS_DEMOSCREEN;
+    public GameState wipegamestate = GameState.GS_DEMOSCREEN;
 
     public int mouseSensitivity = 15;
 

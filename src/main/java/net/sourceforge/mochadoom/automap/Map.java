@@ -291,11 +291,11 @@ public abstract class Map<T, V>
 
         this.updateStatus(DS);
         // Some initializing...
-        this.markpoints = new mpoint_t[AM_NUMMARKPOINTS];
-        C2JUtils.initArrayOfObjects(markpoints, mpoint_t.class);
+        this.markpoints = new MPoint[AM_NUMMARKPOINTS];
+        C2JUtils.initArrayOfObjects(markpoints, MPoint.class);
 
-        f_oldloc = new mpoint_t();
-        m_paninc = new mpoint_t();
+        f_oldloc = new MPoint();
+        m_paninc = new MPoint();
 
         this.plr = DM.players[DM.displayplayer];
 
@@ -374,19 +374,19 @@ public abstract class Map<T, V>
     /**
      * A line drawing of the player pointing right, starting from the middle.
      */
-    protected mline_t[] player_arrow;
+    protected MLine[] player_arrow;
 
     protected int NUMPLYRLINES;
 
-    protected mline_t[] cheat_player_arrow;
+    protected MLine[] cheat_player_arrow;
 
     protected int NUMCHEATPLYRLINES;
 
-    protected mline_t[] triangle_guy;
+    protected MLine[] triangle_guy;
 
     protected int NUMTRIANGLEGUYLINES;
 
-    protected mline_t[] thintriangle_guy;
+    protected MLine[] thintriangle_guy;
 
     protected int NUMTHINTRIANGLEGUYLINES;
 
@@ -394,51 +394,51 @@ public abstract class Map<T, V>
 
         int R = ((8 * PLAYERRADIUS) / 7);
         player_arrow =
-                new mline_t[]{
-                        new mline_t(-R + R / 8, 0, R, 0), // -----
-                        new mline_t(R, 0, R - R / 2, R / 4), // ----
-                        new mline_t(R, 0, R - R / 2, -R / 4),
-                        new mline_t(-R + R / 8, 0, -R - R / 8, R / 4), // >---
-                        new mline_t(-R + R / 8, 0, -R - R / 8, -R / 4),
-                        new mline_t(-R + 3 * R / 8, 0, -R + R / 8, R / 4), // >>--
-                        new mline_t(-R + 3 * R / 8, 0, -R + R / 8, -R / 4)};
+                new MLine[]{
+                        new MLine(-R + R / 8, 0, R, 0), // -----
+                        new MLine(R, 0, R - R / 2, R / 4), // ----
+                        new MLine(R, 0, R - R / 2, -R / 4),
+                        new MLine(-R + R / 8, 0, -R - R / 8, R / 4), // >---
+                        new MLine(-R + R / 8, 0, -R - R / 8, -R / 4),
+                        new MLine(-R + 3 * R / 8, 0, -R + R / 8, R / 4), // >>--
+                        new MLine(-R + 3 * R / 8, 0, -R + R / 8, -R / 4)};
 
         NUMPLYRLINES = player_arrow.length;
 
         cheat_player_arrow =
-                new mline_t[]{
-                        new mline_t(-R + R / 8, 0, R, 0), // -----
-                        new mline_t(R, 0, R - R / 2, R / 6), // ----
-                        new mline_t(R, 0, R - R / 2, -R / 6),
-                        new mline_t(-R + R / 8, 0, -R - R / 8, R / 6), // >----
-                        new mline_t(-R + R / 8, 0, -R - R / 8, -R / 6),
-                        new mline_t(-R + 3 * R / 8, 0, -R + R / 8, R / 6), // >>----
-                        new mline_t(-R + 3 * R / 8, 0, -R + R / 8, -R / 6),
-                        new mline_t(-R / 2, 0, -R / 2, -R / 6), // >>-d--
-                        new mline_t(-R / 2, -R / 6, -R / 2 + R / 6, -R / 6),
-                        new mline_t(-R / 2 + R / 6, -R / 6, -R / 2 + R / 6, R / 4),
-                        new mline_t(-R / 6, 0, -R / 6, -R / 6), // >>-dd-
-                        new mline_t(-R / 6, -R / 6, 0, -R / 6),
-                        new mline_t(0, -R / 6, 0, R / 4),
-                        new mline_t(R / 6, R / 4, R / 6, -R / 7), // >>-ddt
-                        new mline_t(R / 6, -R / 7, R / 6 + R / 32, -R / 7 - R / 32),
-                        new mline_t(R / 6 + R / 32, -R / 7 - R / 32,
+                new MLine[]{
+                        new MLine(-R + R / 8, 0, R, 0), // -----
+                        new MLine(R, 0, R - R / 2, R / 6), // ----
+                        new MLine(R, 0, R - R / 2, -R / 6),
+                        new MLine(-R + R / 8, 0, -R - R / 8, R / 6), // >----
+                        new MLine(-R + R / 8, 0, -R - R / 8, -R / 6),
+                        new MLine(-R + 3 * R / 8, 0, -R + R / 8, R / 6), // >>----
+                        new MLine(-R + 3 * R / 8, 0, -R + R / 8, -R / 6),
+                        new MLine(-R / 2, 0, -R / 2, -R / 6), // >>-d--
+                        new MLine(-R / 2, -R / 6, -R / 2 + R / 6, -R / 6),
+                        new MLine(-R / 2 + R / 6, -R / 6, -R / 2 + R / 6, R / 4),
+                        new MLine(-R / 6, 0, -R / 6, -R / 6), // >>-dd-
+                        new MLine(-R / 6, -R / 6, 0, -R / 6),
+                        new MLine(0, -R / 6, 0, R / 4),
+                        new MLine(R / 6, R / 4, R / 6, -R / 7), // >>-ddt
+                        new MLine(R / 6, -R / 7, R / 6 + R / 32, -R / 7 - R / 32),
+                        new MLine(R / 6 + R / 32, -R / 7 - R / 32,
                                 R / 6 + R / 10, -R / 7)};
 
         NUMCHEATPLYRLINES = cheat_player_arrow.length;
 
         R = (FRACUNIT);
         triangle_guy =
-                new mline_t[]{new mline_t(-.867 * R, -.5 * R, .867 * R, -.5 * R),
-                        new mline_t(.867 * R, -.5 * R, 0, R),
-                        new mline_t(0, R, -.867 * R, -.5 * R)};
+                new MLine[]{new MLine(-.867 * R, -.5 * R, .867 * R, -.5 * R),
+                        new MLine(.867 * R, -.5 * R, 0, R),
+                        new MLine(0, R, -.867 * R, -.5 * R)};
 
         NUMTRIANGLEGUYLINES = triangle_guy.length;
 
         thintriangle_guy =
-                new mline_t[]{new mline_t(-.5 * R, -.7 * R, R, 0),
-                        new mline_t(R, 0, -.5 * R, .7 * R),
-                        new mline_t(-.5 * R, .7 * R, -.5 * R, -.7 * R)};
+                new MLine[]{new MLine(-.5 * R, -.7 * R, R, 0),
+                        new MLine(R, 0, -.5 * R, .7 * R),
+                        new MLine(-.5 * R, .7 * R, -.5 * R, -.7 * R)};
 
         NUMTHINTRIANGLEGUYLINES = thintriangle_guy.length;
     }
@@ -483,7 +483,7 @@ public abstract class Map<T, V>
     /**
      * (fixed_t) how far the window pans each tic (map coords)
      */
-    protected mpoint_t m_paninc;
+    protected MPoint m_paninc;
 
     /**
      * (fixed_t) how far the window zooms in each tic (map coords)
@@ -548,7 +548,7 @@ public abstract class Map<T, V>
     /**
      * old location used by the Follower routine
      */
-    protected mpoint_t f_oldloc;
+    protected MPoint f_oldloc;
 
     /**
      * (fixed_t) used by MTOF to scale from map-to-frame-buffer coords
@@ -573,7 +573,7 @@ public abstract class Map<T, V>
     /**
      * where the points are
      */
-    private mpoint_t[] markpoints;
+    private MPoint[] markpoints;
 
     /**
      * next point to be assigned
@@ -611,7 +611,7 @@ public abstract class Map<T, V>
      * @param is
      */
 
-    public final void getIslope(mline_t ml, islope_t is) {
+    public final void getIslope(MLine ml, ISlope is) {
         int dx, dy;
 
         dy = ml.ay - ml.by;
@@ -1143,7 +1143,7 @@ public abstract class Map<T, V>
      */
     private int tmpx, tmpy;// =new fpoint_t();
 
-    private final boolean clipMline(mline_t ml, fline_t fl) {
+    private final boolean clipMline(MLine ml, FLine fl) {
 
         // System.out.print("Asked to clip from "+FixedFloat.toFloat(ml.a.x)+","+FixedFloat.toFloat(ml.a.y));
         // System.out.print(" to clip "+FixedFloat.toFloat(ml.b.x)+","+FixedFloat.toFloat(ml.b.y)+"\n");
@@ -1278,7 +1278,7 @@ public abstract class Map<T, V>
     //
     // Classic Bresenham w/ whatever optimizations needed for speed
     //
-    private final void drawFline(fline_t fl, int color) {
+    private final void drawFline(FLine fl, int color) {
 
         // MAES: wish they were registers...
         int x;
@@ -1353,7 +1353,7 @@ public abstract class Map<T, V>
      */
     protected int singlepixel = 0;
 
-    private final void drawMline(mline_t ml, int color) {
+    private final void drawMline(MLine ml, int color) {
 
         // fl.reset();
 
@@ -1364,9 +1364,9 @@ public abstract class Map<T, V>
         }
     }
 
-    private final fline_t fl = new fline_t();
+    private final FLine fl = new FLine();
 
-    private final mline_t ml = new mline_t();
+    private final MLine ml = new MLine();
 
     /**
      * Draws flat (floor/ceiling tile) aligned grid lines.
@@ -1411,7 +1411,7 @@ public abstract class Map<T, V>
 
     }
 
-    protected mline_t l = new mline_t();
+    protected MLine l = new MLine();
 
     /**
      * Determines visible lines, draws them. This is LineDef based, not LineSeg
@@ -1491,7 +1491,7 @@ public abstract class Map<T, V>
         // rotx.val = tmpx;
     }
 
-    private final void drawLineCharacter(mline_t[] lineguy, int lineguylines,
+    private final void drawLineCharacter(MLine[] lineguy, int lineguylines,
                                          int scale, // fixed_t
                                          int angle, // This should be a LUT-ready angle.
                                          int color, int x, // fixed_t
@@ -1499,7 +1499,7 @@ public abstract class Map<T, V>
     ) {
         int i;
         final boolean rotate = (angle != 0);
-        mline_t l = new mline_t();
+        MLine l = new MLine();
 
         for (i = 0; i < lineguylines; i++) {
             l.ax = lineguy[i].ax;

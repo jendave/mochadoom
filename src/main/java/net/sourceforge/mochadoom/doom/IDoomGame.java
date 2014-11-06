@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.doom;
 
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
 
 /**
  * Groups functions formerly in d_game,
@@ -21,7 +21,7 @@ public interface IDoomGame {
      * but a warp test can start elsewhere
      */
 
-    public void DeferedInitNew(skill_t skill, int episode, int map);
+    public void DeferedInitNew(Skill skill, int episode, int map);
 
     /**
      * Can be called by the startup code or M_Responder,

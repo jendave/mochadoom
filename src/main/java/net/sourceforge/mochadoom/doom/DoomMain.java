@@ -22,12 +22,8 @@ import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.musicenum_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.defines.GameMission_t;
-import net.sourceforge.mochadoom.defines.GameMode_t;
-import net.sourceforge.mochadoom.defines.Language_t;
-import net.sourceforge.mochadoom.defines.gamestate_t;
-import net.sourceforge.mochadoom.defines.skill_t;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.*;
+import net.sourceforge.mochadoom.defines.GameMode;
 import net.sourceforge.mochadoom.demo.IDemoTicCmd;
 import net.sourceforge.mochadoom.demo.IDoomDemo;
 import net.sourceforge.mochadoom.demo.VanillaDoomDemo;
@@ -229,7 +225,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     private boolean menuactivestate = false;
     private boolean inhelpscreensstate = false;
     private boolean fullscreen = false;
-    private gamestate_t oldgamestate = gamestate_t.GS_MINUS_ONE;
+    private GameState oldgamestate = GameState.GS_MINUS_ONE;
     private int borderdrawcount;
 
     /**
@@ -255,7 +251,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         // change the view size if needed
         if (R.getSetSizeNeeded()) {
             R.ExecuteSetViewSize();
-            oldgamestate = gamestate_t.GS_MINUS_ONE;                      // force background redraw
+            oldgamestate = GameState.GS_MINUS_ONE;                      // force background redraw
             borderdrawcount = 3;
         }
 
@@ -266,7 +262,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         } else
             wipe = false;
 
-        if (gamestate == gamestate_t.GS_LEVEL && eval(gametic))
+        if (gamestate == GameState.GS_LEVEL && eval(gametic))
             HU.Erase();
 
         // do buffered drawing
@@ -298,7 +294,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
         // draw the view directly
-        if (gamestate == gamestate_t.GS_LEVEL && !automapactive && eval(gametic)) {
+        if (gamestate == GameState.GS_LEVEL && !automapactive && eval(gametic)) {
             if (flashing_hom) {
                 V.FillRect(gametic % 256, 0, view.getViewWindowX(), view.getViewWindowY(),
                         view.getScaledViewWidth(), view.getScaledViewHeight());
@@ -307,21 +303,21 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
         // Automap was active, update only HU.    
-        if (gamestate == gamestate_t.GS_LEVEL && eval(gametic))
+        if (gamestate == GameState.GS_LEVEL && eval(gametic))
             HU.Drawer();
 
         // clean up border stuff
-        if (gamestate != oldgamestate && gamestate != gamestate_t.GS_LEVEL)
+        if (gamestate != oldgamestate && gamestate != GameState.GS_LEVEL)
             VI.SetPalette(0);
 
         // see if the border needs to be initially drawn
-        if (gamestate == gamestate_t.GS_LEVEL && oldgamestate != gamestate_t.GS_LEVEL) {
+        if (gamestate == GameState.GS_LEVEL && oldgamestate != GameState.GS_LEVEL) {
             viewactivestate = false;        // view was not active
             R.FillBackScreen();    // draw the pattern into the back screen
         }
 
         // see if the border needs to be updated to the screen
-        if (gamestate == gamestate_t.GS_LEVEL && !automapactive && !R.isFullScreen()) {
+        if (gamestate == GameState.GS_LEVEL && !automapactive && !R.isFullScreen()) {
             if (menuactive || menuactivestate || !viewactivestate)
                 borderdrawcount = 3;
             if (eval(borderdrawcount)) {
@@ -517,7 +513,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     pagetic = 35 * 11;
                 else
                     pagetic = 170;
-                gamestate = gamestate_t.GS_DEMOSCREEN;
+                gamestate = GameState.GS_DEMOSCREEN;
 
 
                 if (W.CheckNumForName("TITLEPIC") != -1) {
@@ -539,14 +535,14 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                 break;
             case 2:
                 pagetic = 200;
-                gamestate = gamestate_t.GS_DEMOSCREEN;
+                gamestate = GameState.GS_DEMOSCREEN;
                 pagename = "CREDIT";
                 break;
             case 3:
                 DeferedPlayDemo("demo2");
                 break;
             case 4:
-                gamestate = gamestate_t.GS_DEMOSCREEN;
+                gamestate = GameState.GS_DEMOSCREEN;
                 if (isCommercial()) {
                     pagetic = 35 * 11;
                     pagename = "TITLEPIC";
@@ -619,7 +615,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         DoomVersions vcheck = new DoomVersions();
 
         // By default.
-        language = Language_t.english;
+        language = Language.english;
 
         // First, check for -iwad parameter.
         // If valid, then it trumps all others.
@@ -636,7 +632,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             String separator = System.getProperty("file.separator");
             doomwaddir = test.substring(0, 1 + test.lastIndexOf(separator));
             String iwad = test.substring(1 + test.lastIndexOf(separator));
-            GameMode_t attempt = vcheck.tryOnlyOne(iwad, doomwaddir);
+            GameMode attempt = vcheck.tryOnlyOne(iwad, doomwaddir);
             // Note: at this point we can't distinguish between "doom" retail
             // and "doom" ultimate yet.
             if (attempt != null) {
@@ -670,7 +666,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // MAES: Interesting. I didn't know of that :-o
         if (eval(CM.CheckParm("-shdev"))) {
-            setGameMode(GameMode_t.shareware);
+            setGameMode(GameMode.shareware);
             devparm = true;
             AddFile(dstrings.DEVDATA + "doom1.wad");
             AddFile(dstrings.DEVMAPS + "data_se/texture1.lmp");
@@ -680,7 +676,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
         if (eval(CM.CheckParm("-regdev"))) {
-            setGameMode(GameMode_t.registered);
+            setGameMode(GameMode.registered);
             devparm = true;
             AddFile(dstrings.DEVDATA + "doom.wad");
             AddFile(dstrings.DEVMAPS + "data_se/texture1.lmp");
@@ -691,7 +687,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
         if (eval(CM.CheckParm("-comdev"))) {
-            setGameMode(GameMode_t.commercial);
+            setGameMode(GameMode.commercial);
             devparm = true;
             /* I don't bother
     if(plutonia)
@@ -708,7 +704,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
         if (eval(CM.CheckParm("-fr1dev"))) {
-            setGameMode(GameMode_t.shareware);
+            setGameMode(GameMode.freedoom1);
             devparm = true;
             AddFile(dstrings.DEVDATA + "freedoom1.wad");
             AddFile(dstrings.DEVMAPS + "data_se/texture1.lmp");
@@ -718,7 +714,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
         if (eval(CM.CheckParm("-fr2dev"))) {
-            setGameMode(GameMode_t.shareware);
+            setGameMode(GameMode.freedoom2);
             devparm = true;
             AddFile(dstrings.DEVDATA + "freedoom2.wad");
             AddFile(dstrings.DEVMAPS + "data_se/texture1.lmp");
@@ -729,10 +725,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
 
         if (testReadAccess(vcheck.doom2fwad)) {
-            setGameMode(GameMode_t.commercial);
+            setGameMode(GameMode.commercial);
             // C'est ridicule!
             // Let's handle languages in config files, okay?
-            language = Language_t.french;
+            language = Language.french;
             System.out.println("French version\n");
             AddFile(vcheck.doom2fwad);
             return vcheck.doom2fwad;
@@ -740,25 +736,25 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
 
         if (testReadAccess(vcheck.doom2wad)) {
-            setGameMode(GameMode_t.commercial);
+            setGameMode(GameMode.commercial);
             AddFile(vcheck.doom2wad);
             return vcheck.doom2wad;
         }
 
         if (testReadAccess(vcheck.plutoniawad)) {
-            setGameMode(GameMode_t.pack_plut);
+            setGameMode(GameMode.pack_plut);
             AddFile(vcheck.plutoniawad);
             return vcheck.plutoniawad;
         }
 
         if (testReadAccess(vcheck.tntwad)) {
-            setGameMode(GameMode_t.pack_tnt);
+            setGameMode(GameMode.pack_tnt);
             AddFile(vcheck.tntwad);
             return vcheck.tntwad;
         }
 
         if (testReadAccess(vcheck.tntwad)) {
-            setGameMode(GameMode_t.pack_xbla);
+            setGameMode(GameMode.pack_xbla);
             AddFile(vcheck.xblawad);
             return vcheck.xblawad;
         }
@@ -766,31 +762,31 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         if (testReadAccess(vcheck.doomuwad)) {
             // TODO auto-detect ultimate Doom even from doom.wad
             // Maes: this is done later on.
-            setGameMode(GameMode_t.retail);
+            setGameMode(GameMode.retail);
             AddFile(vcheck.doomuwad);
             return vcheck.doomuwad;
         }
 
         if (testReadAccess(vcheck.doomwad)) {
-            setGameMode(GameMode_t.registered);
+            setGameMode(GameMode.registered);
             AddFile(vcheck.doomwad);
             return vcheck.doomwad;
         }
 
         if (testReadAccess(vcheck.doom1wad)) {
-            setGameMode(GameMode_t.shareware);
+            setGameMode(GameMode.shareware);
             AddFile(vcheck.doom1wad);
             return vcheck.doom1wad;
         }
 
         if (testReadAccess(vcheck.freedoom1wad)) {
-            setGameMode(GameMode_t.commercial);
+            setGameMode(GameMode.commercial);
             AddFile(vcheck.doom2wad);
             return vcheck.doom2wad;
         }
 
         if (testReadAccess(vcheck.freedoom2wad)) {
-            setGameMode(GameMode_t.commercial);
+            setGameMode(GameMode.commercial);
             AddFile(vcheck.doom2wad);
             return vcheck.doom2wad;
         }
@@ -798,7 +794,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         // MAES: Maybe we should add FreeDoom here later.
 
         System.out.println("Game mode indeterminate.\n");
-        setGameMode(GameMode_t.indetermined);
+        setGameMode(GameMode.indetermined);
 
         return null;
         // We don't abort. Let's see what the PWAD contains.
@@ -903,7 +899,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             char[] tmp = CM.getArgv(p).toCharArray();
             tmp[4] = 'p';// big hack, change to -warp
             CM.setArgv(p, new String(tmp));
-            GameMode_t gamemode = getGameMode();
+            GameMode gamemode = getGameMode();
             // Map name handling.
             switch (gamemode) {
                 case shareware:
@@ -971,7 +967,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // get skill / episode / map from parms
         // FIXME: should get them FROM THE DEMO itself.
-        startskill = skill_t.sk_medium;
+        startskill = Skill.sk_medium;
         startepisode = 1;
         startmap = 1;
         //autostart = false;
@@ -986,7 +982,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         p = CM.CheckParm("-skill");
         if (eval(p) && p < CM.getArgc() - 1) {
-            startskill = skill_t.values()[CM.getArgv(p + 1).charAt(0) - '1'];
+            startskill = Skill.values()[CM.getArgv(p + 1).charAt(0) - '1'];
             autostart = true;
         }
 
@@ -1288,7 +1284,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             singledemo = true;              // quit after one demo
             if (fastdemo) timingdemo = true;
             InitNew(startskill, startepisode, startmap);
-            gamestate = gamestate_t.GS_DEMOSCREEN;
+            gamestate = GameState.GS_DEMOSCREEN;
             DeferedPlayDemo(loaddemo);
             DoomLoop();  // never returns
         }
@@ -1413,7 +1409,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             // but w/o all the lumps of the registered version. 
             if (!CheckForLumps(lumps, W)) return;
             // Checks passed, so we can set the mode to Ultimate
-            setGameMode(GameMode_t.retail);
+            setGameMode(GameMode.retail);
         }
 
     }
@@ -1736,7 +1732,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     //
     // G_DoLoadLevel 
     //
-    //extern  gamestate_t     wipegamestate; 
+    //extern  GameState     wipegamestate;
 
     public boolean DoLoadLevel() {
         int i;
@@ -1751,8 +1747,8 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         // DOOM determines the sky texture to be used
         // depending on the current episode, and the game version.
         if (isCommercial()
-                || (gamemission == GameMission_t.pack_tnt)
-                || (gamemission == GameMission_t.pack_plut)) {
+                || (gamemission == GameMission.pack_tnt)
+                || (gamemission == GameMission.pack_plut)) {
             TM.setSkyTexture(TM.TextureNumForName("SKY3"));
             if (gamemap < 12)
                 TM.setSkyTexture(TM.TextureNumForName("SKY1"));
@@ -1762,10 +1758,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         levelstarttic = gametic;        // for time calculation
 
-        if (wipegamestate == gamestate_t.GS_LEVEL)
-            wipegamestate = gamestate_t.GS_MINUS_ONE;             // force a wipe 
+        if (wipegamestate == GameState.GS_LEVEL)
+            wipegamestate = GameState.GS_MINUS_ONE;             // force a wipe
 
-        gamestate = gamestate_t.GS_LEVEL;
+        gamestate = GameState.GS_LEVEL;
 
         for (i = 0; i < MAXPLAYERS; i++) {
             if (playeringame[i] && players[i].playerstate == PST_DEAD)
@@ -1829,7 +1825,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      */
     public boolean Responder(event_t ev) {
         // allow spy mode changes even during the demo
-        if (gamestate == gamestate_t.GS_LEVEL && ev.type == evtype_t.ev_keydown
+        if (gamestate == GameState.GS_LEVEL && ev.type == evtype_t.ev_keydown
                 && ev.data1 == KEY_F12 && (singledemo || !deathmatch)) {
             // spy mode 
             do {
@@ -1842,7 +1838,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // any other key pops up menu if in demos
         if (gameaction == gameaction_t.ga_nothing && !singledemo &&
-                (demoplayback || gamestate == gamestate_t.GS_DEMOSCREEN)
+                (demoplayback || gamestate == GameState.GS_DEMOSCREEN)
                 ) {
             if (ev.type == evtype_t.ev_keydown ||
                     (ev.type == evtype_t.ev_mouse && ev.data1 != 0) ||
@@ -1853,7 +1849,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             return false;
         }
 
-        if (gamestate == gamestate_t.GS_LEVEL) {
+        if (gamestate == GameState.GS_LEVEL) {
 
             if (devparm && ev.type == evtype_t.ev_keydown && ev.data1 == ';') {
                 DeathMatchSpawnPlayer(0);
@@ -1871,7 +1867,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         }
 
-        if (gamestate == gamestate_t.GS_FINALE) {
+        if (gamestate == GameState.GS_FINALE) {
             if (F.Responder(ev))
                 return true;    // finale ate the event 
         }
@@ -2399,7 +2395,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     , wminfo.plyr[i].frags.length);
         }
 
-        gamestate = gamestate_t.GS_INTERMISSION;
+        gamestate = GameState.GS_INTERMISSION;
         viewactive = false;
         automapactive = false;
 
@@ -2436,7 +2432,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     }
 
     public void DoWorldDone() {
-        gamestate = gamestate_t.GS_LEVEL;
+        gamestate = GameState.GS_LEVEL;
         gamemap = wminfo.next + 1;
         DoLoadLevel();
         gameaction = gameaction_t.ga_nothing;
@@ -2603,13 +2599,13 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     }
 
-    skill_t d_skill;
+    Skill d_skill;
     int d_episode;
     int d_map;
 
     public void
     DeferedInitNew
-            (skill_t skill,
+            (Skill skill,
              int episode,
              int map) {
         d_skill = skill;
@@ -2641,7 +2637,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      */
 
     public void InitNew
-    (skill_t skill,
+    (Skill skill,
      int episode,
      int map) {
         int i;
@@ -2652,8 +2648,8 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         }
 
 
-        if (skill.ordinal() > skill_t.sk_nightmare.ordinal())
-            skill = skill_t.sk_nightmare;
+        if (skill.ordinal() > Skill.sk_nightmare.ordinal())
+            skill = Skill.sk_nightmare;
 
 
         // This was quite messy with SPECIAL and commented parts.
@@ -2683,20 +2679,20 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         RND.ClearRandom();
 
-        if (skill == skill_t.sk_nightmare || respawnparm)
+        if (skill == Skill.sk_nightmare || respawnparm)
             respawnmonsters = true;
         else
             respawnmonsters = false;
 
         // If on nightmare/fast monsters make everything MOAR pimp.
 
-        if (fastparm || (skill == skill_t.sk_nightmare && gameskill != skill_t.sk_nightmare)) {
+        if (fastparm || (skill == Skill.sk_nightmare && gameskill != Skill.sk_nightmare)) {
             for (i = statenum_t.S_SARG_RUN1.ordinal(); i <= statenum_t.S_SARG_PAIN2.ordinal(); i++)
                 states[i].tics >>= 1;
             mobjinfo[mobjtype_t.MT_BRUISERSHOT.ordinal()].speed = 20 * MAPFRACUNIT;
             mobjinfo[mobjtype_t.MT_HEADSHOT.ordinal()].speed = 20 * MAPFRACUNIT;
             mobjinfo[mobjtype_t.MT_TROOPSHOT.ordinal()].speed = 20 * MAPFRACUNIT;
-        } else if (skill != skill_t.sk_nightmare && gameskill == skill_t.sk_nightmare) {
+        } else if (skill != Skill.sk_nightmare && gameskill == Skill.sk_nightmare) {
             for (i = statenum_t.S_SARG_RUN1.ordinal(); i <= statenum_t.S_SARG_PAIN2.ordinal(); i++)
                 states[i].tics <<= 1;
             mobjinfo[mobjtype_t.MT_BRUISERSHOT.ordinal()].speed = 15 * MAPFRACUNIT;
@@ -2751,7 +2747,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         if (endgame) {             // Initiate endgame
             gameaction = gameaction_t.ga_failure;
-            gamestate = gamestate_t.GS_DEMOSCREEN;
+            gamestate = GameState.GS_DEMOSCREEN;
             M.ClearMenus();
             StartTitle();
         } else {
@@ -2846,7 +2842,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
     public void DoPlayDemo() {
 
-        skill_t skill;
+        Skill skill;
         boolean fail = false;
         int i, episode, map;
 
@@ -2969,7 +2965,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         super();
         C2JUtils.initArrayOfObjects(events, event_t.class);
         this.I = new DoomSystem();
-        gamestate = gamestate_t.GS_DEMOSCREEN;
+        gamestate = GameState.GS_DEMOSCREEN;
 
         this.RealTime = new MilliTicker();
     }
@@ -3513,7 +3509,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                 if (flags(netbuffer.checksum, NCMD_SETUP)) {
                     if (netbuffer.player != VERSION)
                         I.Error("Different DOOM versions cannot play a net game!");
-                    startskill = skill_t.values()[netbuffer.retransmitfrom & 15];
+                    startskill = Skill.values()[netbuffer.retransmitfrom & 15];
 
                     // Deathmatch
                     if (((netbuffer.retransmitfrom & 0xc0) >> 6) == 1)

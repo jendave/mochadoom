@@ -5,7 +5,7 @@ package net.sourceforge.mochadoom.defines;
  * Game mode handling - identify IWAD version
  * to handle IWAD dependend animations etc.
  */
-public enum GameMode_t {
+public enum GameMode {
     shareware,    // DOOM 1 shareware, E1, M9
     registered,   // DOOM 1 registered, E3, M27
     commercial,   // DOOM 2 retail, E1 M34

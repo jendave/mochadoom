@@ -5,7 +5,7 @@ import net.sourceforge.mochadoom.data.mobjinfo_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
@@ -2644,7 +2644,7 @@ public class ActionFunctions implements DoomStatusAware {
             mobj_t newmobj;
 
             easy ^= 1;
-            if (DS.gameskill.ordinal() <= skill_t.sk_easy.ordinal() && (easy == 0))
+            if (DS.gameskill.ordinal() <= Skill.sk_easy.ordinal() && (easy == 0))
                 return;
 
             // shoot a cube at current target
@@ -2826,7 +2826,7 @@ public class ActionFunctions implements DoomStatusAware {
             // do not attack twice in a row
             if (eval(actor.flags & MF_JUSTATTACKED)) {
                 actor.flags &= ~MF_JUSTATTACKED;
-                if (DS.gameskill != skill_t.sk_nightmare && !DS.fastparm)
+                if (DS.gameskill != Skill.sk_nightmare && !DS.fastparm)
                     A.NewChaseDir(actor);
                 return;
             }
@@ -2844,7 +2844,7 @@ public class ActionFunctions implements DoomStatusAware {
             // check for missile attack
             if (actor.info.missilestate != statenum_t.S_NULL /*!= null*/) //_D_: this caused a bug where Demon for example were disappearing
             {
-                if (DS.gameskill.ordinal() < skill_t.sk_nightmare.ordinal()
+                if (DS.gameskill.ordinal() < Skill.sk_nightmare.ordinal()
                         && !DS.fastparm && actor.movecount != 0) {
                     nomissile = true;
                 } else if (!EN.CheckMissileRange(actor))

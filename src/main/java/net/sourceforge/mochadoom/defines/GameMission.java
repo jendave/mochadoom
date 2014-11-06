@@ -3,7 +3,7 @@ package net.sourceforge.mochadoom.defines;
 /**
  * Mission packs - might be useful for TC stuff?
  */
-public enum GameMission_t {
+public enum GameMission {
     doom,     // DOOM 1
     doom2,    // DOOM 2
     pack_tnt, // TNT mission pack

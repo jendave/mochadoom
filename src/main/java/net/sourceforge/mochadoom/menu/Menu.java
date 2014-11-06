@@ -1,9 +1,9 @@
 package net.sourceforge.mochadoom.menu;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.defines.Language_t;
-import net.sourceforge.mochadoom.defines.gamestate_t;
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.GameState;
+import net.sourceforge.mochadoom.defines.Language;
+import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.English;
 import net.sourceforge.mochadoom.doom.event_t;
@@ -576,7 +576,7 @@ public class Menu extends AbstractDoomMenu {
                 return;
             }
 
-            if (DM.gamestate != gamestate_t.GS_LEVEL)
+            if (DM.gamestate != GameState.GS_LEVEL)
                 return;
 
             SetupNextMenu(SaveDef);
@@ -606,7 +606,7 @@ public class Menu extends AbstractDoomMenu {
             return;
         }
 
-        if (DM.gamestate != gamestate_t.GS_LEVEL)
+        if (DM.gamestate != GameState.GS_LEVEL)
             return;
 
         if (quickSaveSlot < 0) {
@@ -728,7 +728,7 @@ public class Menu extends AbstractDoomMenu {
             if (ch != 'y')
                 return;
 
-            DG.DeferedInitNew(skill_t.sk_nightmare, epi + 1, 1);
+            DG.DeferedInitNew(Skill.sk_nightmare, epi + 1, 1);
             ClearMenus();
         }
     }
@@ -777,7 +777,7 @@ public class Menu extends AbstractDoomMenu {
         public void invoke(int choice) {
             // We pick index 0 which is language sensitive,
             // or one at random, between 1 and maximum number.
-            if (DM.language != Language_t.english)
+            if (DM.language != Language.english)
                 endstring = endmsg[0] + "\n\n" + DOSY;
             else
                 endstring =
@@ -1765,7 +1765,7 @@ public class Menu extends AbstractDoomMenu {
                 return;
             }
 
-            DG.DeferedInitNew(skill_t.values()[choice], epi + 1, 1);
+            DG.DeferedInitNew(Skill.values()[choice], epi + 1, 1);
             ClearMenus();
         }
 

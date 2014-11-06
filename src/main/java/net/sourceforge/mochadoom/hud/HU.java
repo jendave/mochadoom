@@ -22,8 +22,8 @@ package net.sourceforge.mochadoom.hud;
 // -----------------------------------------------------------------------------
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.defines.GameMode_t;
-import net.sourceforge.mochadoom.defines.Language_t;
+import net.sourceforge.mochadoom.defines.GameMode;
+import net.sourceforge.mochadoom.defines.Language;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.event_t;
@@ -433,7 +433,7 @@ public class HU implements DoomStatusAware, IVideoScaleAware, IHeadsUp {
         int j;
         String buffer;
 
-        if (DM.language == Language_t.french)
+        if (DM.language == Language.french)
             shiftxform = french_shiftxform;
         else
             shiftxform = english_shiftxform;
@@ -475,7 +475,7 @@ public class HU implements DoomStatusAware, IVideoScaleAware, IHeadsUp {
         // (typically once per level). They need to be aware of game progress,
         // and episode numbers <1 will cause it to bomb.
         // MAES: hack to handle Betray in XBLA 31/5/2011
-        if ((DM.gamemap > 32) && (DM.getGameMode() == GameMode_t.pack_xbla)) {
+        if ((DM.gamemap > 32) && (DM.getGameMode() == GameMode.pack_xbla)) {
             this.HU_TITLE = mapnames[(DM.gameepisode - 1) * 9 + DM.gamemap - 2];
 
 
@@ -762,7 +762,7 @@ public class HU implements DoomStatusAware, IVideoScaleAware, IHeadsUp {
                 plr.message = lastmessage.toString();
                 eatkey = true;
             } else {
-                if (DM.language == Language_t.french)
+                if (DM.language == Language.french)
                     c = ForeignTranslation(c);
                 if (shiftdown || (c >= 'a' && c <= 'z'))
                     c = shiftxform[c];

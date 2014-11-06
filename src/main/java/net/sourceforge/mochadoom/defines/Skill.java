@@ -1,7 +1,7 @@
 package net.sourceforge.mochadoom.defines;
 
 
-public enum skill_t {
+public enum Skill {
     sk_baby,
     sk_easy,
     sk_medium,

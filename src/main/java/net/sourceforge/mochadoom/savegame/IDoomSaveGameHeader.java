@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.savegame;
 
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.Skill;
 
 
 /**
@@ -17,9 +17,9 @@ public interface IDoomSaveGameHeader {
 
     void setName(String name);
 
-    skill_t getGameskill();
+    Skill getGameskill();
 
-    void setGameskill(skill_t gameskill);
+    void setGameskill(Skill gameskill);
 
     String getVersion();
 

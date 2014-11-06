@@ -1,7 +1,7 @@
 package net.sourceforge.mochadoom.tests;
 
-import net.sourceforge.mochadoom.defines.GameMission_t;
-import net.sourceforge.mochadoom.defines.skill_t;
+import net.sourceforge.mochadoom.defines.GameMission;
+import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.gamelogic.LevelLoader;
@@ -30,8 +30,8 @@ public class LevelLoaderTester {
     DoomStatus DS = new DoomMain.Indexed();
     DS.gameepisode=1;
     DS.gamemap=1;
-    DS.gamemission=GameMission_t.doom;
-    //DS.gamemode=GameMode_t.shareware;
+    DS.gamemission= GameMission.doom;
+    //DS.gamemode=GameMode.shareware;
     IDoomSound S=new DummySoundDriver();            
     DS.S=S;
     DS.W=W;
@@ -46,7 +46,7 @@ public class LevelLoaderTester {
     //HU hu=new HU(DS);
     //hu.Init();
     
-    LL.SetupLevel(1, 1, 0, skill_t.sk_hard);
+    LL.SetupLevel(1, 1, 0, Skill.sk_hard);
     
     
     
