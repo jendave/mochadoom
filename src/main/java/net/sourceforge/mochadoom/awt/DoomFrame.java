@@ -298,6 +298,12 @@ public abstract class DoomFrame<V> extends JFrame implements DoomVideoInterface<
 
         // JFrame's size is auto-set here.
         this.pack();
+        // FIXME This is a workaround for a black screen in the window.
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println("Sleep");
+        }
         this.setVisible(true);
         this.setResizable(false);
         this.setTitle(Strings.MOCHA_DOOM_TITLE);
