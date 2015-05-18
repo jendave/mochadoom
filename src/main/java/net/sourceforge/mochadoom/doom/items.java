@@ -42,7 +42,7 @@ package net.sourceforge.mochadoom.doom;
 //-----------------------------------------------------------------------------
 
 import net.sourceforge.mochadoom.defines.ammotype_t;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 
 public class items {
 
@@ -51,82 +51,82 @@ public class items {
                     new weaponinfo_t(
                             // fist
                             ammotype_t.am_noammo,
-                            statenum_t.S_PUNCHUP,
-                            statenum_t.S_PUNCHDOWN,
-                            statenum_t.S_PUNCH,
-                            statenum_t.S_PUNCH1,
-                            statenum_t.S_NULL
+                            StateNum.S_PUNCHUP,
+                            StateNum.S_PUNCHDOWN,
+                            StateNum.S_PUNCH,
+                            StateNum.S_PUNCH1,
+                            StateNum.S_NULL
                     ),
                     new weaponinfo_t(
                             // pistol
                             ammotype_t.am_clip,
-                            statenum_t.S_PISTOLUP,
-                            statenum_t.S_PISTOLDOWN,
-                            statenum_t.S_PISTOL,
-                            statenum_t.S_PISTOL1,
-                            statenum_t.S_PISTOLFLASH
+                            StateNum.S_PISTOLUP,
+                            StateNum.S_PISTOLDOWN,
+                            StateNum.S_PISTOL,
+                            StateNum.S_PISTOL1,
+                            StateNum.S_PISTOLFLASH
                     ), new weaponinfo_t(
                     // shotgun
                     ammotype_t.am_shell,
-                    statenum_t.S_SGUNUP,
-                    statenum_t.S_SGUNDOWN,
-                    statenum_t.S_SGUN,
-                    statenum_t.S_SGUN1,
-                    statenum_t.S_SGUNFLASH1
+                    StateNum.S_SGUNUP,
+                    StateNum.S_SGUNDOWN,
+                    StateNum.S_SGUN,
+                    StateNum.S_SGUN1,
+                    StateNum.S_SGUNFLASH1
             ),
                     new weaponinfo_t(
                             // chaingun
                             ammotype_t.am_clip,
-                            statenum_t.S_CHAINUP,
-                            statenum_t.S_CHAINDOWN,
-                            statenum_t.S_CHAIN,
-                            statenum_t.S_CHAIN1,
-                            statenum_t.S_CHAINFLASH1
+                            StateNum.S_CHAINUP,
+                            StateNum.S_CHAINDOWN,
+                            StateNum.S_CHAIN,
+                            StateNum.S_CHAIN1,
+                            StateNum.S_CHAINFLASH1
                     ),
                     new weaponinfo_t(
                             // missile launcher
                             ammotype_t.am_misl,
-                            statenum_t.S_MISSILEUP,
-                            statenum_t.S_MISSILEDOWN,
-                            statenum_t.S_MISSILE,
-                            statenum_t.S_MISSILE1,
-                            statenum_t.S_MISSILEFLASH1
+                            StateNum.S_MISSILEUP,
+                            StateNum.S_MISSILEDOWN,
+                            StateNum.S_MISSILE,
+                            StateNum.S_MISSILE1,
+                            StateNum.S_MISSILEFLASH1
                     ),
                     new weaponinfo_t(
                             // plasma rifle
                             ammotype_t.am_cell,
-                            statenum_t.S_PLASMAUP,
-                            statenum_t.S_PLASMADOWN,
-                            statenum_t.S_PLASMA,
-                            statenum_t.S_PLASMA1,
-                            statenum_t.S_PLASMAFLASH1
+                            StateNum.S_PLASMAUP,
+                            StateNum.S_PLASMADOWN,
+                            StateNum.S_PLASMA,
+                            StateNum.S_PLASMA1,
+                            StateNum.S_PLASMAFLASH1
                     ),
                     new weaponinfo_t(
                             // bfg 9000
                             ammotype_t.am_cell,
-                            statenum_t.S_BFGUP,
-                            statenum_t.S_BFGDOWN,
-                            statenum_t.S_BFG,
-                            statenum_t.S_BFG1,
-                            statenum_t.S_BFGFLASH1
+                            StateNum.S_BFGUP,
+                            StateNum.S_BFGDOWN,
+                            StateNum.S_BFG,
+                            StateNum.S_BFG1,
+                            StateNum.S_BFGFLASH1
                     ),
                     new weaponinfo_t(
                             // chainsaw
                             ammotype_t.am_noammo,
-                            statenum_t.S_SAWUP,
-                            statenum_t.S_SAWDOWN,
-                            statenum_t.S_SAW,
-                            statenum_t.S_SAW1,
-                            statenum_t.S_NULL
+                            StateNum.S_SAWUP,
+                            StateNum.S_SAWDOWN,
+                            StateNum.S_SAW,
+                            StateNum.S_SAW1,
+                            StateNum.S_NULL
                     ),
                     new weaponinfo_t(
                             // super shotgun
                             ammotype_t.am_shell,
-                            statenum_t.S_DSGUNUP,
-                            statenum_t.S_DSGUNDOWN,
-                            statenum_t.S_DSGUN,
-                            statenum_t.S_DSGUN1,
-                            statenum_t.S_DSGUNFLASH1
+                            StateNum.S_DSGUNUP,
+                            StateNum.S_DSGUNDOWN,
+                            StateNum.S_DSGUN,
+                            StateNum.S_DSGUN1,
+                            StateNum.S_DSGUNFLASH1
                     )
             };
 }

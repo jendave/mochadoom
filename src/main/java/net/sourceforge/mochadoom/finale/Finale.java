@@ -5,7 +5,7 @@ import net.sourceforge.mochadoom.data.sounds.musicenum_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.GameState;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
 import net.sourceforge.mochadoom.doom.event_t;
@@ -402,13 +402,13 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
     // F_CastTicker
     //
     public void CastTicker() {
-        statenum_t st;
+        StateNum st;
         sfxenum_t sfx;
 
         if (--casttics > 0)
             return; // not time to change state yet
 
-        if (caststate.tics == -1 || caststate.nextstate == statenum_t.S_NULL
+        if (caststate.tics == -1 || caststate.nextstate == StateNum.S_NULL
                 || caststate.nextstate == null) {
             // switch from deathstate to next monster
             castnum++;
@@ -424,7 +424,7 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
             castframes = 0;
         } else {
             // just advance to next state in animation
-            if (caststate == states[statenum_t.S_PLAY_ATK1.ordinal()]) {
+            if (caststate == states[StateNum.S_PLAY_ATK1.ordinal()]) {
                 stopattack(); // Oh, gross hack!
                 afterstopattack();
                 return; // bye ...
@@ -515,7 +515,7 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
                 caststate = states[mobjinfo[castorder[castnum].type.ordinal()].missilestate
                         .ordinal()];
             castonmelee ^= 1;
-            if (caststate == states[statenum_t.S_NULL.ordinal()]) {
+            if (caststate == states[StateNum.S_NULL.ordinal()]) {
                 if (castonmelee != 0)
                     caststate = states[mobjinfo[castorder[castnum].type
                             .ordinal()].meleestate.ordinal()];

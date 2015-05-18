@@ -5,8 +5,8 @@ import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.defines.ammotype_t;
-import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.system.DoomStatusAware;
 import net.sourceforge.mochadoom.system.IDoomSystem;
 import java.io.DataInputStream;
@@ -345,8 +345,8 @@ public class player_t /*extends mobj_t */
             Thrust((mo.angle - ANG90) & BITS32, cmd.sidemove * PLAYERTHRUST);
 
         if ((cmd.forwardmove != 0 || cmd.sidemove != 0)
-                && mo.state == states[statenum_t.S_PLAY.ordinal()]) {
-            this.mo.SetMobjState(statenum_t.S_PLAY_RUN1);
+                && mo.state == states[StateNum.S_PLAY.ordinal()]) {
+            this.mo.SetMobjState(StateNum.S_PLAY_RUN1);
         }
 
         // Freelook code ripped off Heretic. Sieg heil!
@@ -899,7 +899,7 @@ public class player_t /*extends mobj_t */
     public void
     SetPsprite
     (int position,
-     statenum_t newstate) {
+     StateNum newstate) {
         pspdef_t psp;
         state_t state;
 
@@ -987,7 +987,7 @@ public class player_t /*extends mobj_t */
     SetPsprite
     ( player_t  player,
       int       position,
-      statenum_t    newstate ) 
+      StateNum    newstate )
     {
         pspdef_t    psp;
         state_t state;
@@ -1065,7 +1065,7 @@ public class player_t /*extends mobj_t */
     // Uses player
     //
     public void BringUpWeapon() {
-        statenum_t newstate = statenum_t.S_NULL;
+        StateNum newstate = StateNum.S_NULL;
 
         if (pendingweapon == weapontype_t.wp_nochange)
             pendingweapon = readyweapon;

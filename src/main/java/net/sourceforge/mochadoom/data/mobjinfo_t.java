@@ -1,7 +1,7 @@
 package net.sourceforge.mochadoom.data;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 
 public class mobjinfo_t {
 
@@ -37,15 +37,15 @@ public class mobjinfo_t {
         this.flags = flags;
         this.raisestate = raisestate;
     }*/
-    public mobjinfo_t(int doomednum, statenum_t spawnstate, int spawnhealth,
-                      statenum_t seestate, sfxenum_t seesound, int reactiontime,
-                      sfxenum_t attacksound, statenum_t painstate,
+    public mobjinfo_t(int doomednum, StateNum spawnstate, int spawnhealth,
+                      StateNum seestate, sfxenum_t seesound, int reactiontime,
+                      sfxenum_t attacksound, StateNum painstate,
                       int painchance, sfxenum_t painsound,
-                      statenum_t meleestate, statenum_t missilestate,
-                      statenum_t deathstate, statenum_t xdeathstate,
+                      StateNum meleestate, StateNum missilestate,
+                      StateNum deathstate, StateNum xdeathstate,
                       sfxenum_t deathsound, int speed, int radius, int height,
                       int mass, int damage, sfxenum_t activesound, int flags,
-                      statenum_t raisestate) {
+                      StateNum raisestate) {
         super();
         this.doomednum = doomednum;
         this.spawnstate = spawnstate;
@@ -73,19 +73,19 @@ public class mobjinfo_t {
     }
 
     public int doomednum;
-    public statenum_t spawnstate;
+    public StateNum spawnstate;
     public int spawnhealth;
-    public statenum_t seestate;
+    public StateNum seestate;
     public sfxenum_t seesound;
     public int reactiontime;
     public sfxenum_t attacksound;
-    public statenum_t painstate;
+    public StateNum painstate;
     public int painchance;
     public sfxenum_t painsound;
-    public statenum_t meleestate;
-    public statenum_t missilestate;
-    public statenum_t deathstate;
-    public statenum_t xdeathstate;
+    public StateNum meleestate;
+    public StateNum missilestate;
+    public StateNum deathstate;
+    public StateNum xdeathstate;
     public sfxenum_t deathsound;
     public int speed;
     public int radius;
@@ -94,5 +94,5 @@ public class mobjinfo_t {
     public int damage;
     public sfxenum_t activesound;
     public int flags;
-    public statenum_t raisestate;
+    public StateNum raisestate;
 }

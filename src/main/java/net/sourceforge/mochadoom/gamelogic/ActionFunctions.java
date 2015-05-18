@@ -6,7 +6,7 @@ import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.Skill;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
 import net.sourceforge.mochadoom.doom.player_t;
@@ -1409,7 +1409,7 @@ public class ActionFunctions implements DoomStatusAware {
                             A_FaceTarget(actor);
                             actor.target = temp;
 
-                            actor.SetMobjState(statenum_t.S_VILE_HEAL1);
+                            actor.SetMobjState(StateNum.S_VILE_HEAL1);
                             S.StartSound(A.VileCheck.corpsehit, sfxenum_t.sfx_slop);
                             info = A.VileCheck.corpsehit.info;
 
@@ -1467,7 +1467,7 @@ public class ActionFunctions implements DoomStatusAware {
         public void invoke(player_t player, pspdef_t psp) {
             S.StartSound(player.mo, sfxenum_t.sfx_pistol);
 
-            player.mo.SetMobjState(statenum_t.S_PLAY_ATK2);
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
 
             player.SetPsprite(
@@ -1487,7 +1487,7 @@ public class ActionFunctions implements DoomStatusAware {
             int i;
 
             S.StartSound(player.mo, sfxenum_t.sfx_shotgn);
-            player.mo.SetMobjState(statenum_t.S_PLAY_ATK2);
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
 
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
 
@@ -1515,7 +1515,7 @@ public class ActionFunctions implements DoomStatusAware {
 
 
             S.StartSound(player.mo, sfxenum_t.sfx_dshtgn);
-            player.mo.SetMobjState(statenum_t.S_PLAY_ATK2);
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
 
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] -= 2;
 
@@ -1860,17 +1860,17 @@ public class ActionFunctions implements DoomStatusAware {
 
     class A_WeaponReady implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            statenum_t newstate;
+            StateNum newstate;
             int angle;
 
             // get out of attack state
-            if (player.mo.state == states[statenum_t.S_PLAY_ATK1.ordinal()]
-                    || player.mo.state == states[statenum_t.S_PLAY_ATK2.ordinal()]) {
-                player.mo.SetMobjState(statenum_t.S_PLAY);
+            if (player.mo.state == states[StateNum.S_PLAY_ATK1.ordinal()]
+                    || player.mo.state == states[StateNum.S_PLAY_ATK2.ordinal()]) {
+                player.mo.SetMobjState(StateNum.S_PLAY);
             }
 
             if (player.readyweapon == weapontype_t.wp_chainsaw
-                    && psp.state == states[statenum_t.S_SAW.ordinal()]) {
+                    && psp.state == states[StateNum.S_SAW.ordinal()]) {
                 S.StartSound(player.mo, sfxenum_t.sfx_sawidl);
             }
 
@@ -1910,7 +1910,7 @@ public class ActionFunctions implements DoomStatusAware {
     //
     class A_Raise implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            statenum_t newstate;
+            StateNum newstate;
 
             //System.out.println("Trying to raise weapon");      
             //System.out.println(player.readyweapon + " height: "+psp.sy);
@@ -1961,7 +1961,7 @@ public class ActionFunctions implements DoomStatusAware {
     //
     class A_GunFlash implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            player.mo.SetMobjState(statenum_t.S_PLAY_ATK2);
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
             player.SetPsprite(ps_flash, weaponinfo[player.readyweapon.ordinal()].flashstate);
         }
     }
@@ -2094,14 +2094,14 @@ public class ActionFunctions implements DoomStatusAware {
             if (!eval(player.ammo[weaponinfo[readyweap].ammo.ordinal()]))
                 return;
 
-            player.mo.SetMobjState(statenum_t.S_PLAY_ATK2);
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
             player.ammo[weaponinfo[readyweap].ammo.ordinal()]--;
 
             // MAES: Code to alternate between two different gun flashes
             // needed a clear rewrite, as it was way too messy.
             // We know that the flash states are a certain amount away from 
             // the firing states. This amount is two frames.
-            player.SetPsprite(ps_flash, statenum_t.values()[flashstate + current_state - statenum_t.S_CHAIN1.ordinal()]
+            player.SetPsprite(ps_flash, StateNum.values()[flashstate + current_state - StateNum.S_CHAIN1.ordinal()]
             );
 
             A.P_BulletSlope(player.mo);
@@ -2520,7 +2520,7 @@ public class ActionFunctions implements DoomStatusAware {
             // so change the weapon and start raising it
             if (!eval(player.health[0])) {
                 // Player is dead, so keep the weapon off screen.
-                player.SetPsprite(ps_weapon, statenum_t.S_NULL);
+                player.SetPsprite(ps_weapon, StateNum.S_NULL);
                 return;
             }
 
@@ -2596,7 +2596,7 @@ public class ActionFunctions implements DoomStatusAware {
                 th = A.SpawnMobj(x, y, z, mobjtype_t.MT_ROCKET);
                 th.momz = RND.P_Random() * 512;
 
-                th.SetMobjState(statenum_t.S_BRAINEXPLODE1);
+                th.SetMobjState(StateNum.S_BRAINEXPLODE1);
 
                 th.tics -= RND.P_Random() & 7;
                 if (th.tics < 1)
@@ -2621,7 +2621,7 @@ public class ActionFunctions implements DoomStatusAware {
             th = A.SpawnMobj(x, y, z, mobjtype_t.MT_ROCKET);
             th.momz = RND.P_Random() * 512;
 
-            th.SetMobjState(statenum_t.S_BRAINEXPLODE1);
+            th.SetMobjState(StateNum.S_BRAINEXPLODE1);
 
             th.tics -= RND.P_Random() & 7;
             if (th.tics < 1)
@@ -2832,7 +2832,7 @@ public class ActionFunctions implements DoomStatusAware {
             }
 
             // check for melee attack
-            if (actor.info.meleestate != statenum_t.S_NULL /*null*/
+            if (actor.info.meleestate != StateNum.S_NULL /*null*/
                     && EN.CheckMeleeRange(actor)) {
                 if (actor.info.attacksound != null) {
                     S.StartSound(actor, actor.info.attacksound);
@@ -2842,7 +2842,7 @@ public class ActionFunctions implements DoomStatusAware {
             }
 
             // check for missile attack
-            if (actor.info.missilestate != statenum_t.S_NULL /*!= null*/) //_D_: this caused a bug where Demon for example were disappearing
+            if (actor.info.missilestate != StateNum.S_NULL /*!= null*/) //_D_: this caused a bug where Demon for example were disappearing
             {
                 if (DS.gameskill.ordinal() < Skill.sk_nightmare.ordinal()
                         && !DS.fastparm && actor.movecount != 0) {

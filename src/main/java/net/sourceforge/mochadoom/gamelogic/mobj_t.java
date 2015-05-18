@@ -7,7 +7,7 @@ import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.spritenum_t;
 import net.sourceforge.mochadoom.data.state_t;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.player_t;
 import net.sourceforge.mochadoom.doom.thinker_t;
 import java.io.DataInputStream;
@@ -306,11 +306,11 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
      * P_SetMobjState Returns true if the mobj is still present.
      */
 
-    public boolean SetMobjState(statenum_t state) {
+    public boolean SetMobjState(StateNum state) {
         state_t st;
 
         do {
-            if (state == statenum_t.S_NULL) {
+            if (state == StateNum.S_NULL) {
                 state = null;
                 // MAES/_D_: uncommented this as it should work by now (?).
                 A.RemoveMobj(this);

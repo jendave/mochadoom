@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.defines;
 
-public enum statenum_t {
+public enum StateNum {
     S_NULL,
     S_LIGHTDONE,
     S_PUNCH,

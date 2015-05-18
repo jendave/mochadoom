@@ -2687,13 +2687,13 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         // If on nightmare/fast monsters make everything MOAR pimp.
 
         if (fastparm || (skill == Skill.sk_nightmare && gameskill != Skill.sk_nightmare)) {
-            for (i = statenum_t.S_SARG_RUN1.ordinal(); i <= statenum_t.S_SARG_PAIN2.ordinal(); i++)
+            for (i = StateNum.S_SARG_RUN1.ordinal(); i <= StateNum.S_SARG_PAIN2.ordinal(); i++)
                 states[i].tics >>= 1;
             mobjinfo[mobjtype_t.MT_BRUISERSHOT.ordinal()].speed = 20 * MAPFRACUNIT;
             mobjinfo[mobjtype_t.MT_HEADSHOT.ordinal()].speed = 20 * MAPFRACUNIT;
             mobjinfo[mobjtype_t.MT_TROOPSHOT.ordinal()].speed = 20 * MAPFRACUNIT;
         } else if (skill != Skill.sk_nightmare && gameskill == Skill.sk_nightmare) {
-            for (i = statenum_t.S_SARG_RUN1.ordinal(); i <= statenum_t.S_SARG_PAIN2.ordinal(); i++)
+            for (i = StateNum.S_SARG_RUN1.ordinal(); i <= StateNum.S_SARG_PAIN2.ordinal(); i++)
                 states[i].tics <<= 1;
             mobjinfo[mobjtype_t.MT_BRUISERSHOT.ordinal()].speed = 15 * MAPFRACUNIT;
             mobjinfo[mobjtype_t.MT_HEADSHOT.ordinal()].speed = 10 * MAPFRACUNIT;

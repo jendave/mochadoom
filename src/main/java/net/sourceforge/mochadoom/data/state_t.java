@@ -1,6 +1,6 @@
 package net.sourceforge.mochadoom.data;
 
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.think_t;
 import net.sourceforge.mochadoom.gamelogic.ActionType1;
 import net.sourceforge.mochadoom.gamelogic.ActionType2;
@@ -15,7 +15,7 @@ public class state_t {
     }
 
     public state_t(spritenum_t sprite, int frame, int tics, think_t action,
-                   statenum_t nextstate, int misc1, int misc2) {
+                   StateNum nextstate, int misc1, int misc2) {
         this.sprite = sprite;
         this.frame = frame;
         this.tics = tics * TIC_MUL;
@@ -50,7 +50,7 @@ public class state_t {
     public ActionType2 acp2;
     public ActionTypeSS acpss;
 
-    public statenum_t nextstate;
+    public StateNum nextstate;
     public int misc1, misc2;
     /**
      * relative index in state array. Needed sometimes.
@@ -79,7 +79,7 @@ public class state_t {
        this.frame = f.readLEInt();
        this.tics = f.readLong();
        this.action = think_t.values()[f.readInt()];
-       this.nextstate = statenum_t.values()[f.readInt()];
+       this.nextstate = StateNum.values()[f.readInt()];
        this.misc1 = f.readInt();
        this.misc2 = f.readInt();
 

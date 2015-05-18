@@ -9,7 +9,7 @@ import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.defines.SlopeType;
-import net.sourceforge.mochadoom.defines.statenum_t;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.player_t;
 import net.sourceforge.mochadoom.doom.think_t;
@@ -1819,9 +1819,9 @@ public class Actions extends UnifiedGameMap {
             th.tics = 1;
 
         if (damage <= 12 && damage >= 9)
-            th.SetMobjState(statenum_t.S_BLOOD2);
+            th.SetMobjState(StateNum.S_BLOOD2);
         else if (damage < 9)
-            th.SetMobjState(statenum_t.S_BLOOD3);
+            th.SetMobjState(StateNum.S_BLOOD3);
     }
 
     /**
@@ -1850,7 +1850,7 @@ public class Actions extends UnifiedGameMap {
 
 // don't make punches spark on the wall
         if (attackrange == MELEERANGE)
-            th.SetMobjState(statenum_t.S_PUFF3);
+            th.SetMobjState(StateNum.S_PUFF3);
     }
 
     /**
@@ -2087,7 +2087,7 @@ public class Actions extends UnifiedGameMap {
             target.target = source;
             target.threshold = BASETHRESHOLD;
             if (target.state == states[target.info.spawnstate.ordinal()]
-                    && target.info.seestate != statenum_t.S_NULL)
+                    && target.info.seestate != StateNum.S_NULL)
                 target.SetMobjState(target.info.seestate);
         }
 
@@ -2151,7 +2151,7 @@ public class Actions extends UnifiedGameMap {
         }
 
         if (target.health < -target.info.spawnhealth
-                && target.info.xdeathstate != statenum_t.S_NULL) {
+                && target.info.xdeathstate != StateNum.S_NULL) {
             target.SetMobjState(target.info.xdeathstate);
         } else
             target.SetMobjState(target.info.deathstate);
@@ -3658,8 +3658,8 @@ public class Actions extends UnifiedGameMap {
             // if in a walking frame, stop moving
             // TODO: we need a way to get state indexed inside of states[], to sim pointer arithmetic.
             // FIX: added an "id" field.
-            if (player != null && (int) (player.mo.state.id - statenum_t.S_PLAY_RUN1.ordinal()) < 4)
-                player.mo.SetMobjState(statenum_t.S_PLAY);
+            if (player != null && (int) (player.mo.state.id - StateNum.S_PLAY_RUN1.ordinal()) < 4)
+                player.mo.SetMobjState(StateNum.S_PLAY);
 
             mo.momx = 0;
             mo.momy = 0;
@@ -5033,7 +5033,7 @@ public class Actions extends UnifiedGameMap {
             if (thing.tics != -1)
                 return true;    // not lying still yet
 
-            if (thing.info.raisestate == statenum_t.S_NULL)
+            if (thing.info.raisestate == StateNum.S_NULL)
                 return true;    // monster doesn't have a raise state
 
             maxdist = thing.info.radius + mobjinfo[mobjtype_t.MT_VILE.ordinal()].radius;
@@ -5072,7 +5072,7 @@ public class Actions extends UnifiedGameMap {
 
             // crunch bodies to giblets
             if (thing.health <= 0) {
-                thing.SetMobjState(statenum_t.S_GIBS);
+                thing.SetMobjState(StateNum.S_GIBS);
 
                 thing.flags &= ~MF_SOLID;
                 thing.height = 0;

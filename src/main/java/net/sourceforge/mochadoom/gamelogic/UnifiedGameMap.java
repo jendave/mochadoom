@@ -7,8 +7,8 @@ import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.Card;
+import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.defines.ammotype_t;
-import net.sourceforge.mochadoom.defines.statenum_t;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
@@ -728,12 +728,12 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
          * P_FireWeapon. Originally in pspr
          */
         public void FireWeapon(player_t player) {
-            statenum_t newstate;
+            StateNum newstate;
 
             if (!player.CheckAmmo())
                 return;
 
-            player.mo.SetMobjState(statenum_t.S_PLAY_ATK1);
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK1);
             newstate = weaponinfo[player.readyweapon.ordinal()].atkstate;
             player.SetPsprite(player_t.ps_weapon, newstate);
             NoiseAlert(player.mo, player.mo);
@@ -1775,11 +1775,11 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
     // Returns true if the mobj is still present.
     //
 
-    public boolean SetMobjState(mobj_t mobj, statenum_t state) {
+    public boolean SetMobjState(mobj_t mobj, StateNum state) {
         state_t st;
 
         do {
-            if (state == statenum_t.S_NULL) {
+            if (state == StateNum.S_NULL) {
                 mobj.state = null;
                 RemoveMobj(mobj);
                 return false;
