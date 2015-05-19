@@ -12,9 +12,9 @@ import net.sourceforge.mochadoom.wad.CacheableDoomObject;
  * segs_t, has fixed_t members.
  */
 
-public class mapseg_v4_t implements CacheableDoomObject {
+public class MapSegV4 implements CacheableDoomObject {
 
-    public mapseg_v4_t() {
+    public MapSegV4() {
 
     }
 

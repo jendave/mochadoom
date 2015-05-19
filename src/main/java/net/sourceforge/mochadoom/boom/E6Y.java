@@ -239,7 +239,7 @@ typedef struct prboom_comp_s
   unsigned int maxver;
   dboolean state;
   const char *cmd;
-} prboom_comp_t;
+} PrboomComp;
 
 enum
 {
@@ -269,7 +269,7 @@ enum
   PC_MAX
 };
 
-extern prboom_comp_t prboom_comp[];
+extern PrboomComp prboom_comp[];
 
 int StepwiseSum(int value, int direction, int step, int minval, int maxval, int defval);
 

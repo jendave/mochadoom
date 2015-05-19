@@ -1,13 +1,13 @@
 package net.sourceforge.mochadoom.gamelogic;
 
 import net.sourceforge.mochadoom.boom.DeepBSPNodesV4;
-import net.sourceforge.mochadoom.boom.mapglvertex_t;
-import net.sourceforge.mochadoom.boom.mapnode_v4_t;
-import net.sourceforge.mochadoom.boom.mapnode_znod_t;
-import net.sourceforge.mochadoom.boom.mapseg_v4_t;
-import net.sourceforge.mochadoom.boom.mapseg_znod_t;
-import net.sourceforge.mochadoom.boom.mapsubsector_v4_t;
-import net.sourceforge.mochadoom.boom.mapsubsector_znod_t;
+import net.sourceforge.mochadoom.boom.MapGlVertex;
+import net.sourceforge.mochadoom.boom.MapNodeV4;
+import net.sourceforge.mochadoom.boom.MapNodeZnod;
+import net.sourceforge.mochadoom.boom.MapSegV4;
+import net.sourceforge.mochadoom.boom.MapSegZnod;
+import net.sourceforge.mochadoom.boom.MapSubsectorV4;
+import net.sourceforge.mochadoom.boom.MapSubsectorZnod;
 import net.sourceforge.mochadoom.data.Limits;
 import net.sourceforge.mochadoom.data.maplinedef_t;
 import net.sourceforge.mochadoom.data.mapnode_t;
@@ -378,14 +378,14 @@ public class BoomLevelLoader
                 // of the gl lump.
                 numvertexes +=
                         (W.LumpLength(gllump) - GL_VERT_OFFSET)
-                                / mapglvertex_t.sizeOf();
+                                / MapGlVertex.sizeOf();
 
                 // Vertexes size accomodates both normal and GL nodes.
                 vertexes =
                         malloc_IfSameLevel(vertexes, numvertexes, vertex_t.class);
 
-                final mapglvertex_t[] mgl =
-                        C2JUtils.createArrayOfObjects(mapglvertex_t.class,
+                final MapGlVertex[] mgl =
+                        C2JUtils.createArrayOfObjects(MapGlVertex.class,
                                 numvertexes - firstglvertex);
 
                 // Get lump and skip first 4 bytes
@@ -619,18 +619,18 @@ public class BoomLevelLoader
 
     private void P_LoadSegs_V4(int lump) {
         int i;
-        mapseg_v4_t[] data;
+        MapSegV4[] data;
 
-        numsegs = W.LumpLength(lump) / mapseg_v4_t.sizeOf();
+        numsegs = W.LumpLength(lump) / MapSegV4.sizeOf();
         segs = (seg_t[]) calloc_IfSameLevel(segs, numsegs, seg_t.class);
-        data = W.CacheLumpNumIntoArray(lump, numsegs, mapseg_v4_t.class);
+        data = W.CacheLumpNumIntoArray(lump, numsegs, MapSegV4.class);
 
         if ((data == null) || (numsegs == 0))
             I.Error("P_LoadSegs_V4: no segs in level");
 
         for (i = 0; i < numsegs; i++) {
             seg_t li = segs[i];
-            final mapseg_v4_t ml = data[i];
+            final MapSegV4 ml = data[i];
             int v1, v2;
 
             int side, linedef;
@@ -806,15 +806,15 @@ public class BoomLevelLoader
          * cph 2006/07/29 - make data a final mapsubsector_t *, so the loop
          * below is simpler & gives no finalness warnings
          */
-        final mapsubsector_v4_t[] data;
+        final MapSubsectorV4[] data;
         int i;
 
-        numsubsectors = W.LumpLength(lump) / mapsubsector_v4_t.sizeOf();
+        numsubsectors = W.LumpLength(lump) / MapSubsectorV4.sizeOf();
         subsectors =
                 calloc_IfSameLevel(subsectors, numsubsectors, subsector_t.class);
         data =
                 W.CacheLumpNumIntoArray(lump, numsubsectors,
-                        mapsubsector_v4_t.class);
+                        MapSubsectorV4.class);
 
         if ((data == null) || (numsubsectors == 0))
             I.Error("P_LoadSubsectors_V4: no subsectors in level");
@@ -963,7 +963,7 @@ public class BoomLevelLoader
         final DeepBSPNodesV4 data; // cph - final*
         int i;
 
-        numnodes = (W.LumpLength(lump) - 8) / mapnode_v4_t.sizeOf();
+        numnodes = (W.LumpLength(lump) - 8) / MapNodeV4.sizeOf();
         nodes = (node_t[]) malloc_IfSameLevel(nodes, numnodes, node_t.class);
         data = (DeepBSPNodesV4) W.CacheLumpNum(lump, 0, DeepBSPNodesV4.class); // cph
         // -
@@ -983,7 +983,7 @@ public class BoomLevelLoader
 
         for (i = 0; i < numnodes; i++) {
             node_t no = nodes[i];
-            final mapnode_v4_t mn = data.getNodes()[i];
+            final MapNodeV4 mn = data.getNodes()[i];
             int j;
 
             no.x = mn.x << FRACBITS;
@@ -1008,7 +1008,7 @@ public class BoomLevelLoader
     private void P_LoadZSegs(ByteBuffer data) throws IOException {
         int i;
 
-        final mapseg_znod_t nodes[] = C2JUtils.createArrayOfObjects(mapseg_znod_t.class, numsegs);
+        final MapSegZnod nodes[] = C2JUtils.createArrayOfObjects(MapSegZnod.class, numsegs);
         CacheableDoomObjectContainer.unpack(data, nodes);
 
         for (i = 0; i < numsegs; i++) {
@@ -1017,7 +1017,7 @@ public class BoomLevelLoader
             int linedef;
             char side;
             seg_t li = segs[i];
-            final mapseg_znod_t ml = nodes[i];
+            final MapSegZnod ml = nodes[i];
 
             v1 = ml.v1;
             v2 = ml.v2;
@@ -1172,8 +1172,8 @@ public class BoomLevelLoader
             I.Error("P_LoadZNodes: no subsectors in level");
         subsectors = calloc_IfSameLevel(subsectors, numsubsectors, subsector_t.class);
 
-        len = CheckZNodesOverflow(len, numSubs * mapsubsector_znod_t.sizeOf());
-        final mapsubsector_znod_t mseg = new mapsubsector_znod_t();
+        len = CheckZNodesOverflow(len, numSubs * MapSubsectorZnod.sizeOf());
+        final MapSubsectorZnod mseg = new MapSubsectorZnod();
         for (i = currSeg = 0; i < numSubs; i++) {
             mseg.unpack(data);
 
@@ -1196,7 +1196,7 @@ public class BoomLevelLoader
         segs = calloc_IfSameLevel(segs, numsegs, seg_t.class);
 
         if (glnodes == 0) {
-            len = CheckZNodesOverflow(len, numsegs * mapseg_znod_t.sizeOf());
+            len = CheckZNodesOverflow(len, numsegs * MapSegZnod.sizeOf());
             P_LoadZSegs(data);
         } else {
             //P_LoadGLZSegs (data, glnodes);
@@ -1210,15 +1210,15 @@ public class BoomLevelLoader
         numnodes = numNodes;
         nodes = calloc_IfSameLevel(nodes, numNodes, node_t.class);
 
-        len = CheckZNodesOverflow(len, numNodes * mapnode_znod_t.sizeOf());
+        len = CheckZNodesOverflow(len, numNodes * MapNodeZnod.sizeOf());
 
-        mapnode_znod_t[] znodes = C2JUtils.createArrayOfObjects(mapnode_znod_t.class, numNodes);
+        MapNodeZnod[] znodes = C2JUtils.createArrayOfObjects(MapNodeZnod.class, numNodes);
         CacheableDoomObjectContainer.unpack(data, znodes);
 
         for (i = 0; i < numNodes; i++) {
             int j, k;
             node_t no = nodes[i];
-            final mapnode_znod_t mn = znodes[i];
+            final MapNodeZnod mn = znodes[i];
 
             no.x = mn.x << FRACBITS;
             no.y = mn.y << FRACBITS;

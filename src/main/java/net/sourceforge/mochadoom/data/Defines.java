@@ -2,8 +2,8 @@ package net.sourceforge.mochadoom.data;
 
 //import m.define;
 
+import net.sourceforge.mochadoom.defines.AmmoType;
 import net.sourceforge.mochadoom.defines.Card;
-import net.sourceforge.mochadoom.defines.ammotype_t;
 import net.sourceforge.mochadoom.doom.weapontype_t;
 import net.sourceforge.mochadoom.game.Keys;
 
@@ -106,7 +106,7 @@ public final class Defines {
     public static final int NUMWEAPONS = weapontype_t.NUMWEAPONS.ordinal();
 
     //Maes: this makes it a bit less retarded.
-    public static final int NUMAMMO = ammotype_t.NUMAMMO.ordinal();
+    public static final int NUMAMMO = AmmoType.NUMAMMO.ordinal();
 
     // Power up artifacts.
     public static final int pw_invulnerability = 0;

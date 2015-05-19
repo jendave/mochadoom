@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import net.sourceforge.mochadoom.wad.CacheableDoomObject;
 
-public class mapsubsector_v4_t implements CacheableDoomObject {
+public class MapSubsectorV4 implements CacheableDoomObject {
 
     public char numsegs;
     /**

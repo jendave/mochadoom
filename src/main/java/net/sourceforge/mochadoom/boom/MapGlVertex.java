@@ -6,31 +6,21 @@ import java.nio.ByteOrder;
 import net.sourceforge.mochadoom.wad.CacheableDoomObject;
 
 /**
- * ZDoom node?
+ * fixed 32 bit gl_vert format v2.0+ (glBsp 1.91)
  */
 
-public class mapseg_znod_t implements CacheableDoomObject {
-
-    public mapseg_znod_t() {
-
-    }
-
-    public int v1, v2; // Those are unsigned :-/
-    public char linedef;
-    public byte side;
+public class MapGlVertex implements CacheableDoomObject {
+    public int x, y; // fixed_t
 
     public static int sizeOf() {
-        return 11;
+        return 8;
     }
 
     @Override
     public void unpack(ByteBuffer buf)
             throws IOException {
         buf.order(ByteOrder.LITTLE_ENDIAN);
-        this.v1 = buf.getInt();
-        this.v2 = buf.getInt();
-        this.linedef = buf.getChar();
-        this.side = buf.get();
+        x = buf.getInt();
+        y = buf.getInt();
     }
-
-};
+}

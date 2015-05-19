@@ -1,7 +1,7 @@
 package net.sourceforge.mochadoom.doom;
 
 import net.sourceforge.mochadoom.defines.StateNum;
-import net.sourceforge.mochadoom.defines.ammotype_t;
+import net.sourceforge.mochadoom.defines.AmmoType;
 
 //
 // PSPRITE ACTIONS for waepons.
@@ -19,7 +19,7 @@ import net.sourceforge.mochadoom.defines.ammotype_t;
 public class weaponinfo_t {
 
     /*    
-    public weaponinfo_t(ammotype_t ammo, int upstate, int downstate,
+    public weaponinfo_t(AmmoType ammo, int upstate, int downstate,
             int readystate, int atkstate, int flashstate) {
         super();
         this.ammo = ammo;
@@ -29,10 +29,10 @@ public class weaponinfo_t {
         this.atkstate = atkstate;
         this.flashstate = flashstate;
     }*/
-    public ammotype_t ammo;
+    public AmmoType ammo;
 
 
-    public weaponinfo_t(ammotype_t ammo, StateNum upstate,
+    public weaponinfo_t(AmmoType ammo, StateNum upstate,
                         StateNum downstate, StateNum readystate,
                         StateNum atkstate, StateNum flashstate) {
         super();

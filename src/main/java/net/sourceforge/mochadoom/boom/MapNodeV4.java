@@ -6,22 +6,33 @@ import java.nio.ByteOrder;
 import net.sourceforge.mochadoom.wad.CacheableDoomObject;
 import net.sourceforge.mochadoom.wad.DoomBuffer;
 
-public class mapnode_znod_t implements CacheableDoomObject {
+/**
+ * BSP Node structure on-disk
+ */
+public class MapNodeV4
+        implements CacheableDoomObject {
 
-
-    public short x;  // Partition line from (x,y) to x+dx,y+dy)
-    public short y;
-    public short dx;
-    public short dy;
-    // Bounding box for each child, clip against view frustum.
-    public short[][] bbox;
-    // If NF_SUBSECTOR its a subsector, else it's a node of another subtree.
-    public int[] children;
-
-    public mapnode_znod_t() {
+    public MapNodeV4() {
         this.bbox = new short[2][4];
         this.children = new int[2];
     }
+
+    /**
+     * Partition line from (x,y) to x+dx,y+dy)
+     */
+    public short x, y, dx, dy;
+
+    /**
+     * Bounding box for each child, clip against view frustum.
+     */
+    public short[][] bbox;
+
+    /**
+     * If NF_SUBSECTOR its a subsector, else it's a node of another subtree.
+     * In simpler words: if the first bit is set, strip it and use the rest
+     * as a subtree index. Else it's a node index.
+     */
+    public int[] children = new int[2];
 
     public static final int sizeOf() {
         return (8 + 16 + 8);
@@ -38,7 +49,6 @@ public class mapnode_znod_t implements CacheableDoomObject {
         DoomBuffer.readShortArray(buf, this.bbox[0], 4);
         DoomBuffer.readShortArray(buf, this.bbox[1], 4);
         DoomBuffer.readIntArray(buf, this.children, 2);
-
     }
 
 }

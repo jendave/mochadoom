@@ -41,7 +41,7 @@ package net.sourceforge.mochadoom.doom;
 //
 //-----------------------------------------------------------------------------
 
-import net.sourceforge.mochadoom.defines.ammotype_t;
+import net.sourceforge.mochadoom.defines.AmmoType;
 import net.sourceforge.mochadoom.defines.StateNum;
 
 public class items {
@@ -50,7 +50,7 @@ public class items {
             {
                     new weaponinfo_t(
                             // fist
-                            ammotype_t.am_noammo,
+                            AmmoType.am_noammo,
                             StateNum.S_PUNCHUP,
                             StateNum.S_PUNCHDOWN,
                             StateNum.S_PUNCH,
@@ -59,7 +59,7 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // pistol
-                            ammotype_t.am_clip,
+                            AmmoType.am_clip,
                             StateNum.S_PISTOLUP,
                             StateNum.S_PISTOLDOWN,
                             StateNum.S_PISTOL,
@@ -67,7 +67,7 @@ public class items {
                             StateNum.S_PISTOLFLASH
                     ), new weaponinfo_t(
                     // shotgun
-                    ammotype_t.am_shell,
+                    AmmoType.am_shell,
                     StateNum.S_SGUNUP,
                     StateNum.S_SGUNDOWN,
                     StateNum.S_SGUN,
@@ -76,7 +76,7 @@ public class items {
             ),
                     new weaponinfo_t(
                             // chaingun
-                            ammotype_t.am_clip,
+                            AmmoType.am_clip,
                             StateNum.S_CHAINUP,
                             StateNum.S_CHAINDOWN,
                             StateNum.S_CHAIN,
@@ -85,7 +85,7 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // missile launcher
-                            ammotype_t.am_misl,
+                            AmmoType.am_misl,
                             StateNum.S_MISSILEUP,
                             StateNum.S_MISSILEDOWN,
                             StateNum.S_MISSILE,
@@ -94,7 +94,7 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // plasma rifle
-                            ammotype_t.am_cell,
+                            AmmoType.am_cell,
                             StateNum.S_PLASMAUP,
                             StateNum.S_PLASMADOWN,
                             StateNum.S_PLASMA,
@@ -103,7 +103,7 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // bfg 9000
-                            ammotype_t.am_cell,
+                            AmmoType.am_cell,
                             StateNum.S_BFGUP,
                             StateNum.S_BFGDOWN,
                             StateNum.S_BFG,
@@ -112,7 +112,7 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // chainsaw
-                            ammotype_t.am_noammo,
+                            AmmoType.am_noammo,
                             StateNum.S_SAWUP,
                             StateNum.S_SAWDOWN,
                             StateNum.S_SAW,
@@ -121,7 +121,7 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // super shotgun
-                            ammotype_t.am_shell,
+                            AmmoType.am_shell,
                             StateNum.S_DSGUNUP,
                             StateNum.S_DSGUNDOWN,
                             StateNum.S_DSGUN,

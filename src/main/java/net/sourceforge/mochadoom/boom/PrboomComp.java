@@ -1,8 +1,8 @@
 package net.sourceforge.mochadoom.boom;
 
-public class prboom_comp_t {
+public class PrboomComp {
 
-    public prboom_comp_t(int minver, int maxver, boolean state, String cmd) {
+    public PrboomComp(int minver, int maxver, boolean state, String cmd) {
         this.minver = minver;
         this.maxver = maxver;
         this.state = state;

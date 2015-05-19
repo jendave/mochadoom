@@ -3,10 +3,10 @@ package net.sourceforge.mochadoom.doom;
 import net.sourceforge.mochadoom.data.Tables;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
+import net.sourceforge.mochadoom.defines.AmmoType;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.defines.StateNum;
-import net.sourceforge.mochadoom.defines.ammotype_t;
 import net.sourceforge.mochadoom.system.DoomStatusAware;
 import net.sourceforge.mochadoom.system.IDoomSystem;
 import java.io.DataInputStream;
@@ -432,14 +432,14 @@ public class player_t /*extends mobj_t */
      * P_GiveAmmo Num is the number of clip loads, not the individual count (0=
      * 1/2 clip).
      *
-     * @param amm intended to be ammotype_t.
+     * @param amm intended to be AmmoType.
      * @return false if the ammo can't be picked up at all
      */
 
-    public boolean GiveAmmo(ammotype_t amm, int num) {
+    public boolean GiveAmmo(AmmoType amm, int num) {
         int oldammo;
         int ammo = amm.ordinal();
-        if (ammo == ammotype_t.am_noammo.ordinal())
+        if (ammo == AmmoType.am_noammo.ordinal())
             return false;
 
         if (ammo < 0 || ammo > NUMAMMO)
@@ -475,7 +475,7 @@ public class player_t /*extends mobj_t */
         // We were down to zero,
         // so select a new weapon.
         // Preferences are not user selectable.
-        switch (ammotype_t.values()[ammo]) {
+        switch (AmmoType.values()[ammo]) {
             case am_clip:
                 if (readyweapon == weapontype_t.wp_fist) {
                     if (weaponowned[weapontype_t.wp_chaingun.ordinal()])
@@ -545,7 +545,7 @@ public class player_t /*extends mobj_t */
             return false;
         }
 
-        if (weaponinfo[weapon].ammo != ammotype_t.am_noammo) {
+        if (weaponinfo[weapon].ammo != AmmoType.am_noammo) {
             // give one clip with a dropped weapon,
             // two clips with a found weapon
             if (dropped)
@@ -1088,7 +1088,7 @@ public class player_t /*extends mobj_t */
      */
 
     public boolean CheckAmmo() {
-        ammotype_t ammo;
+        AmmoType ammo;
         int count;
 
         ammo = weaponinfo[readyweapon.ordinal()].ammo;
@@ -1103,35 +1103,35 @@ public class player_t /*extends mobj_t */
 
         // Some do not need ammunition anyway.
         // Return if current ammunition sufficient.
-        if (ammo == ammotype_t.am_noammo || this.ammo[ammo.ordinal()] >= count)
+        if (ammo == AmmoType.am_noammo || this.ammo[ammo.ordinal()] >= count)
             return true;
 
         // Out of ammo, pick a weapon to change to.
         // Preferences are set here.
         do {
             if (weaponowned[weapontype_t.wp_plasma.ordinal()]
-                    && (this.ammo[ammotype_t.am_cell.ordinal()] != 0)
+                    && (this.ammo[AmmoType.am_cell.ordinal()] != 0)
                     && !DS.isShareware()) {
                 pendingweapon = weapontype_t.wp_plasma;
             } else if (weaponowned[weapontype_t.wp_supershotgun.ordinal()]
-                    && this.ammo[ammotype_t.am_shell.ordinal()] > 2
+                    && this.ammo[AmmoType.am_shell.ordinal()] > 2
                     && DS.isCommercial()) {
                 pendingweapon = weapontype_t.wp_supershotgun;
             } else if (weaponowned[weapontype_t.wp_chaingun.ordinal()]
-                    && this.ammo[ammotype_t.am_clip.ordinal()] != 0) {
+                    && this.ammo[AmmoType.am_clip.ordinal()] != 0) {
                 pendingweapon = weapontype_t.wp_chaingun;
             } else if (weaponowned[weapontype_t.wp_shotgun.ordinal()]
-                    && this.ammo[ammotype_t.am_shell.ordinal()] != 0) {
+                    && this.ammo[AmmoType.am_shell.ordinal()] != 0) {
                 pendingweapon = weapontype_t.wp_shotgun;
-            } else if (this.ammo[ammotype_t.am_clip.ordinal()] != 0) {
+            } else if (this.ammo[AmmoType.am_clip.ordinal()] != 0) {
                 pendingweapon = weapontype_t.wp_pistol;
             } else if (weaponowned[weapontype_t.wp_chainsaw.ordinal()]) {
                 pendingweapon = weapontype_t.wp_chainsaw;
             } else if (weaponowned[weapontype_t.wp_missile.ordinal()]
-                    && this.ammo[ammotype_t.am_misl.ordinal()] != 0) {
+                    && this.ammo[AmmoType.am_misl.ordinal()] != 0) {
                 pendingweapon = weapontype_t.wp_missile;
             } else if (weaponowned[weapontype_t.wp_bfg.ordinal()]
-                    && this.ammo[ammotype_t.am_cell.ordinal()] > 40
+                    && this.ammo[AmmoType.am_cell.ordinal()] > 40
                     && !DS.isShareware()) {
                 pendingweapon = weapontype_t.wp_bfg;
             } else {
@@ -1359,7 +1359,7 @@ public class player_t /*extends mobj_t */
         readyweapon = pendingweapon = weapontype_t.wp_pistol;
         weaponowned[weapontype_t.wp_fist.ordinal()] = true;
         weaponowned[weapontype_t.wp_pistol.ordinal()] = true;
-        ammo[ammotype_t.am_clip.ordinal()] = 50;
+        ammo[AmmoType.am_clip.ordinal()] = 50;
         lookdir = 0; // From Heretic
 
         for (i = 0; i < NUMAMMO; i++)

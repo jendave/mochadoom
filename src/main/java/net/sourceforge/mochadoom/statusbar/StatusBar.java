@@ -25,7 +25,7 @@ package net.sourceforge.mochadoom.statusbar;
 // -----------------------------------------------------------------------------
 
 import net.sourceforge.mochadoom.data.sounds.musicenum_t;
-import net.sourceforge.mochadoom.defines.ammotype_t;
+import net.sourceforge.mochadoom.defines.AmmoType;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.event_t;
 import net.sourceforge.mochadoom.doom.evtype_t;
@@ -1003,7 +1003,7 @@ public class StatusBar extends AbstractStatusBar {
         // must redirect the pointer if the ready weapon has changed.
         // if (w_ready.data != plyr.readyweapon)
         // {
-        if (weaponinfo[plyr.readyweapon.ordinal()].ammo == ammotype_t.am_noammo)
+        if (weaponinfo[plyr.readyweapon.ordinal()].ammo == AmmoType.am_noammo)
             w_ready.numindex = largeammo;
         else
             w_ready.numindex =

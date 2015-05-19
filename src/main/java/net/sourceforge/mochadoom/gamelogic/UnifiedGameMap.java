@@ -6,9 +6,9 @@ import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
+import net.sourceforge.mochadoom.defines.AmmoType;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.StateNum;
-import net.sourceforge.mochadoom.defines.ammotype_t;
 import net.sourceforge.mochadoom.doom.DoomMain;
 import net.sourceforge.mochadoom.doom.DoomStatus;
 import net.sourceforge.mochadoom.doom.IDoomGame;
@@ -2180,53 +2180,53 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             // ammo
             case SPR_CLIP:
                 if ((special.flags & MF_DROPPED) != 0) {
-                    if (!player.GiveAmmo(ammotype_t.am_clip, 0))
+                    if (!player.GiveAmmo(AmmoType.am_clip, 0))
                         return;
                 } else {
-                    if (!player.GiveAmmo(ammotype_t.am_clip, 1))
+                    if (!player.GiveAmmo(AmmoType.am_clip, 1))
                         return;
                 }
                 player.message = GOTCLIP;
                 break;
 
             case SPR_AMMO:
-                if (!player.GiveAmmo(ammotype_t.am_clip, 5))
+                if (!player.GiveAmmo(AmmoType.am_clip, 5))
                     return;
                 player.message = GOTCLIPBOX;
                 break;
 
             case SPR_ROCK:
-                if (!player.GiveAmmo(ammotype_t.am_misl, 1))
+                if (!player.GiveAmmo(AmmoType.am_misl, 1))
                     return;
                 player.message = GOTROCKET;
                 break;
 
             case SPR_BROK:
-                if (!player.GiveAmmo(ammotype_t.am_misl, 5))
+                if (!player.GiveAmmo(AmmoType.am_misl, 5))
                     return;
                 player.message = GOTROCKBOX;
                 break;
 
             case SPR_CELL:
-                if (!player.GiveAmmo(ammotype_t.am_cell, 1))
+                if (!player.GiveAmmo(AmmoType.am_cell, 1))
                     return;
                 player.message = GOTCELL;
                 break;
 
             case SPR_CELP:
-                if (!player.GiveAmmo(ammotype_t.am_cell, 5))
+                if (!player.GiveAmmo(AmmoType.am_cell, 5))
                     return;
                 player.message = GOTCELLBOX;
                 break;
 
             case SPR_SHEL:
-                if (!player.GiveAmmo(ammotype_t.am_shell, 1))
+                if (!player.GiveAmmo(AmmoType.am_shell, 1))
                     return;
                 player.message = GOTSHELLS;
                 break;
 
             case SPR_SBOX:
-                if (!player.GiveAmmo(ammotype_t.am_shell, 5))
+                if (!player.GiveAmmo(AmmoType.am_shell, 5))
                     return;
                 player.message = GOTSHELLBOX;
                 break;
@@ -2238,7 +2238,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
                     player.backpack = true;
                 }
                 for (i = 0; i < NUMAMMO; i++)
-                    player.GiveAmmo(ammotype_t.values()[i], 1);
+                    player.GiveAmmo(AmmoType.values()[i], 1);
                 player.message = GOTBACKPACK;
                 break;
 

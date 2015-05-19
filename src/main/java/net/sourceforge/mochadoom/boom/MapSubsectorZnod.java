@@ -6,7 +6,7 @@ import java.nio.ByteOrder;
 import net.sourceforge.mochadoom.utils.C2JUtils;
 import net.sourceforge.mochadoom.wad.CacheableDoomObject;
 
-public class mapsubsector_znod_t implements CacheableDoomObject {
+public class MapSubsectorZnod implements CacheableDoomObject {
 
     public long numsegs;
 

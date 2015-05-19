@@ -13,14 +13,14 @@ public class DeepBSPNodesV4 implements CacheableDoomObject {
     };
 
     byte[] header = new byte[8];
-    mapnode_v4_t[] nodes;
+    MapNodeV4[] nodes;
     int numnodes;
 
     public boolean formatOK() {
         return Arrays.equals(header, DeepBSPHeader);
     }
 
-    public mapnode_v4_t[] getNodes() {
+    public MapNodeV4[] getNodes() {
         return nodes;
     }
 
@@ -31,13 +31,13 @@ public class DeepBSPNodesV4 implements CacheableDoomObject {
         // Too short, not even header.
         if (length < 8) return;
 
-        numnodes = (length - 8) / mapnode_v4_t.sizeOf();
+        numnodes = (length - 8) / MapNodeV4.sizeOf();
 
         if (length < 1) return;
 
         buf.get(header); // read header
 
-        nodes = C2JUtils.createArrayOfObjects(mapnode_v4_t.class, length);
+        nodes = C2JUtils.createArrayOfObjects(MapNodeV4.class, length);
 
         for (int i = 0; i < length; i++) {
             nodes[i].unpack(buf);
