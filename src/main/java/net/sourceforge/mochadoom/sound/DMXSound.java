@@ -1,6 +1,7 @@
 package net.sourceforge.mochadoom.sound;
 
 import java.io.IOException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import net.sourceforge.mochadoom.wad.CacheableDoomObject;
@@ -32,7 +33,11 @@ public class DMXSound implements CacheableDoomObject {
         buf.order(ByteOrder.LITTLE_ENDIAN);
         type = buf.getChar();
         speed = buf.getChar();
-        datasize = buf.getInt();
+        try {
+            datasize = buf.getInt();
+        } catch (BufferUnderflowException e) {
+            datasize = buf.capacity() - buf.position();
+        }
         data = new byte[Math.min(buf.remaining(), datasize)];
         buf.get(data);
     }

@@ -391,7 +391,7 @@
 
     <profiles>
         <profile>
-            <id>zipfile</id>
+            <id>zipfreedoom</id>
             <build>
                 <plugins>
                     <plugin>
@@ -404,8 +404,32 @@
                                     <goal>single</goal>
                                 </goals>
                                 <configuration>
-                                    <descriptor>src/main/assembly/assembly.xml</descriptor>
-                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <descriptor>src/main/assembly/assembly-freedoom.xml</descriptor>
+                                    <appendAssemblyId>true</appendAssemblyId>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>zipdoom</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>create-zip</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <descriptor>src/main/assembly/assembly-doom.xml</descriptor>
+                                    <appendAssemblyId>true</appendAssemblyId>
                                 </configuration>
                             </execution>
                         </executions>

@@ -1,0 +1,46 @@
+<assembly>
+    <id>freedoom</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>src/main/config</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>default.cfg</include>
+            </includes>
+            <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/config</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>DOOM1.WAD</include>
+                <include>freedoom1.wad</include>
+                <include>freedoom2.wad</include>
+            </includes>
+            <filtered>false</filtered>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/config</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>mochadoom.sh</include>
+                <include>mochadoomf1.sh</include>
+                <include>mochadoomf2.sh</include>
+            </includes>
+            <fileMode>0744</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+            <includes>
+                <include>${project.build.finalName}.jar</include>
+            </includes>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
