@@ -209,7 +209,7 @@ public class Finale<T> implements DoomStatusAware, IVideoScaleAware {
                         break;
                     case 20:
                         finaleflat = "RROCK07";
-                        finaleflat = texts[2];
+                        finaletext = texts[2];
                         break;
                     case 30:
                         finaleflat = "RROCK17";
