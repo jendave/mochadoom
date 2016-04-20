@@ -327,6 +327,7 @@ public class player_t /*extends mobj_t */
 
     /**
      * P_MovePlayer
+     * Method that allow to move the player in the game.
      */
     public void MovePlayer() {
         ticcmd_t cmd = this.cmd;
