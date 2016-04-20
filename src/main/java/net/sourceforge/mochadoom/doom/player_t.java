@@ -323,11 +323,12 @@ public class player_t /*extends mobj_t */
         mo.momy += FixedMul(move, finesine(angle));
     }
 
+    /* If you change this the player can run faster or slower */
     protected final static int PLAYERTHRUST = 2048 / TIC_MUL;
 
     /**
      * P_MovePlayer
-     * Method that allow to move the player in the game.
+     * Method that allows to move the player.
      */
     public void MovePlayer() {
         ticcmd_t cmd = this.cmd;
