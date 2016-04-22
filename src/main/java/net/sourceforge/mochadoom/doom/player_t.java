@@ -327,6 +327,66 @@ public class player_t /*extends mobj_t */
     protected final static int PLAYERTHRUST = 2048 / TIC_MUL;
 
     /**
+     * Returns true if the player is running.
+     * @param fm the forwardmove.
+     * @return true if the player is running.
+     */
+    public boolean isRunning(byte fm) {
+      // Based on the forwardmove array in DoomStatus.
+      if((fm == DS.MAXPLMOVE()) || (fm == -DS.MAXPLMOVE())) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    
+    /* The maximum tired that could be the player */
+    private final static int MAXTIRED = 150;
+    /* How tired is the player now */
+    private static int tired = 0;
+    /* The last time when the player was tired */
+    private static long lastTimeTired = 0;
+    /* Wait time to begin to decrese the tired variable */
+    private static final long WAITTIRED = 5000; // 5 seconds.
+    
+    /**
+     * Fatigues the player. Increase the tired variable that indicates how tire
+     * is the player.
+     */
+    private void fatigue() {
+      tired++;
+      if (tired == MAXTIRED) {
+        lastTimeTired = System.currentTimeMillis();
+      }
+    }
+    
+    /**
+     * Rest the player. Decrease the tired variable that indicates how tire
+     * is the player.
+     */
+    private void rest() {
+      if (tired>0) {
+        long actualTime = System.currentTimeMillis();
+        // It decrease only if the player has waited the time to begin to rest.
+        if ((actualTime - lastTimeTired)>WAITTIRED) {
+          tired--;
+        }
+      }
+    }
+    
+    /**
+     * Returns true if the player is not tired and can run.
+     * @return true if the player can run.
+     */
+    private boolean canRun() {
+      if (tired < MAXTIRED) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    
+    /**
      * P_MovePlayer
      * Method that allows to move the player.
      */
@@ -339,9 +399,21 @@ public class player_t /*extends mobj_t */
         // Do not let the player control movement
         // if not onground.
         onground = (mo.z <= mo.floorz);
-
-        if (cmd.forwardmove != 0 && onground)
+        
+        /* Check if the player is running and fatigue him if he is. */
+        if(isRunning(cmd.forwardmove) && canRun()) {
+          fatigue();
+        } else {
+          rest();
+        }
+        
+        if (cmd.forwardmove != 0 && onground) {
+          if (canRun()) {
             Thrust(mo.angle, cmd.forwardmove * PLAYERTHRUST);
+          } else {
+            Thrust(mo.angle, DS.SLOWPLMOVE() * PLAYERTHRUST);
+          }
+        }
 
         if (cmd.sidemove != 0 && onground)
             Thrust((mo.angle - ANG90) & BITS32, cmd.sidemove * PLAYERTHRUST);
