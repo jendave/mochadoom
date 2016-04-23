@@ -396,6 +396,7 @@ public class player_t /*extends mobj_t */
      * @param skill the actual game's skill.
      */
     public void setWaitTired(Skill skill) {
+      System.out.println("HOLAAAA");
       switch (skill) {
         case sk_baby:
           waitTired = 0;
@@ -457,6 +458,11 @@ public class player_t /*extends mobj_t */
      * Method that allows to move the player.
      */
     public void MovePlayer() {
+      
+//      System.out.println("Tired: "+tired);
+//      System.out.println("maxTired: "+maxTired);
+//      System.out.println("waitTired: "+waitTired);
+      
         ticcmd_t cmd = this.cmd;
 
         mo.angle += (cmd.angleturn << 16);
@@ -477,7 +483,11 @@ public class player_t /*extends mobj_t */
           if (canRun()) {
             Thrust(mo.angle, cmd.forwardmove * PLAYERTHRUST);
           } else {
-            Thrust(mo.angle, DS.SLOWPLMOVE() * PLAYERTHRUST);
+            if(cmd.forwardmove > 0) {
+              Thrust(mo.angle, DS.SLOWPLMOVE() * PLAYERTHRUST);
+            } else {
+              Thrust(mo.angle, -DS.SLOWPLMOVE() * PLAYERTHRUST);
+            }
           }
         }
 
@@ -1524,6 +1534,7 @@ public class player_t /*extends mobj_t */
         this.RND = DS.RND;
         this.I = DS.I;
         this.S = DS.S;
+        setGameSkill(DS.gameskill);
     }
 
     public String toString() {
