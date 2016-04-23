@@ -356,14 +356,64 @@ public class player_t /*extends mobj_t */
     }
     
     /* The maximum tired that could be the player */
-    private final static int MAXTIRED = 150;
+    private int maxTired;
+    
+    /**
+     * Sets the variable maxTired according to the given
+     * skill of the game.
+     * @param skill
+     */
+    private void setMaxTired(Skill skill) {
+      switch (skill) {
+        case sk_baby:
+          maxTired = 500;
+          break;
+        case sk_easy:
+          maxTired = 300;
+          break;
+        case sk_medium:
+          maxTired = 150;
+          break;
+        case sk_hard:
+          maxTired = 100;
+          break;
+        case sk_nightmare:
+          maxTired = 50;
+          break;
+      }
+    }
     
     /* How tired is the player now */
     private static int tired = 0;
     /* The last time when the player was tired */
     private static long lastTimeTired = 0;
     /* Wait time to begin to decrese the tired variable */
-    private static final long WAITTIRED = 5000; // 5 seconds.
+    private long waitTired;
+    
+    /**
+     * Sets the waitTired variable according to the skill of
+     * the level.
+     * @param skill the actual game's skill.
+     */
+    public void setWaitTired(Skill skill) {
+      switch (skill) {
+        case sk_baby:
+          waitTired = 0;
+          break;
+        case sk_easy:
+          waitTired = 2000;
+          break;
+        case sk_medium:
+          waitTired = 5000;
+          break;
+        case sk_hard:
+          waitTired = 7500;
+          break;
+        case sk_nightmare:
+          waitTired = 10000;
+          break;
+      }
+    }
     
     /**
      * Fatigues the player. Increase the tired variable that indicates how tire
@@ -371,7 +421,7 @@ public class player_t /*extends mobj_t */
      */
     private void fatigue() {
       tired++;
-      if (tired == MAXTIRED) {
+      if (tired == maxTired) {
         lastTimeTired = System.currentTimeMillis();
       }
     }
@@ -384,7 +434,7 @@ public class player_t /*extends mobj_t */
       if (tired>0) {
         long actualTime = System.currentTimeMillis();
         // It decrease only if the player has waited the time to begin to rest.
-        if ((actualTime - lastTimeTired)>WAITTIRED) {
+        if ((actualTime - lastTimeTired)>waitTired) {
           tired--;
         }
       }
@@ -395,7 +445,7 @@ public class player_t /*extends mobj_t */
      * @return true if the player can run.
      */
     private boolean canRun() {
-      if (tired < MAXTIRED) {
+      if (tired < maxTired) {
         return true;
       } else {
         return false;
