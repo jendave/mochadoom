@@ -396,7 +396,6 @@ public class player_t /*extends mobj_t */
      * @param skill the actual game's skill.
      */
     public void setWaitTired(Skill skill) {
-      System.out.println("HOLAAAA");
       switch (skill) {
         case sk_baby:
           waitTired = 0;
@@ -458,10 +457,6 @@ public class player_t /*extends mobj_t */
      * Method that allows to move the player.
      */
     public void MovePlayer() {
-      
-//      System.out.println("Tired: "+tired);
-//      System.out.println("maxTired: "+maxTired);
-//      System.out.println("waitTired: "+waitTired);
       
         ticcmd_t cmd = this.cmd;
 
