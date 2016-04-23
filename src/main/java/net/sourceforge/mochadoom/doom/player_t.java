@@ -342,6 +342,11 @@ public class player_t /*extends mobj_t */
     
     /* The maximum tired that could be the player */
     private final static int MAXTIRED = 150;
+    
+    /*
+     * Possible solution: maxTired = getMaxTired();
+     */
+    
     /* How tired is the player now */
     private static int tired = 0;
     /* The last time when the player was tired */

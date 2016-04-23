@@ -2602,6 +2602,14 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     Skill d_skill;
     int d_episode;
     int d_map;
+    
+    /**
+     * Returns the actual skill of the game.
+     * @return the skill of the game.
+     */
+    public Skill getGameSkill() {
+      return d_skill;
+    }
 
     public void
     DeferedInitNew
