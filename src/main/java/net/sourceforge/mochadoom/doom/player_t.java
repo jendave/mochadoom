@@ -320,6 +320,13 @@ public class player_t /*extends mobj_t */
       setMaxTired(skill);
       setWaitTired(skill);
     }
+    
+    /**
+     * Updates the actual game's skill.
+     */
+    public void updateGameSkill() {
+      setGameSkill(DS.gameskill);
+    }
 
     /**
      * 16 pixels of bob
@@ -1529,7 +1536,6 @@ public class player_t /*extends mobj_t */
         this.RND = DS.RND;
         this.I = DS.I;
         this.S = DS.S;
-        setGameSkill(DS.gameskill);
     }
 
     public String toString() {
