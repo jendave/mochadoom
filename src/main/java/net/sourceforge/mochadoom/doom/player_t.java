@@ -305,6 +305,21 @@ public class player_t /*extends mobj_t */
             throws CloneNotSupportedException {
         return (player_t) super.clone();
     }
+    
+    /**
+     * gameSkill is the variable that indicates the skill/level of the actual game.
+     */
+    private Skill gameSkill;
+    
+    /**
+     * Sets the gameSkill.
+     * @param skill the actual skill of the game.
+     */
+    public void setGameSkill(Skill skill) {
+      gameSkill = skill;
+      setMaxTired(skill);
+      setWaitTired(skill);
+    }
 
     /**
      * 16 pixels of bob
@@ -342,10 +357,6 @@ public class player_t /*extends mobj_t */
     
     /* The maximum tired that could be the player */
     private final static int MAXTIRED = 150;
-    
-    /*
-     * Possible solution: maxTired = getMaxTired();
-     */
     
     /* How tired is the player now */
     private static int tired = 0;
