@@ -2,6 +2,10 @@ package net.sourceforge.mochadoom.data;
 
 public enum mobjtype_t {
     MT_PLAYER,
+    MT_GREENZOMBIE,
+    MT_REDZOMBIE,
+    MT_GRAYZOMBIE,
+    MT_BLACKZOMBIE,
     MT_POSSESSED,
     MT_SHOTGUY,
     MT_VILE,

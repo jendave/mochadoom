@@ -1439,8 +1439,7 @@ public class Actions extends UnifiedGameMap {
     /**
      * P_NightmareRespawn
      */
-    void
-    NightmareRespawn(mobj_t mobj) {
+    void NightmareRespawn(mobj_t mobj) {
         int x, y, z; // fixed 
         subsector_t ss;
         mobj_t mo;
@@ -1501,12 +1500,7 @@ public class Actions extends UnifiedGameMap {
      * @return
      */
 
-    public mobj_t
-    SpawnMobj
-    (int x,
-     int y,
-     int z,
-     mobjtype_t type) {
+    public mobj_t SpawnMobj(int x, int y, int z, mobjtype_t type) {
         mobj_t mobj;
         state_t st;
         mobjinfo_t info;
@@ -1802,12 +1796,7 @@ public class Actions extends UnifiedGameMap {
      * @param damage
      */
 
-    void
-    SpawnBlood
-    (int x,
-     int y,
-     int z,
-     int damage) {
+    void SpawnBlood(int x, int y, int z, int damage) {
         mobj_t th;
 
         z += ((RND.P_Random() - RND.P_Random()) << 10);
@@ -1960,12 +1949,7 @@ public class Actions extends UnifiedGameMap {
     // Source can be NULL for slime, barrel explosions
     // and other environmental stuff.
     //
-    public void
-    DamageMobj
-    (mobj_t target,
-     mobj_t inflictor,
-     mobj_t source,
-     int damage) {
+    public void DamageMobj(mobj_t target, mobj_t inflictor, mobj_t source, int damage) {
         long ang; // unsigned
         int saved;
         player_t player;
@@ -2096,10 +2080,7 @@ public class Actions extends UnifiedGameMap {
     //
     // KillMobj
     //
-    public void
-    KillMobj
-    (mobj_t source,
-     mobj_t target) {
+    public void KillMobj(mobj_t source, mobj_t target) {
         mobjtype_t item;
         mobj_t mo;
 
@@ -2153,8 +2134,9 @@ public class Actions extends UnifiedGameMap {
         if (target.health < -target.info.spawnhealth
                 && target.info.xdeathstate != StateNum.S_NULL) {
             target.SetMobjState(target.info.xdeathstate);
-        } else
+        } else {
             target.SetMobjState(target.info.deathstate);
+        }
         target.tics -= RND.P_Random() & 3;
 
         if (target.tics < 1)
