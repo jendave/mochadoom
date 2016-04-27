@@ -896,10 +896,7 @@ public class player_t /*extends mobj_t */
      * /* P_SetPsprite
      */
 
-    public void
-    SetPsprite
-    (int position,
-     StateNum newstate) {
+    public void SetPsprite(int position, StateNum newstate) {
         pspdef_t psp;
         state_t state;
 

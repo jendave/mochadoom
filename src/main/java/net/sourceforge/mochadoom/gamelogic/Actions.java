@@ -5,6 +5,7 @@ import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mobjinfo_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
+import net.sourceforge.mochadoom.data.spritenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
@@ -115,6 +116,9 @@ import static net.sourceforge.mochadoom.rendering.line_t.ML_BLOCKMONSTERS;
 import static net.sourceforge.mochadoom.rendering.line_t.ML_SECRET;
 import static net.sourceforge.mochadoom.rendering.line_t.ML_TWOSIDED;
 import static net.sourceforge.mochadoom.utils.C2JUtils.eval;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Action functions need to be aware of:
@@ -1553,6 +1557,52 @@ public class Actions extends UnifiedGameMap {
 
         return mobj;
     }
+    // BJPR: Spawns the specific zombie, changing the sprite chosen.
+    public mobj_t SpawnZombieMobj(int x, int y, int z, mobjtype_t type ,mobj_t source) {
+      mobj_t mobj;
+      state_t st;
+      mobjinfo_t info;
+
+      mobj = new mobj_t(this);
+      info = mobjinfo[type.ordinal()];
+
+      mobj.type = type;
+      mobj.info = info;
+      mobj.x = x;
+      mobj.y = y;
+      mobj.radius = info.radius;
+      mobj.height = info.height;
+      mobj.flags = info.flags;
+      mobj.health = info.spawnhealth;
+
+      if (DM.gameskill != Skill.sk_nightmare)
+          mobj.reactiontime = info.reactiontime;
+
+      mobj.lastlook = RND.P_Random() % MAXPLAYERS;
+
+      st = states[info.spawnstate.ordinal()];
+
+      mobj.state = st;
+      mobj.tics = st.tics;
+      mobj.sprite = st.sprite;
+      mobj.frame = st.frame;
+      LL.SetThingPosition(mobj);
+
+      mobj.floorz = mobj.subsector.sector.floorheight;
+      mobj.ceilingz = mobj.subsector.sector.ceilingheight;
+
+      if (z == ONFLOORZ)
+          mobj.z = mobj.floorz;
+      else if (z == ONCEILINGZ)
+          mobj.z = mobj.ceilingz - mobj.info.height;
+      else
+          mobj.z = z;
+
+      mobj.function = think_t.P_MobjThinker;
+      AddThinker(mobj);
+
+      return mobj;
+  }
 
     /**
      * P_RespawnSpecials
@@ -2083,7 +2133,14 @@ public class Actions extends UnifiedGameMap {
     public void KillMobj(mobj_t source, mobj_t target) {
         mobjtype_t item;
         mobj_t mo;
-
+        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
+        
+        //Create array with zombie types.
+        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
+        
         // Maes: this seems necessary in order for barrel damage
         // to propagate inflictors.
         target.target = source;
@@ -2130,12 +2187,15 @@ public class Actions extends UnifiedGameMap {
             }
 
         }
-
+        // BJPR:  Creation of zombie after monster death.
         if (target.health < -target.info.spawnhealth
                 && target.info.xdeathstate != StateNum.S_NULL) {
             target.SetMobjState(target.info.xdeathstate);
         } else {
-            target.SetMobjState(target.info.deathstate);
+          if(!(zombiearray.contains(target.type))){
+            SpawnZombieMobj(target.x,target.y,target.z,mobjtype_t.MT_REDZOMBIE,target);
+          }
+          target.SetMobjState(target.info.deathstate);
         }
         target.tics -= RND.P_Random() & 3;
 
