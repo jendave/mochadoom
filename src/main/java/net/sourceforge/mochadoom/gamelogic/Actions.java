@@ -1558,12 +1558,14 @@ public class Actions extends UnifiedGameMap {
         return mobj;
     }
     // BJPR: Spawns the specific zombie, changing the sprite chosen.
-    public mobj_t SpawnZombieMobj(int x, int y, int z, mobjtype_t type ,mobj_t source) {
+    public mobj_t SpawnZombieMobj(int x, int y, int z, mobj_t source) {
       mobj_t mobj;
+      mobjtype_t type;
       state_t st;
       mobjinfo_t info;
 
       mobj = new mobj_t(this);
+      type = mobjtype_t.MT_REDZOMBIE;
       info = mobjinfo[type.ordinal()];
 
       mobj.type = type;
@@ -2193,7 +2195,7 @@ public class Actions extends UnifiedGameMap {
             target.SetMobjState(target.info.xdeathstate);
         } else {
           if(!(zombiearray.contains(target.type))){
-            SpawnZombieMobj(target.x,target.y,target.z,mobjtype_t.MT_REDZOMBIE,target);
+            SpawnZombieMobj(target.x,target.y,target.z,target);
           }
           target.SetMobjState(target.info.deathstate);
         }
