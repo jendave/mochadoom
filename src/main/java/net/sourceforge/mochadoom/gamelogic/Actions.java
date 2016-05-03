@@ -1592,9 +1592,30 @@ public class Actions extends UnifiedGameMap {
   );
 
       mobj = new mobj_t(this);
-      type = mobjtype_t.MT_REDZOMBIE;
-      info = mobjinfo[type.ordinal()];      
       
+      /*
+       * Get the zombi's type
+       */
+   // BJPR: Prob. function.
+      int generatedZombieType = getRandomZombieType();
+  	  
+      switch (generatedZombieType) {
+  		case 0:
+  			type = mobjtype_t.MT_GREENZOMBIE;
+  			break; //creates green zombie
+  		case 1: 
+  			type = mobjtype_t.MT_REDZOMBIE;
+  			break; //creates red zombie
+  		case 2: 
+  			type = mobjtype_t.MT_GRAYZOMBIE;
+  			break; //creates gray zombie
+  		case 3: 
+  			type = mobjtype_t.MT_BLACKZOMBIE;
+  			break; //creates black zombie
+  		default:
+  			type = mobjtype_t.MT_GREENZOMBIE;
+  	  }
+   
       mobj.type = type;
       mobj.info = info2;
       mobj.info.missilestate = info.missilestate;
@@ -2224,7 +2245,7 @@ public class Actions extends UnifiedGameMap {
         } else {
           target.SetMobjState(target.info.deathstate);
           if(!(zombiearray.contains(target.type))){
-            SpawnZombieMobj(target.x,target.y,target.z,target);
+        	SpawnZombieMobj(target.x,target.y,target.z,target);
           }          
         }
         target.tics -= RND.P_Random() & 3;
@@ -2259,6 +2280,74 @@ public class Actions extends UnifiedGameMap {
         mo.flags |= MF_DROPPED;    // special versions of items
     }
 
+   /**
+    * 
+    * @return zombie type: 0 green, 1 red, 2 gray, 3 black.
+    * 
+    */
+  public int getRandomZombieType() {
+	  // BJPR: simple random function
+	  /*
+	   * This asks for a random number between 0 and 100.
+	   * Then if the number is between 0 and 10 is a black zombie,
+	   * 11 30 is a gray zombie, 31 72 is a red zombie and 73 80 is
+	   * green zombie.
+	   */
+	  
+	  int greenZombieWeigth = getZombieWeigth("green");
+	  int redZombieWeigth = getZombieWeigth("red");
+	  int grayZombieWeigth = getZombieWeigth("gray");
+	  int blackZombeWeigth = getZombieWeigth("black");
+	  
+	  double randomType = Math.floor(Math.random()* (greenZombieWeigth + 
+			  redZombieWeigth + grayZombieWeigth + blackZombeWeigth));
+	  
+	  if (randomType >= 0 && randomType <= greenZombieWeigth) {
+			return 0;
+		} else if (randomType > greenZombieWeigth && randomType <= redZombieWeigth + greenZombieWeigth) {
+			return 1;
+		} else if (randomType > redZombieWeigth + greenZombieWeigth 
+				&& randomType <= grayZombieWeigth + redZombieWeigth + greenZombieWeigth) {
+			return 2;
+		} else if (randomType + grayZombieWeigth + redZombieWeigth + greenZombieWeigth > 
+		grayZombieWeigth 
+		&& randomType <= redZombieWeigth + grayZombieWeigth + redZombieWeigth + greenZombieWeigth) {
+			return 3;
+		}
+	  
+	  /*
+	   * Error
+	   */
+	  return -1;
+  }
+  
+  /**
+   * Returns zombie weigths depending of the difficulty.
+   * @param type: ZOmbie type
+   * @return Zombie weigth
+   */
+  public int getZombieWeigth(String type) {
+	  // BJPR: zombie Prob.
+	  /*
+	   * This is not complete, i have to add the player Skill
+	   */
+	  if(type.equals("green")) {
+		  return 50;
+	  } else if(type.equals("red")) {
+		  return 30;
+	  } else if(type.equals("gray")){
+		  return 15;
+	  } else if(type.equals("black")) {
+		  return 5;
+	  }
+	  
+	  /*
+	   * error
+	   */
+	  return -1;
+  }
+    
+    
     //
     // TELEPORTATION
     //
