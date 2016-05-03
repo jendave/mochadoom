@@ -998,6 +998,13 @@ public class StatusBar extends AbstractStatusBar {
                     (int) mo.angle, mo.x, mo.y);
 
         }
+        
+        // Show the percentage of how tired is the player.
+        int tired = plyr.getTired();
+        int maxTired = plyr.getMaxTired();
+        int percentage = (tired*100)/maxTired;
+        plyr.message = String.format("Tiredness: %d %c", percentage, '%');
+        
 
 
         // must redirect the pointer if the ready weapon has changed.
