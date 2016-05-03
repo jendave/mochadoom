@@ -2,6 +2,10 @@ package net.sourceforge.mochadoom.rendering;
 
 import net.sourceforge.mochadoom.system.IDoomSystem;
 import java.util.Arrays;
+
+import com.sun.prism.paint.Color;
+
+import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.gamelogic.mobj_t;
 import net.sourceforge.mochadoom.utils.C2JUtils;
 
@@ -35,6 +39,9 @@ public final class VisSprites<V>
     private final static boolean DEBUG = false;
 
     private final static boolean RANGECHECK = false;
+    
+    private static short color;
+    private static short colori = 0;
 
     protected IDoomSystem I;
 
@@ -227,7 +234,7 @@ public final class VisSprites<V>
         if (vis.x1 > x1)
             vis.startfrac += vis.xiscale * (vis.x1 - x1);
         vis.patch = lump;
-
+        
         // get light level
         if ((thing.flags & MF_SHADOW) != 0) {
             // shadow draw
@@ -249,6 +256,71 @@ public final class VisSprites<V>
 
             vis.colormap = colormaps.spritelights[index];
             // vis.pcolormap=index;
+        }
+        short[] array = new short[256];
+        // BJPR:  Zombie color AQUI VIEJO [-65535, 65535].
+        if(thing.type.equals(mobjtype_t.MT_REDZOMBIE)){
+          vis.colormap = (V) colormaps.colormaps[colormaps.colormaps.length - 5];
+          //colori += 1;
+          //color = (short) (-2950 + -(colori)%50);
+          //color = (short) (20700 + colori);
+          //System.out.println(color);
+          for(int i=0; i < 256; i++){
+              // MORADO array[i] = (short) (30000 * Math.PI - 1);
+              // BLANCO array[i] = (short) 65535;
+              // array[i] = 1 -> Black
+              //            10 -> Blue
+              //            20-50 -> Blue normal
+              //            100 -> Black blue
+              //            200 -> Gray blue
+              //            500-700 -> Light Blue
+              //            1000 -> Light Green
+              //            5000 -> Green
+              //            6500 -> Musgo
+              //            6505 ->
+              //            6510 -> Azul agrisado.
+              //            8000 -> Brillan3 verde
+              //            16000 -> Verde limón
+              //            20645  -> Casi rojo
+              //            25000 -> caquita de guagua
+              //            30000 -> Pink
+              //            35000 -> Blue
+              //            40000 -> Brown
+              //            -2973--2975 -> Red
+              //  Hexadecimal 0xff0000 -> nigga
+              // 
+              // RED Zombie
+              array[i] = (short) ((-2983*999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 20])[i])/1000);
+              // BLACK ZOMBIE
+              //array[i] = (short) ((0*9999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 1])[i])/10000);
+            //GRAY ZOMBIE not ready.
+            //array[i] = (short) ((-5*9999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 10])[i])/10000);
+            //System.out.println(array[i]);
+          }
+          vis.colormap = (V) array;
+          //          System.out.println(colormaps.colormaps[0].toString());
+          //         System.out.println(colormaps.colormaps[0].getClass()); 
+        }
+        else if(thing.type.equals(mobjtype_t.MT_GREENZOMBIE)){
+          vis.colormap = (V) colormaps.colormaps[colormaps.colormaps.length - 5];
+          for(int i=0; i < 256; i++){
+             array[i] = (short) ((256*0.2 + 0.8*((short[]) colormaps.colormaps[colormaps.colormaps.length - 5])[i]));
+          }
+          vis.colormap = (V) array;
+        }
+        else if(thing.type.equals(mobjtype_t.MT_GRAYZOMBIE)){
+          vis.colormap = (V) colormaps.colormaps[colormaps.colormaps.length - 5];
+          for(int i=0; i < 256; i++){
+            array[i] = (short) ((-5*9999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 10])[i])/10000);
+          }
+          vis.colormap = (V) array;
+        }
+        else if(thing.type.equals(mobjtype_t.MT_BLACKZOMBIE)){
+          vis.colormap = (V) colormaps.colormaps[colormaps.colormaps.length - 5];
+          for(int i=0; i < 256; i++){
+            array[i] = (short) ((0*9999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 1])[i])/10000);
+          }
+          vis.colormap = (V) array;
         }
     }
 

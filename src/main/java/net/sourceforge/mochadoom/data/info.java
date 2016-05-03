@@ -4679,7 +4679,7 @@ public class info {
                 StateNum.S_POSS_DIE1,        // deathstate
                 StateNum.S_POSS_XDIE1,        // xdeathstate
                 sfxenum_t.sfx_podth1,        // deathsound
-                50,        // speed
+                30,        // speed
                 20 * FRACUNIT,        // radius
                 56 * FRACUNIT,        // height
                 100,        // mass

@@ -2710,6 +2710,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         viewactive = true;
         gameepisode = episode;
         gamemap = map;
+        // BJPR: Dificultad juego.
         gameskill = skill;
 
         viewactive = true;

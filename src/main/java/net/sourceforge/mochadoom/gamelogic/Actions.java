@@ -1525,7 +1525,7 @@ public class Actions extends UnifiedGameMap {
         mobj.height = info.height;
         mobj.flags = info.flags;
         mobj.health = info.spawnhealth;
-
+        // BJPR: dificultad del juego.
         if (DM.gameskill != Skill.sk_nightmare)
             mobj.reactiontime = info.reactiontime;
 
@@ -1538,6 +1538,8 @@ public class Actions extends UnifiedGameMap {
         mobj.tics = st.tics;
         mobj.sprite = st.sprite;
         mobj.frame = st.frame;
+        
+        
 
 // set subsector and/or block links
         LL.SetThingPosition(mobj);
@@ -1563,13 +1565,42 @@ public class Actions extends UnifiedGameMap {
       mobjtype_t type;
       state_t st;
       mobjinfo_t info;
+      mobjinfo_t info2 = new mobjinfo_t(        // BJPR: MT_BLACKZOMBIE
+          mobjinfo[source.type.ordinal()].doomednum,        // doomednum
+          mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
+          mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
+          mobjinfo[source.type.ordinal()].seestate,        // seestate
+          mobjinfo[source.type.ordinal()].seesound,        // seesound
+          mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
+          mobjinfo[source.type.ordinal()].attacksound,        // attacksound
+          mobjinfo[source.type.ordinal()].painstate,        // painstate
+          mobjinfo[source.type.ordinal()].painchance,        // painchance
+          mobjinfo[source.type.ordinal()].painsound,        // painsound
+          mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
+          mobjinfo[source.type.ordinal()].missilestate,        // missilestate
+          mobjinfo[source.type.ordinal()].deathstate,        // deathstate
+          mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
+          mobjinfo[source.type.ordinal()].deathsound,        // deathsound
+          mobjinfo[source.type.ordinal()].speed,        // speed
+          mobjinfo[source.type.ordinal()].radius,        // radius
+          mobjinfo[source.type.ordinal()].height,        // height
+          mobjinfo[source.type.ordinal()].mass,        // mass
+          mobjinfo[source.type.ordinal()].damage,        // damage
+          mobjinfo[source.type.ordinal()].activesound,        // activesound
+          mobjinfo[source.type.ordinal()].flags,        // flags
+          mobjinfo[source.type.ordinal()].raisestate        // raisestate
+  );
 
       mobj = new mobj_t(this);
       type = mobjtype_t.MT_REDZOMBIE;
-      info = mobjinfo[type.ordinal()];
-
+      info = mobjinfo[type.ordinal()];      
+      
       mobj.type = type;
-      mobj.info = info;
+      mobj.info = info2;
+      mobj.info.missilestate = info.missilestate;
+      mobj.info.meleestate = info.meleestate;
+      mobj.info.speed = info.speed;
+      
       mobj.x = x;
       mobj.y = y;
       mobj.radius = info.radius;
@@ -1582,8 +1613,9 @@ public class Actions extends UnifiedGameMap {
 
       mobj.lastlook = RND.P_Random() % MAXPLAYERS;
 
-      st = states[info.spawnstate.ordinal()];
-
+      st = states[mobjinfo[source.type.ordinal()].spawnstate.ordinal()];
+      //System.out.println(source.type);
+      
       mobj.state = st;
       mobj.tics = st.tics;
       mobj.sprite = st.sprite;
@@ -1898,11 +1930,7 @@ public class Actions extends UnifiedGameMap {
      * P_SpawnMissile
      */
 
-    protected mobj_t
-    SpawnMissile
-    (mobj_t source,
-     mobj_t dest,
-     mobjtype_t type) {
+    protected mobj_t SpawnMissile(mobj_t source,mobj_t dest,mobjtype_t type) {
         mobj_t th;
         long an; // angle_t
         int dist;
@@ -2194,10 +2222,10 @@ public class Actions extends UnifiedGameMap {
                 && target.info.xdeathstate != StateNum.S_NULL) {
             target.SetMobjState(target.info.xdeathstate);
         } else {
+          target.SetMobjState(target.info.deathstate);
           if(!(zombiearray.contains(target.type))){
             SpawnZombieMobj(target.x,target.y,target.z,target);
-          }
-          target.SetMobjState(target.info.deathstate);
+          }          
         }
         target.tics -= RND.P_Random() & 3;
 
