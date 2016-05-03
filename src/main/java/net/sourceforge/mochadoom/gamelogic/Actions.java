@@ -1616,6 +1616,7 @@ public class Actions extends UnifiedGameMap {
   			type = mobjtype_t.MT_GREENZOMBIE;
   	  }
    
+      info = mobjinfo[type.ordinal()];
       mobj.type = type;
       mobj.info = info2;
       mobj.info.missilestate = info.missilestate;
