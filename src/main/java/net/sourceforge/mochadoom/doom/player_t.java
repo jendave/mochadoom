@@ -366,6 +366,14 @@ public class player_t /*extends mobj_t */
     private int maxTired;
     
     /**
+     * Returns the maxTired variable.
+     * @return maxTired variable.
+     */
+    public int getMaxTired() {
+      return maxTired;
+    }
+    
+    /**
      * Sets the variable maxTired according to the given
      * skill of the game.
      * @param skill
@@ -392,6 +400,15 @@ public class player_t /*extends mobj_t */
     
     /* How tired is the player now */
     private static int tired = 0;
+    
+    /**
+     * Returns how tired is the player.
+     * @return the tired variable.
+     */
+    public int getTired() {
+      return tired;
+    }
+    
     /* The last time when the player was tired */
     private static long lastTimeTired = 0;
     /* Wait time to begin to decrese the tired variable */
