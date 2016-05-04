@@ -2338,17 +2338,47 @@ public class Actions extends UnifiedGameMap {
    */
   public int getZombieWeigth(String type) {
 	  // BJPR: zombie Prob.
-	  /*
-	   * This is not complete, i have to add the player Skill
-	   */
+	  int greenProb = 0;
+	  int grayProb = 0;
+	  int redPorb = 0;
+	  int blackProb = 0;
+	 
+	  if(DM.gameskill == Skill.sk_baby){
+		  greenProb = 100;
+		  redPorb = 0;
+		  grayProb = 0;
+		  blackProb = 0;
+	  } else if(DM.gameskill == Skill.sk_easy) {
+		  greenProb = 70;
+		  redPorb = 20;
+		  grayProb = 10;
+		  blackProb = 0;
+	  } else if(DM.gameskill == Skill.sk_medium) {
+		  greenProb = 50;
+		  redPorb = 30;
+		  grayProb = 15;
+		  blackProb = 5;
+	  } else if(DM.gameskill == Skill.sk_hard) {
+		  greenProb = 20;
+		  redPorb = 30;
+		  grayProb = 30;
+		  blackProb = 20;
+	  } else if(DM.gameskill == Skill.sk_nightmare) {
+		  greenProb = 10;
+		  redPorb = 20;
+		  grayProb = 30;
+		  blackProb = 40;
+	  }
+	  
+	  
 	  if(type.equals("green")) {
-		  return 50;
+		  return greenProb;
 	  } else if(type.equals("red")) {
-		  return 30;
+		  return redPorb;
 	  } else if(type.equals("gray")){
-		  return 15;
+		  return grayProb;
 	  } else if(type.equals("black")) {
-		  return 5;
+		  return blackProb;
 	  }
 	  
 	  /*
