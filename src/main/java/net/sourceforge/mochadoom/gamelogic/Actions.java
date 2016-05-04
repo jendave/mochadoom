@@ -339,7 +339,7 @@ public class Actions extends UnifiedGameMap {
                         break;
                 }
             } else if (floor.direction == -1) {
-                switch (floor.type) //TODO: check if a null floor.type is valid or a bug 
+                switch (floor.type) //TODO: check if a null floor.type is valid or a bug
                 // MAES: actually, type should always be set to something.
                 // In C, this means "zero" or "null". In Java, we must make sure
                 // it's actually set to something all the time.
@@ -2359,15 +2359,15 @@ public class Actions extends UnifiedGameMap {
 		  grayProb = 15;
 		  blackProb = 5;
 	  } else if(DM.gameskill == Skill.sk_hard) {
-		  greenProb = 20;
+		  greenProb = 35;
 		  redPorb = 30;
-		  grayProb = 30;
-		  blackProb = 20;
+		  grayProb = 20;
+		  blackProb = 15;
 	  } else if(DM.gameskill == Skill.sk_nightmare) {
-		  greenProb = 10;
+		  greenProb = 30;
 		  redPorb = 20;
-		  grayProb = 30;
-		  blackProb = 40;
+		  grayProb = 25;
+		  blackProb = 25;
 	  }
 	  
 	  
