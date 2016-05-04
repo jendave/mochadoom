@@ -340,7 +340,7 @@ public class Actions extends UnifiedGameMap {
                         break;
                 }
             } else if (floor.direction == -1) {
-                switch (floor.type) //TODO: check if a null floor.type is valid or a bug 
+                switch (floor.type) //TODO: check if a null floor.type is valid or a bug
                 // MAES: actually, type should always be set to something.
                 // In C, this means "zero" or "null". In Java, we must make sure
                 // it's actually set to something all the time.
@@ -1597,25 +1597,7 @@ public class Actions extends UnifiedGameMap {
       /*
        * Get the zombi's type
        */
-   // BJPR: Prob. function.
-      int generatedZombieType = getRandomZombieType();
-  	  
-      switch (generatedZombieType) {
-  		case 0:
-  			type = mobjtype_t.MT_GREENZOMBIE;
-  			break; //creates green zombie
-  		case 1: 
-  			type = mobjtype_t.MT_REDZOMBIE;
-  			break; //creates red zombie
-  		case 2: 
-  			type = mobjtype_t.MT_GRAYZOMBIE;
-  			break; //creates gray zombie
-  		case 3: 
-  			type = mobjtype_t.MT_BLACKZOMBIE;
-  			break; //creates black zombie
-  		default:
-  			type = mobjtype_t.MT_GREENZOMBIE;
-  	  }
+      type = getRandomMobjtype_tZombie();
    
       info = mobjinfo[type.ordinal()];
       mobj.type = type;
@@ -1660,6 +1642,35 @@ public class Actions extends UnifiedGameMap {
 
       return mobj;
   }
+    
+    /**
+     * 
+     * @return mobjtype_t : Zombie's type, green, gray, red or black.
+     */
+    public mobjtype_t getRandomMobjtype_tZombie() {
+    	// BJPR: Prob. function.
+        int generatedZombieType = getRandomZombieType();
+        mobjtype_t type = null;
+    	  
+        switch (generatedZombieType) {
+    		case 0:
+    			type = mobjtype_t.MT_GREENZOMBIE;
+    			break; //creates green zombie
+    		case 1: 
+    			type = mobjtype_t.MT_REDZOMBIE;
+    			break; //creates red zombie
+    		case 2: 
+    			type = mobjtype_t.MT_GRAYZOMBIE;
+    			break; //creates gray zombie
+    		case 3: 
+    			type = mobjtype_t.MT_BLACKZOMBIE;
+    			break; //creates black zombie
+    		default:
+    			type = mobjtype_t.MT_GREENZOMBIE;
+    	  }
+       
+        return type;
+    }
 
     /**
      * P_RespawnSpecials
@@ -2317,10 +2328,8 @@ public class Actions extends UnifiedGameMap {
   public int getRandomZombieType() {
 	  // BJPR: simple random function
 	  /*
-	   * This asks for a random number between 0 and 100.
-	   * Then if the number is between 0 and 10 is a black zombie,
-	   * 11 30 is a gray zombie, 31 72 is a red zombie and 73 80 is
-	   * green zombie.
+	   * This ask for a random number, then check for wich
+	   * subset of number from 0 to 100 it belongs.
 	   */
 	  
 	  int greenZombieWeigth = getZombieWeigth("green");
@@ -2357,17 +2366,47 @@ public class Actions extends UnifiedGameMap {
    */
   public int getZombieWeigth(String type) {
 	  // BJPR: zombie Prob.
-	  /*
-	   * This is not complete, i have to add the player Skill
-	   */
+	  int greenProb = 0;
+	  int grayProb = 0;
+	  int redPorb = 0;
+	  int blackProb = 0;
+	 
+	  if(DM.gameskill == Skill.sk_baby){
+		  greenProb = 100;
+		  redPorb = 0;
+		  grayProb = 0;
+		  blackProb = 0;
+	  } else if(DM.gameskill == Skill.sk_easy) {
+		  greenProb = 70;
+		  redPorb = 20;
+		  grayProb = 10;
+		  blackProb = 0;
+	  } else if(DM.gameskill == Skill.sk_medium) {
+		  greenProb = 50;
+		  redPorb = 30;
+		  grayProb = 15;
+		  blackProb = 5;
+	  } else if(DM.gameskill == Skill.sk_hard) {
+		  greenProb = 35;
+		  redPorb = 30;
+		  grayProb = 20;
+		  blackProb = 15;
+	  } else if(DM.gameskill == Skill.sk_nightmare) {
+		  greenProb = 30;
+		  redPorb = 20;
+		  grayProb = 25;
+		  blackProb = 25;
+	  }
+	  
+	  
 	  if(type.equals("green")) {
-		  return 50;
+		  return greenProb;
 	  } else if(type.equals("red")) {
-		  return 30;
+		  return redPorb;
 	  } else if(type.equals("gray")){
-		  return 15;
+		  return grayProb;
 	  } else if(type.equals("black")) {
-		  return 5;
+		  return blackProb;
 	  }
 	  
 	  /*
