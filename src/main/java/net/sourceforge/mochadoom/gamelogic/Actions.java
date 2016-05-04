@@ -2289,10 +2289,8 @@ public class Actions extends UnifiedGameMap {
   public int getRandomZombieType() {
 	  // BJPR: simple random function
 	  /*
-	   * This asks for a random number between 0 and 100.
-	   * Then if the number is between 0 and 10 is a black zombie,
-	   * 11 30 is a gray zombie, 31 72 is a red zombie and 73 80 is
-	   * green zombie.
+	   * This ask for a random number, then check for wich
+	   * subset of number from 0 to 100 it belongs.
 	   */
 	  
 	  int greenZombieWeigth = getZombieWeigth("green");
