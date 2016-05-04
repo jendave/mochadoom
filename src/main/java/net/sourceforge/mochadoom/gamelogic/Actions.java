@@ -119,6 +119,7 @@ import static net.sourceforge.mochadoom.utils.C2JUtils.eval;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Action functions need to be aware of:
@@ -2057,7 +2058,19 @@ public class Actions extends UnifiedGameMap {
         player_t player;
         int thrust; // fixed_t
         int temp;
-
+        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
+        
+        //Create array with zombie types.
+        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
+        
+        //Zombie's inmunity to acid.
+        if(zombiearray.contains(target.type) && inflictor == null){
+          //System.out.println("its acid");
+          return;
+        }
         if (!eval(target.flags & MF_SHOOTABLE))
             return; // shouldn't happen...
 
@@ -2185,13 +2198,14 @@ public class Actions extends UnifiedGameMap {
     public void KillMobj(mobj_t source, mobj_t target) {
         mobjtype_t item;
         mobj_t mo;
-        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
+        List<mobjtype_t> noposiblezombiearray= new ArrayList<mobjtype_t>();
         
         //Create array with zombie types.
-        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
-        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_BARREL);
         
         // Maes: this seems necessary in order for barrel damage
         // to propagate inflictors.
@@ -2245,8 +2259,20 @@ public class Actions extends UnifiedGameMap {
             target.SetMobjState(target.info.xdeathstate);
         } else {
           target.SetMobjState(target.info.deathstate);
-          if(!(zombiearray.contains(target.type))){
-        	SpawnZombieMobj(target.x,target.y,target.z,target);
+          if(!(noposiblezombiearray.contains(target.type))){
+            System.out.println(target.type);
+            // Creates a thread that later respawns the zombie after some time.
+            Thread t1 = new Thread(new Runnable() {
+              public void run() {
+                try{
+                 TimeUnit.SECONDS.sleep(5);
+                } catch(InterruptedException e) {}      
+                SpawnZombieMobj(target.x,target.y,target.z,target);
+                target.SetMobjState(StateNum.S_NULL);
+              }
+            });  
+            t1.start();
+            t1.interrupt();
           }          
         }
         target.tics -= RND.P_Random() & 3;
@@ -2279,6 +2305,8 @@ public class Actions extends UnifiedGameMap {
 
         mo = SpawnMobj(target.x, target.y, ONFLOORZ, item);
         mo.flags |= MF_DROPPED;    // special versions of items
+        
+       
     }
 
    /**

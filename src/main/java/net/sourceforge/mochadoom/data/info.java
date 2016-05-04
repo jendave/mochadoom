@@ -2195,7 +2195,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC0
+            new mobjinfo_t(        // MT_MISC0 ARMOR
                     2018,        // doomednum
                     StateNum.S_ARM1,        // spawnstate
                     1000,        // spawnhealth
@@ -2221,7 +2221,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC1
+            new mobjinfo_t(        // MT_MISC1 MEGAARMOR
                     2019,        // doomednum
                     StateNum.S_ARM2,        // spawnstate
                     1000,        // spawnhealth
@@ -2247,7 +2247,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC2
+            new mobjinfo_t(        // MT_MISC2 HEALTH BONUS
                     2014,        // doomednum
                     StateNum.S_BON1,        // spawnstate
                     1000,        // spawnhealth
@@ -2273,7 +2273,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC3
+            new mobjinfo_t(        // MT_MISC3 ARMOR BONUS
                     2015,        // doomednum
                     StateNum.S_BON2,        // spawnstate
                     1000,        // spawnhealth
@@ -2481,7 +2481,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC11
+            new mobjinfo_t(        // MT_MISC11 MEDIKIT
                     2012,        // doomednum
                     StateNum.S_MEDI,        // spawnstate
                     1000,        // spawnhealth
@@ -2741,7 +2741,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC17
+            new mobjinfo_t(        // MT_MISC17 BOX OF BULLETS
                     2048,        // doomednum
                     StateNum.S_AMMO,        // spawnstate
                     1000,        // spawnhealth
@@ -2871,7 +2871,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC22
+            new mobjinfo_t(        // MT_MISC22 SHOTGUN SHELL
                     2008,        // doomednum
                     StateNum.S_SHEL,        // spawnstate
                     1000,        // spawnhealth
@@ -2897,7 +2897,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC23
+            new mobjinfo_t(        // MT_MISC23 
                     2049,        // doomednum
                     StateNum.S_SBOX,        // spawnstate
                     1000,        // spawnhealth
