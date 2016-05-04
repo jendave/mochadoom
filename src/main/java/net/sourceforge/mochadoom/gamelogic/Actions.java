@@ -1596,25 +1596,7 @@ public class Actions extends UnifiedGameMap {
       /*
        * Get the zombi's type
        */
-   // BJPR: Prob. function.
-      int generatedZombieType = getRandomZombieType();
-  	  
-      switch (generatedZombieType) {
-  		case 0:
-  			type = mobjtype_t.MT_GREENZOMBIE;
-  			break; //creates green zombie
-  		case 1: 
-  			type = mobjtype_t.MT_REDZOMBIE;
-  			break; //creates red zombie
-  		case 2: 
-  			type = mobjtype_t.MT_GRAYZOMBIE;
-  			break; //creates gray zombie
-  		case 3: 
-  			type = mobjtype_t.MT_BLACKZOMBIE;
-  			break; //creates black zombie
-  		default:
-  			type = mobjtype_t.MT_GREENZOMBIE;
-  	  }
+      type = getRandomMobjtype_tZombie();
    
       info = mobjinfo[type.ordinal()];
       mobj.type = type;
@@ -1659,6 +1641,35 @@ public class Actions extends UnifiedGameMap {
 
       return mobj;
   }
+    
+    /**
+     * 
+     * @return mobjtype_t : Zombie's type, green, gray, red or black.
+     */
+    public mobjtype_t getRandomMobjtype_tZombie() {
+    	// BJPR: Prob. function.
+        int generatedZombieType = getRandomZombieType();
+        mobjtype_t type = null;
+    	  
+        switch (generatedZombieType) {
+    		case 0:
+    			type = mobjtype_t.MT_GREENZOMBIE;
+    			break; //creates green zombie
+    		case 1: 
+    			type = mobjtype_t.MT_REDZOMBIE;
+    			break; //creates red zombie
+    		case 2: 
+    			type = mobjtype_t.MT_GRAYZOMBIE;
+    			break; //creates gray zombie
+    		case 3: 
+    			type = mobjtype_t.MT_BLACKZOMBIE;
+    			break; //creates black zombie
+    		default:
+    			type = mobjtype_t.MT_GREENZOMBIE;
+    	  }
+       
+        return type;
+    }
 
     /**
      * P_RespawnSpecials
