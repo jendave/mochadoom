@@ -1648,7 +1648,7 @@ public class Actions extends UnifiedGameMap {
      * @return mobjtype_t : Zombie's type, green, gray, red or black.
      */
     public mobjtype_t getRandomMobjtype_tZombie() {
-    	// BJPR: Prob. function.
+    	// BJPR: ramdom zombie factory
         int generatedZombieType = getRandomZombieType();
         mobjtype_t type = null;
     	  
@@ -2276,7 +2276,7 @@ public class Actions extends UnifiedGameMap {
             Thread t1 = new Thread(new Runnable() {
               public void run() {
                 try{
-                 TimeUnit.SECONDS.sleep(5);
+                 TimeUnit.SECONDS.sleep(getZombieSpawnTime());
                 } catch(InterruptedException e) {}      
                 SpawnZombieMobj(target.x,target.y,target.z,target);
                 target.SetMobjState(StateNum.S_NULL);
@@ -2318,6 +2318,28 @@ public class Actions extends UnifiedGameMap {
         mo.flags |= MF_DROPPED;    // special versions of items
         
        
+    }
+
+    /**
+     * Time is chosen depending on the difficulty.
+     *
+     * @return time to spawn a zombie
+     */
+    public int getZombieSpawnTime() {
+        // BJPR : Here is the zombi's SPAWN TIME.
+        if(DM.gameskill == Skill.sk_baby){
+            return 5;
+        } else if(DM.gameskill == Skill.sk_easy) {
+           return 4;
+        } else if(DM.gameskill == Skill.sk_medium) {
+            return 3;
+        } else if(DM.gameskill == Skill.sk_hard) {
+            return 2;
+        } else if(DM.gameskill == Skill.sk_nightmare) {
+           return 1;
+        }
+
+        return 100;
     }
 
    /**

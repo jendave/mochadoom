@@ -2480,7 +2480,7 @@ public class info {
                     MF_SPECIAL,        // flags
                     StateNum.S_NULL        // raisestate
             ),
-
+            // BJPR :  MEDIKIT
             new mobjinfo_t(        // MT_MISC11 MEDIKIT
                     2012,        // doomednum
                     StateNum.S_MEDI,        // spawnstate
