@@ -2283,7 +2283,7 @@ public class Actions extends UnifiedGameMap {
               }
             });  
             t1.start();
-            t1.interrupt();
+
           }          
         }
         target.tics -= RND.P_Random() & 3;
