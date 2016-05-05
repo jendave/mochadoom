@@ -2321,9 +2321,9 @@ public class Actions extends UnifiedGameMap {
     }
 
     /**
-     * Time is chosen depending on the difficulty.
+     * Time (in secods) is chosen depending on the difficulty.
      *
-     * @return time to spawn a zombie
+     * @return time to spawn a zombie in seconds
      */
     public int getZombieSpawnTime() {
         // BJPR : Here is the zombi's SPAWN TIME.
