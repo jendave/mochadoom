@@ -15,6 +15,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.mochadoom.rendering.subsector_t;
 import net.sourceforge.mochadoom.sound.ISoundOrigin;
 import net.sourceforge.mochadoom.wad.IPackableDoomObject;
@@ -308,7 +311,13 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
 
     public boolean SetMobjState(StateNum state) {
         state_t st;
-
+        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
+        
+        //Create array with zombie types.
+        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         do {
             if (state == StateNum.S_NULL) {
                 state = null;
@@ -320,7 +329,14 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
             st = states[state.ordinal()];
             this.state = st;
             tics = st.tics;
-            sprite = st.sprite;
+            // BJPR: MEELEE ATTACK
+            if(!(zombiearray.contains(this.type))){
+              
+              sprite = st.sprite;
+            }
+            else{
+              //System.out.println(st.nextstate);
+            }
             frame = (int) st.frame;
 
             // Modified handling.

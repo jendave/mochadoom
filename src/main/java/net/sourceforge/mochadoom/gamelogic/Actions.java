@@ -1603,7 +1603,7 @@ public class Actions extends UnifiedGameMap {
       mobj.type = type;
       mobj.info = info2;
       mobj.info.missilestate = info.missilestate;
-      mobj.info.meleestate = info.meleestate;
+      mobj.info.meleestate = StateNum.S_SARG_ATK1;
       mobj.info.speed = info.speed;
       
       mobj.x = x;

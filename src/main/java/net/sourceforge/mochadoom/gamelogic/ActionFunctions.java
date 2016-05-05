@@ -1188,7 +1188,13 @@ public class ActionFunctions implements DoomStatusAware {
 
             A_FaceTarget(actor);
             if (EN.CheckMeleeRange(actor)) {
-                damage = ((RND.P_Random() % 10) + 1) * 4;
+              // BJPR: LETAAAL
+                if(actor.type == mobjtype_t.MT_BLACKZOMBIE){
+                  damage = 300;
+                }
+                else{
+                  damage = ((RND.P_Random() % 10) + 1) * 4;
+                }
                 A.DamageMobj(actor.target, actor, actor, damage);
             }
         }
