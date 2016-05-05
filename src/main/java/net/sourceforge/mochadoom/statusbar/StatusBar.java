@@ -472,6 +472,9 @@ public class StatusBar extends AbstractStatusBar {
 
     // idmypos toggle mode
     private boolean st_idmypos = false;
+    
+    // mytired toggle mode
+    private boolean st_mytired = false;
 
     // Massive bunches of cheat shit
     // to keep it from being easy to figure them out.
@@ -519,6 +522,9 @@ public class StatusBar extends AbstractStatusBar {
     private char cheat_mypos_seq[] =
             {0xb2, 0x26, 0xb6, 0xba, 0x2a, 0xf6, 0xea, 0xff // idmypos
             };
+    
+    // tiredness cheat
+    private char cheat_mytired_seq[] = {'m', 'y', 't', 'i', 'r', 'e', 'd', 0xff};
 
     // Now what?
     cheatseq_t cheat_mus = new cheatseq_t(cheat_mus_seq, 0);
@@ -548,6 +554,8 @@ public class StatusBar extends AbstractStatusBar {
     cheatseq_t cheat_clev = new cheatseq_t(cheat_clev_seq, 0);
 
     cheatseq_t cheat_mypos = new cheatseq_t(cheat_mypos_seq, 0);
+    
+    cheatseq_t cheat_mytired = new cheatseq_t(cheat_mytired_seq, 0);
 
     cheatseq_t cheat_tnthom = new cheatseq_t("tnthom", false);
 
@@ -747,6 +755,10 @@ public class StatusBar extends AbstractStatusBar {
                     plyr.weaponowned[weapontype_t.wp_chainsaw.ordinal()] = true;
                     plyr.powers[pw_invulnerability] = 1; // true
                     plyr.message = STSTR_CHOPPERS;
+                }
+                // 'mytired' to show how tired is the player.
+                else if (cheat_mytired.CheckCheat((char) ev.data1)) {
+                  st_mytired = !st_mytired;
                 }
                 // 'mypos' for player position
                 else if (cheat_mypos.CheckCheat((char) ev.data1)) {
@@ -1000,10 +1012,12 @@ public class StatusBar extends AbstractStatusBar {
         }
         
         // Show the percentage of how tired is the player.
-        int tired = plyr.getTired();
-        int maxTired = plyr.getMaxTired();
-        int percentage = (tired*100)/maxTired;
-        plyr.message = String.format("Tiredness: %d %c", percentage, '%');
+        if (st_mytired) {
+          int tired = plyr.getTired();
+          int maxTired = plyr.getMaxTired();
+          int percentage = (tired*100)/maxTired;
+          plyr.message = String.format("Tiredness: %d %c", percentage, '%');
+        }
         
 
 
