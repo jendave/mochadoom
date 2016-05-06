@@ -1615,7 +1615,7 @@ public class Actions extends UnifiedGameMap {
 
       if (DM.gameskill != Skill.sk_nightmare)
           mobj.reactiontime = info.reactiontime;
-
+      
       mobj.lastlook = RND.P_Random() % MAXPLAYERS;
 
       st = states[mobjinfo[source.type.ordinal()].spawnstate.ordinal()];
@@ -2217,7 +2217,7 @@ public class Actions extends UnifiedGameMap {
         noposiblezombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
         noposiblezombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         noposiblezombiearray.add(mobjtype_t.MT_BARREL);
-        
+
         // Maes: this seems necessary in order for barrel damage
         // to propagate inflictors.
         target.target = source;
@@ -2271,7 +2271,7 @@ public class Actions extends UnifiedGameMap {
         } else {
           target.SetMobjState(target.info.deathstate);
           if(!(noposiblezombiearray.contains(target.type))){
-            System.out.println(target.type);
+            //System.out.println(target.type);
             // Creates a thread that later respawns the zombie after some time.
             Thread t1 = new Thread(new Runnable() {
               public void run() {
@@ -2280,11 +2280,11 @@ public class Actions extends UnifiedGameMap {
                 } catch(InterruptedException e) {}      
                 SpawnZombieMobj(target.x,target.y,target.z,target);
                 target.SetMobjState(StateNum.S_NULL);
+                RemoveMobj(target);
               }
             });  
             t1.start();
-
-          }          
+          }
         }
         target.tics -= RND.P_Random() & 3;
 
@@ -2316,7 +2316,6 @@ public class Actions extends UnifiedGameMap {
 
         mo = SpawnMobj(target.x, target.y, ONFLOORZ, item);
         mo.flags |= MF_DROPPED;    // special versions of items
-        
        
     }
 
@@ -3453,11 +3452,7 @@ public class Actions extends UnifiedGameMap {
      * @param x     fixed_t
      * @param y     fixed_t
      */
-    public boolean
-    CheckPosition
-    (mobj_t thing,
-     int x,
-     int y) {
+    public boolean CheckPosition(mobj_t thing, int x, int y) {
         int xl;
         int xh;
         int yl;

@@ -1,6 +1,7 @@
 package net.sourceforge.mochadoom.doom;
 
 import net.sourceforge.mochadoom.data.Tables;
+import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.AmmoType;
@@ -119,6 +120,7 @@ public class player_t /*extends mobj_t */
     public player_t() {
         powers = new int[NUMPOWERS];
         frags = new int[MAXPLAYERS];
+        countrevivals = 0;
         ammo = new int[NUMAMMO];
         //maxammo = new int[NUMAMMO];
         maxammo = new int[NUMAMMO];
@@ -152,6 +154,9 @@ public class player_t /*extends mobj_t */
      * playerstate_t
      */
     public int playerstate;
+    
+    // number of times player has revived.
+    public int countrevivals;
 
     public ticcmd_t cmd;
 
@@ -1329,7 +1334,7 @@ public class player_t /*extends mobj_t */
         int killcount;
         int itemcount;
         int secretcount;
-
+        
         // System.arraycopy(players[player].frags, 0, frags, 0, frags.length);
         // We save the player's frags here...
         C2JUtils.memcpy(frags, this.frags, frags.length);

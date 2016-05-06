@@ -167,6 +167,7 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     public state_t state;
     public int flags;
     public int health;
+    public short[] zombiecolormap = null;
 
     /**
      * Movement direction, movement generation (zig-zagging).
@@ -304,6 +305,10 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
       * instance-specific, so they were implemented here rather that being
       * scattered all over the package.
       */
+    /* just to use A to zombiefy player*/
+    public Actions getActions(){
+      return A;
+    }
 
     /**
      * P_SetMobjState Returns true if the mobj is still present.
