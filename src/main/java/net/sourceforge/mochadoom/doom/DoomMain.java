@@ -1627,7 +1627,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         cmd.chatchar = HU.dequeueChatChar();
 
         if (gamekeydown[key_fire] || mousebuttons(mousebfire)
-                || joybuttons(joybfire)|| mousebuttons(2) )
+                || joybuttons(joybfire)|| mousebuttons(mousebstrafe) )
             cmd.buttons |= BT_ATTACK;
 
         if (gamekeydown[key_use] || joybuttons(joybuse)) {
