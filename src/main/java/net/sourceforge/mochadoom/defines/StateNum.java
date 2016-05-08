@@ -18,6 +18,10 @@ public enum StateNum {
     S_PISTOL2,
     S_PISTOL3,
     S_PISTOL4,
+    
+    S_PISTOL5,    // <----
+    S_PISTOL6,    // <----
+    
     S_PISTOLFLASH,
     S_SGUN,
     S_SGUNDOWN,

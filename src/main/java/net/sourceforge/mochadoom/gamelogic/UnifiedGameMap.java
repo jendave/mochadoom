@@ -738,6 +738,21 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             player.SetPsprite(player_t.ps_weapon, newstate);
             NoiseAlert(player.mo, player.mo);
         }
+        
+        /**
+         * P_FireWeapon. Originally in pspr
+         */
+        public void AlternateFire(player_t player) {
+            StateNum newstate;
+
+            if (!player.CheckAmmo())
+                return;
+
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK1);
+            newstate = weaponinfo[player.readyweapon.ordinal()].atkaltern;
+            player.SetPsprite(player_t.ps_weapon, newstate);
+            NoiseAlert(player.mo, player.mo);
+        }
 
         //
         // P_Move
