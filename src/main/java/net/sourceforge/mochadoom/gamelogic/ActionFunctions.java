@@ -281,7 +281,7 @@ public class ActionFunctions implements DoomStatusAware {
      */
 
     public void doWireState(state_t st) {
-        //System.out.println("Dispatching: "+action);
+      //  System.out.println("Dispatching: "+st.action);
         if (st.action == null) return;
         switch (st.action) {
             case P_MobjThinker:
