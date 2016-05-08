@@ -60,6 +60,9 @@ public class items {
                     ),
                     new weaponinfo_t(
                             // pistol
+                    		// Code.102
+                    		// Se agrego StateNum.S_PISTOL5 para asignar el disparo secundario
+                    		// Intercambiar en los demas weaponinfo por los nuevos StateNum
                             AmmoType.am_clip,
                             StateNum.S_PISTOLUP,
                             StateNum.S_PISTOLDOWN,
@@ -74,7 +77,7 @@ public class items {
                     StateNum.S_SGUNDOWN,
                     StateNum.S_SGUN,
                     StateNum.S_SGUN1,
-                    StateNum.S_SGUN1,
+                    StateNum.S_EXAMPLE1,
                     StateNum.S_SGUNFLASH1
             ),
                     new weaponinfo_t(

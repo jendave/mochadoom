@@ -35,6 +35,10 @@ public enum StateNum {
     S_SGUN7,
     S_SGUN8,
     S_SGUN9,
+    //Code.109 Se Agreg el StateNum de example 1 y 2
+    S_EXAMPLE1,
+    S_EXAMPLE2,
+    
     S_SGUNFLASH1,
     S_SGUNFLASH2,
     S_DSGUN,
