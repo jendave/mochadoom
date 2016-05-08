@@ -31,7 +31,7 @@ import net.sourceforge.mochadoom.menu.VarsManager;
 //
 //-----------------------------------------------------------------------------
 
-
+//commit test 1 nico
 public class Main {
     public static BppMode bpp;
 
