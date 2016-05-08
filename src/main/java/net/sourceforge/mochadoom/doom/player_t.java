@@ -1111,7 +1111,7 @@ public class player_t /*extends mobj_t */
         do {
             if (weaponowned[weapontype_t.wp_plasma.ordinal()]
                     && (this.ammo[AmmoType.am_cell.ordinal()] != 0)
-                    && !DS.isShareware()) {
+                    /*&& !DS.isShareware()*/ ) {
                 pendingweapon = weapontype_t.wp_plasma;
             } else if (weaponowned[weapontype_t.wp_supershotgun.ordinal()]
                     && this.ammo[AmmoType.am_shell.ordinal()] > 2
@@ -1132,7 +1132,7 @@ public class player_t /*extends mobj_t */
                 pendingweapon = weapontype_t.wp_missile;
             } else if (weaponowned[weapontype_t.wp_bfg.ordinal()]
                     && this.ammo[AmmoType.am_cell.ordinal()] > 40
-                    && !DS.isShareware()) {
+                    /*&& !DS.isShareware()*/ ) {
                 pendingweapon = weapontype_t.wp_bfg;
             } else {
                 // If everything fails.
@@ -1256,9 +1256,9 @@ public class player_t /*extends mobj_t */
                     && newweapon != player.readyweapon) {
                 // Do not go to plasma or BFG in shareware,
                 //  even if cheated.
-                if ((newweapon != weapontype_t.wp_plasma
+                if ( true/*(newweapon != weapontype_t.wp_plasma
                         && newweapon != weapontype_t.wp_bfg)
-                        || !DS.isShareware()) {
+                        || !DS.isShareware() */) {
                     player.pendingweapon = newweapon;
                 }
             }

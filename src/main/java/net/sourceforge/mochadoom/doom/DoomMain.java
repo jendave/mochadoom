@@ -89,6 +89,7 @@ import static net.sourceforge.mochadoom.data.Defines.BTS_SAVEGAME;
 import static net.sourceforge.mochadoom.data.Defines.BTS_SAVEMASK;
 import static net.sourceforge.mochadoom.data.Defines.BTS_SAVESHIFT;
 import static net.sourceforge.mochadoom.data.Defines.BT_ATTACK;
+import static net.sourceforge.mochadoom.data.Defines.BT_ALTERN;
 import static net.sourceforge.mochadoom.data.Defines.BT_CHANGE;
 import static net.sourceforge.mochadoom.data.Defines.BT_SPECIAL;
 import static net.sourceforge.mochadoom.data.Defines.BT_SPECIALMASK;
@@ -1623,19 +1624,33 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             look = TOCENTER;
         }
 
-        // buttons
+        // buttons 
         cmd.chatchar = HU.dequeueChatChar();
 
         if (gamekeydown[key_fire] || mousebuttons(mousebfire)
-                || joybuttons(joybfire))
+                || joybuttons(joybfire) )
+        	
+        	// Shoot
             cmd.buttons |= BT_ATTACK;
 
+        
+        
+        
+        if ( mousebuttons(mousebstrafe) )
+        	
+        	// Altern shoot
+			cmd.buttons |= BT_ALTERN;    // <----
+        
+        
+        
+        
+        
         if (gamekeydown[key_use] || joybuttons(joybuse)) {
             cmd.buttons |= BT_USE;
             // clear double clicks if hit use button 
             dclicks = 0;
         }
-
+        
         // chainsaw overrides 
         for (i = 0; i < NUMWEAPONS - 1; i++)
             if (gamekeydown['1' + i]) {

@@ -125,6 +125,10 @@ public class info {
             new state_t(spritenum_t.SPR_PISG, 1, 6, think_t.A_FirePistol, StateNum.S_PISTOL3, 0, 0),// S_PISTOL2
             new state_t(spritenum_t.SPR_PISG, 2, 4, null, StateNum.S_PISTOL4, 0, 0),    // S_PISTOL3
             new state_t(spritenum_t.SPR_PISG, 1, 5, think_t.A_ReFire, StateNum.S_PISTOL, 0, 0),    // S_PISTOL4
+            
+   /*->*/   new state_t(spritenum_t.SPR_PISG, 0, 4, null, StateNum.S_PISTOL6, 0, 0),    // S_PISTOL5
+   /*->*/   new state_t(spritenum_t.SPR_PISG, 1, 6, think_t.A_FirePistolAlternate, StateNum.S_PISTOL3, 0, 0),// S_PISTOL6
+            
             new state_t(spritenum_t.SPR_PISF, 32768, 7, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PISTOLFLASH
             new state_t(spritenum_t.SPR_SHTG, 0, 1, think_t.A_WeaponReady, StateNum.S_SGUN, 0, 0),    // S_SGUN
             new state_t(spritenum_t.SPR_SHTG, 0, 1, think_t.A_Lower, StateNum.S_SGUNDOWN, 0, 0),    // S_SGUNDOWN
