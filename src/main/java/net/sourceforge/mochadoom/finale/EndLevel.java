@@ -146,6 +146,7 @@ import net.sourceforge.mochadoom.wad.IWadLoader;
 import net.sourceforge.mochadoom.wad.animenum_t;
 
 import static net.sourceforge.mochadoom.data.Defines.BT_ATTACK;
+import static net.sourceforge.mochadoom.data.Defines.BT_ALTERN;
 import static net.sourceforge.mochadoom.data.Defines.BT_USE;
 import static net.sourceforge.mochadoom.data.Defines.NUMMAPS;
 import static net.sourceforge.mochadoom.data.Defines.PU_CACHE;
@@ -1390,11 +1391,14 @@ public class EndLevel<T, V> extends AbstractEndLevel {
         for (int i = 0; i < MAXPLAYERS; i++) {
             player_t player = DS.players[i];
             if (DS.playeringame[i]) {
-                if ((player.cmd.buttons & BT_ATTACK) != 0) {
+                if ((player.cmd.buttons & BT_ATTACK |
+                		player.cmd.buttons & BT_ALTERN) != 0 ) {
                     if (!player.attackdown)
                         acceleratestage = 1;
                     player.attackdown = true;
-                } else
+                } 
+                
+                else
                     player.attackdown = false;
                 if ((player.cmd.buttons & BT_USE) != 0) {
                     if (!player.usedown)
