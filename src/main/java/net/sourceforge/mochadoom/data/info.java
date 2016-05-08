@@ -128,7 +128,7 @@ public class info {
             
    /*->*/   new state_t(spritenum_t.SPR_PISG, 0, 4, null, StateNum.S_PISTOL6, 0, 0),    // S_PISTOL5
    /*->*/   new state_t(spritenum_t.SPR_PISG, 1, 6, think_t.A_FirePistolAlternate, StateNum.S_PISTOL3, 0, 0),// S_PISTOL6
-            
+   
             new state_t(spritenum_t.SPR_PISF, 32768, 7, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PISTOLFLASH
             new state_t(spritenum_t.SPR_SHTG, 0, 1, think_t.A_WeaponReady, StateNum.S_SGUN, 0, 0),    // S_SGUN
             new state_t(spritenum_t.SPR_SHTG, 0, 1, think_t.A_Lower, StateNum.S_SGUNDOWN, 0, 0),    // S_SGUNDOWN
@@ -142,6 +142,11 @@ public class info {
             new state_t(spritenum_t.SPR_SHTG, 1, 5, null, StateNum.S_SGUN8, 0, 0),    // S_SGUN7
             new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_SGUN9, 0, 0),    // S_SGUN8
             new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_ReFire, StateNum.S_SGUN, 0, 0),    // S_SGUN9
+            
+   			//Code.110 Se agregan los state para el modo de disparo de ejemplo
+   			new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
+   			new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
+   			
             new state_t(spritenum_t.SPR_SHTF, 32768, 4, think_t.A_Light1, StateNum.S_SGUNFLASH2, 0, 0),    // S_SGUNFLASH1
             new state_t(spritenum_t.SPR_SHTF, 32769, 3, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_SGUNFLASH2
             new state_t(spritenum_t.SPR_SHT2, 0, 1, think_t.A_WeaponReady, StateNum.S_DSGUN, 0, 0),    // S_DSGUN
