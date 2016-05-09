@@ -21,6 +21,7 @@ import net.sourceforge.mochadoom.rendering.line_t;
 import net.sourceforge.mochadoom.sound.IDoomSound;
 
 import static net.sourceforge.mochadoom.data.Defines.BT_ATTACK;
+import static net.sourceforge.mochadoom.data.Defines.BT_ALTERN;
 import static net.sourceforge.mochadoom.data.Defines.MELEERANGE;
 import static net.sourceforge.mochadoom.data.Defines.MISSILERANGE;
 import static net.sourceforge.mochadoom.data.Defines.PST_DEAD;
@@ -75,6 +76,9 @@ public class ActionFunctions implements DoomStatusAware {
         Punch = new A_Punch();
         ReFire = new A_ReFire();
         FirePistol = new A_FirePistol();
+        FirePistolAlternate = new A_FirePistolAlternate();
+        //Code.106 Se inicializa el disparo secundario
+        FireExample = new A_FireExample();
         Light0 = new A_Light0();
         Light1 = new A_Light1();
         Light2 = new A_Light2();
@@ -192,6 +196,9 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 Punch;
     ActionType2 ReFire;
     ActionType2 FirePistol;
+    ActionType2 FirePistolAlternate;
+    //Code.105 Se declara el Disparo Secundario
+    ActionType2 FireExample;
     ActionType2 Light0;
     ActionType2 Light1;
     ActionType2 Light2;
@@ -281,7 +288,7 @@ public class ActionFunctions implements DoomStatusAware {
      */
 
     public void doWireState(state_t st) {
-        //System.out.println("Dispatching: "+action);
+      //  System.out.println("Dispatching: "+st.action);
         if (st.action == null) return;
         switch (st.action) {
             case P_MobjThinker:
@@ -308,6 +315,13 @@ public class ActionFunctions implements DoomStatusAware {
             case A_FirePistol:
                 st.acp2 = FirePistol;
                 break;
+            case A_FirePistolAlternate:
+            	st.acp2 = FirePistolAlternate;
+            	break;
+            //Code.107 Se agrega el caso de disparo de example
+            case A_FireExample:
+            	st.acp2 = FireExample;
+            	break;
             case A_Light1:
                 st.acp2 = Light1;
                 break;
@@ -575,6 +589,13 @@ public class ActionFunctions implements DoomStatusAware {
             case A_FirePistol:
                 st.acp2 = FirePistol;
                 break;
+            case A_FirePistolAlternate:
+            	st.acp2 = FirePistolAlternate;
+            	break;
+            //Code.108 Se agrega el caso de disparo de example
+            case A_FireExample:
+            	st.acp2 = FireExample;
+            	break;
             case A_Light1:
                 st.acp2 = Light1;
                 break;
@@ -1478,7 +1499,60 @@ public class ActionFunctions implements DoomStatusAware {
             A.P_GunShot(player.mo, !eval(player.refire));
         }
     }
+    
+    //
+    // A_FirePistolAlternate
+    //
+    class A_FirePistolAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            S.StartSound(player.mo, sfxenum_t.sfx_pistol);
 
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+
+            player.SetPsprite(
+                    ps_flash,
+                    weaponinfo[player.readyweapon.ordinal()].flashstate);
+
+            A.P_BulletSlope(player.mo);
+            A.P_GunShot2(player.mo, !eval(player.refire));
+        }
+    }
+    
+    //
+    // Code.104 implementacion ejemplo disparo secundario
+    // A_FireExample
+    //
+    class A_FireExample implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+        	  int i;
+              long angle;
+              int damage;
+
+
+              S.StartSound(player.mo, sfxenum_t.sfx_shotgn);
+              player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+
+              player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] -= 2;
+
+              player.SetPsprite(
+                      ps_flash,
+                      weaponinfo[player.readyweapon.ordinal()].flashstate);
+
+              A.P_BulletSlope(player.mo);
+
+              for (i = 0; i < 20; i++) {
+                  damage = 5 * (RND.P_Random() % 3 + 1);
+                  angle = player.mo.angle;
+                  angle += (RND.P_Random() - RND.P_Random()) << 19;
+                  A.LineAttack(player.mo,
+                          angle,
+                          MISSILERANGE,
+                          A.bulletslope + ((RND.P_Random() - RND.P_Random()) << 5), damage);
+              }
+          }
+    }
+    
     //
     // A_FireShotgun
     //
@@ -1894,7 +1968,20 @@ public class ActionFunctions implements DoomStatusAware {
                     EN.FireWeapon(player);
                     return;
                 }
-            } else
+            }
+            
+            else if (eval(player.cmd.buttons & BT_ALTERN)) {
+                if (!player.attackdown
+                        || (player.readyweapon != weapontype_t.wp_missile
+                        && player.readyweapon != weapontype_t.wp_bfg)) {
+                    player.attackdown = true;
+                    EN.AlternateFire(player);
+                    return;
+                }
+            } 
+            
+            
+            else
                 player.attackdown = false;
 
             // bob the weapon based on movement speed
@@ -1948,7 +2035,16 @@ public class ActionFunctions implements DoomStatusAware {
                     && eval(player.health[0])) {
                 player.refire++;
                 EN.FireWeapon(player);
-            } else {
+            }
+            
+            else if (eval(player.cmd.buttons & BT_ALTERN)
+                    && player.pendingweapon == weapontype_t.wp_nochange
+                    && eval(player.health[0])) {
+                player.refire++;
+                EN.AlternateFire(player);
+            }
+            
+            else {
                 player.refire = 0;
                 player.CheckAmmo();
             }
