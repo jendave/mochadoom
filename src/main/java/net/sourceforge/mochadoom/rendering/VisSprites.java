@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sun.prism.paint.Color;
-
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.gamelogic.mobj_t;
 import net.sourceforge.mochadoom.utils.C2JUtils;

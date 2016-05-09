@@ -89,6 +89,7 @@ import static net.sourceforge.mochadoom.data.Defines.BTS_SAVEGAME;
 import static net.sourceforge.mochadoom.data.Defines.BTS_SAVEMASK;
 import static net.sourceforge.mochadoom.data.Defines.BTS_SAVESHIFT;
 import static net.sourceforge.mochadoom.data.Defines.BT_ATTACK;
+import static net.sourceforge.mochadoom.data.Defines.BT_ALTERN;
 import static net.sourceforge.mochadoom.data.Defines.BT_CHANGE;
 import static net.sourceforge.mochadoom.data.Defines.BT_SPECIAL;
 import static net.sourceforge.mochadoom.data.Defines.BT_SPECIALMASK;
@@ -1288,8 +1289,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             DeferedPlayDemo(loaddemo);
             DoomLoop();  // never returns
         }
-
-
+        
         DoomLoop();  // never returns
     }
 
@@ -1623,19 +1623,33 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             look = TOCENTER;
         }
 
-        // buttons
+        // buttons 
         cmd.chatchar = HU.dequeueChatChar();
 
         if (gamekeydown[key_fire] || mousebuttons(mousebfire)
-                || joybuttons(joybfire))
+                || joybuttons(joybfire) )
+        	
+        	// Shoot
             cmd.buttons |= BT_ATTACK;
 
+        
+        
+        
+        if ( mousebuttons(mousebstrafe) )
+        	
+        	// Altern shoot
+			cmd.buttons |= BT_ALTERN;    // <----
+        
+        
+        
+        
+        
         if (gamekeydown[key_use] || joybuttons(joybuse)) {
             cmd.buttons |= BT_USE;
             // clear double clicks if hit use button 
             dclicks = 0;
         }
-
+        
         // chainsaw overrides 
         for (i = 0; i < NUMWEAPONS - 1; i++)
             if (gamekeydown['1' + i]) {
@@ -1921,6 +1935,9 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     mousebuttons(0, ev.data1 & 1);
                     mousebuttons(1, ev.data1 & 2);
                     mousebuttons(2, ev.data1 & 4);
+
+                    System.out.println("presiono el mouse: "+ ev.data1);
+                    
                     mousex = ev.data2 * (mouseSensitivity + 5) / 10;
                     mousey = ev.data3 * (mouseSensitivity + 5) / 10;
                 }
@@ -2110,7 +2127,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // clear everything else to defaults 
         p.PlayerReborn();
-
     }
 
     //
@@ -2712,6 +2728,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         gamemap = map;
         // BJPR: Dificultad juego.
         gameskill = skill;
+        
+        for(int i1=0; i1< MAXPLAYERS ; i1++) {
+          players[i1].updateGameSkill();
+        }
 
         viewactive = true;
 
