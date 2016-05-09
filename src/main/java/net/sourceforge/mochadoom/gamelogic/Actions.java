@@ -5,6 +5,7 @@ import net.sourceforge.mochadoom.data.mapthing_t;
 import net.sourceforge.mochadoom.data.mobjinfo_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
+import net.sourceforge.mochadoom.data.spritenum_t;
 import net.sourceforge.mochadoom.data.state_t;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
@@ -115,6 +116,10 @@ import static net.sourceforge.mochadoom.rendering.line_t.ML_BLOCKMONSTERS;
 import static net.sourceforge.mochadoom.rendering.line_t.ML_SECRET;
 import static net.sourceforge.mochadoom.rendering.line_t.ML_TWOSIDED;
 import static net.sourceforge.mochadoom.utils.C2JUtils.eval;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Action functions need to be aware of:
@@ -335,7 +340,7 @@ public class Actions extends UnifiedGameMap {
                         break;
                 }
             } else if (floor.direction == -1) {
-                switch (floor.type) //TODO: check if a null floor.type is valid or a bug 
+                switch (floor.type) //TODO: check if a null floor.type is valid or a bug
                 // MAES: actually, type should always be set to something.
                 // In C, this means "zero" or "null". In Java, we must make sure
                 // it's actually set to something all the time.
@@ -1478,8 +1483,7 @@ public class Actions extends UnifiedGameMap {
     /**
      * P_NightmareRespawn
      */
-    void
-    NightmareRespawn(mobj_t mobj) {
+    void NightmareRespawn(mobj_t mobj) {
         int x, y, z; // fixed 
         subsector_t ss;
         mobj_t mo;
@@ -1540,12 +1544,7 @@ public class Actions extends UnifiedGameMap {
      * @return
      */
 
-    public mobj_t
-    SpawnMobj
-    (int x,
-     int y,
-     int z,
-     mobjtype_t type) {
+    public mobj_t SpawnMobj(int x, int y, int z, mobjtype_t type) {
         mobj_t mobj;
         state_t st;
         mobjinfo_t info;
@@ -1566,7 +1565,7 @@ public class Actions extends UnifiedGameMap {
         mobj.height = info.height;
         mobj.flags = info.flags;
         mobj.health = info.spawnhealth;
-
+        // BJPR: dificultad del juego.
         if (DM.gameskill != Skill.sk_nightmare)
             mobj.reactiontime = info.reactiontime;
 
@@ -1579,6 +1578,8 @@ public class Actions extends UnifiedGameMap {
         mobj.tics = st.tics;
         mobj.sprite = st.sprite;
         mobj.frame = st.frame;
+        
+        
 
 // set subsector and/or block links
         LL.SetThingPosition(mobj);
@@ -1597,6 +1598,117 @@ public class Actions extends UnifiedGameMap {
         AddThinker(mobj);
 
         return mobj;
+    }
+    // BJPR: Spawns the specific zombie, changing the sprite chosen.
+    public mobj_t SpawnZombieMobj(int x, int y, int z, mobj_t source) {
+      mobj_t mobj;
+      mobjtype_t type;
+      state_t st;
+      mobjinfo_t info;
+      mobjinfo_t info2 = new mobjinfo_t(        // BJPR: MT_BLACKZOMBIE
+          mobjinfo[source.type.ordinal()].doomednum,        // doomednum
+          mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
+          mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
+          mobjinfo[source.type.ordinal()].seestate,        // seestate
+          mobjinfo[source.type.ordinal()].seesound,        // seesound
+          mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
+          mobjinfo[source.type.ordinal()].attacksound,        // attacksound
+          mobjinfo[source.type.ordinal()].painstate,        // painstate
+          mobjinfo[source.type.ordinal()].painchance,        // painchance
+          mobjinfo[source.type.ordinal()].painsound,        // painsound
+          mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
+          mobjinfo[source.type.ordinal()].missilestate,        // missilestate
+          mobjinfo[source.type.ordinal()].deathstate,        // deathstate
+          mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
+          mobjinfo[source.type.ordinal()].deathsound,        // deathsound
+          mobjinfo[source.type.ordinal()].speed,        // speed
+          mobjinfo[source.type.ordinal()].radius,        // radius
+          mobjinfo[source.type.ordinal()].height,        // height
+          mobjinfo[source.type.ordinal()].mass,        // mass
+          mobjinfo[source.type.ordinal()].damage,        // damage
+          mobjinfo[source.type.ordinal()].activesound,        // activesound
+          mobjinfo[source.type.ordinal()].flags,        // flags
+          mobjinfo[source.type.ordinal()].raisestate        // raisestate
+  );
+
+      mobj = new mobj_t(this);
+      
+      /*
+       * Get the zombi's type
+       */
+      type = getRandomMobjtype_tZombie();
+   
+      info = mobjinfo[type.ordinal()];
+      mobj.type = type;
+      mobj.info = info2;
+      mobj.info.missilestate = info.missilestate;
+      mobj.info.meleestate = StateNum.S_SARG_ATK1;
+      mobj.info.speed = info.speed;
+      
+      mobj.x = x;
+      mobj.y = y;
+      mobj.radius = info.radius;
+      mobj.height = info.height;
+      mobj.flags = info.flags;
+      mobj.health = info.spawnhealth;
+
+      if (DM.gameskill != Skill.sk_nightmare)
+          mobj.reactiontime = info.reactiontime;
+      
+      mobj.lastlook = RND.P_Random() % MAXPLAYERS;
+
+      st = states[mobjinfo[source.type.ordinal()].spawnstate.ordinal()];
+      //System.out.println(source.type);
+      
+      mobj.state = st;
+      mobj.tics = st.tics;
+      mobj.sprite = st.sprite;
+      mobj.frame = st.frame;
+      LL.SetThingPosition(mobj);
+
+      mobj.floorz = mobj.subsector.sector.floorheight;
+      mobj.ceilingz = mobj.subsector.sector.ceilingheight;
+
+      if (z == ONFLOORZ)
+          mobj.z = mobj.floorz;
+      else if (z == ONCEILINGZ)
+          mobj.z = mobj.ceilingz - mobj.info.height;
+      else
+          mobj.z = z;
+
+      mobj.function = think_t.P_MobjThinker;
+      AddThinker(mobj);
+
+      return mobj;
+  }
+    
+    /**
+     * 
+     * @return mobjtype_t : Zombie's type, green, gray, red or black.
+     */
+    public mobjtype_t getRandomMobjtype_tZombie() {
+    	// BJPR: ramdom zombie factory
+        int generatedZombieType = getRandomZombieType();
+        mobjtype_t type = null;
+    	  
+        switch (generatedZombieType) {
+    		case 0:
+    			type = mobjtype_t.MT_GREENZOMBIE;
+    			break; //creates green zombie
+    		case 1: 
+    			type = mobjtype_t.MT_REDZOMBIE;
+    			break; //creates red zombie
+    		case 2: 
+    			type = mobjtype_t.MT_GRAYZOMBIE;
+    			break; //creates gray zombie
+    		case 3: 
+    			type = mobjtype_t.MT_BLACKZOMBIE;
+    			break; //creates black zombie
+    		default:
+    			type = mobjtype_t.MT_GREENZOMBIE;
+    	  }
+       
+        return type;
     }
 
     /**
@@ -1841,12 +1953,7 @@ public class Actions extends UnifiedGameMap {
      * @param damage
      */
 
-    void
-    SpawnBlood
-    (int x,
-     int y,
-     int z,
-     int damage) {
+    void SpawnBlood(int x, int y, int z, int damage) {
         mobj_t th;
 
         z += ((RND.P_Random() - RND.P_Random()) << 10);
@@ -1896,11 +2003,7 @@ public class Actions extends UnifiedGameMap {
      * P_SpawnMissile
      */
 
-    protected mobj_t
-    SpawnMissile
-    (mobj_t source,
-     mobj_t dest,
-     mobjtype_t type) {
+    protected mobj_t SpawnMissile(mobj_t source,mobj_t dest,mobjtype_t type) {
         mobj_t th;
         long an; // angle_t
         int dist;
@@ -1999,18 +2102,25 @@ public class Actions extends UnifiedGameMap {
     // Source can be NULL for slime, barrel explosions
     // and other environmental stuff.
     //
-    public void
-    DamageMobj
-    (mobj_t target,
-     mobj_t inflictor,
-     mobj_t source,
-     int damage) {
+    public void DamageMobj(mobj_t target, mobj_t inflictor, mobj_t source, int damage) {
         long ang; // unsigned
         int saved;
         player_t player;
         int thrust; // fixed_t
         int temp;
-
+        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
+        
+        //Create array with zombie types.
+        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
+        
+        //Zombie's inmunity to acid.
+        if(zombiearray.contains(target.type) && inflictor == null){
+          //System.out.println("its acid");
+          return;
+        }
         if (!eval(target.flags & MF_SHOOTABLE))
             return; // shouldn't happen...
 
@@ -2135,12 +2245,17 @@ public class Actions extends UnifiedGameMap {
     //
     // KillMobj
     //
-    public void
-    KillMobj
-    (mobj_t source,
-     mobj_t target) {
+    public void KillMobj(mobj_t source, mobj_t target) {
         mobjtype_t item;
         mobj_t mo;
+        List<mobjtype_t> noposiblezombiearray= new ArrayList<mobjtype_t>();
+        
+        //Create array with zombie types.
+        noposiblezombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
+        noposiblezombiearray.add(mobjtype_t.MT_BARREL);
 
         // Maes: this seems necessary in order for barrel damage
         // to propagate inflictors.
@@ -2188,12 +2303,28 @@ public class Actions extends UnifiedGameMap {
             }
 
         }
-
+        // BJPR:  Creation of zombie after monster death.
         if (target.health < -target.info.spawnhealth
                 && target.info.xdeathstate != StateNum.S_NULL) {
             target.SetMobjState(target.info.xdeathstate);
-        } else
-            target.SetMobjState(target.info.deathstate);
+        } else {
+          target.SetMobjState(target.info.deathstate);
+          if(!(noposiblezombiearray.contains(target.type))){
+            //System.out.println(target.type);
+            // Creates a thread that later respawns the zombie after some time.
+            Thread t1 = new Thread(new Runnable() {
+              public void run() {
+                try{
+                 TimeUnit.SECONDS.sleep(getZombieSpawnTime());
+                } catch(InterruptedException e) {}      
+                SpawnZombieMobj(target.x,target.y,target.z,target);
+                target.SetMobjState(StateNum.S_NULL);
+                RemoveMobj(target);
+              }
+            });  
+            t1.start();
+          }
+        }
         target.tics -= RND.P_Random() & 3;
 
         if (target.tics < 1)
@@ -2224,8 +2355,127 @@ public class Actions extends UnifiedGameMap {
 
         mo = SpawnMobj(target.x, target.y, ONFLOORZ, item);
         mo.flags |= MF_DROPPED;    // special versions of items
+       
     }
 
+    /**
+     * Time (in secods) is chosen depending on the difficulty.
+     *
+     * @return time to spawn a zombie in seconds
+     */
+    public int getZombieSpawnTime() {
+        // BJPR : Here is the zombi's SPAWN TIME.
+        if(DM.gameskill == Skill.sk_baby){
+            return 5;
+        } else if(DM.gameskill == Skill.sk_easy) {
+           return 4;
+        } else if(DM.gameskill == Skill.sk_medium) {
+            return 3;
+        } else if(DM.gameskill == Skill.sk_hard) {
+            return 2;
+        } else if(DM.gameskill == Skill.sk_nightmare) {
+           return 1;
+        }
+
+        return 100;
+    }
+
+   /**
+    * 
+    * @return zombie type: 0 green, 1 red, 2 gray, 3 black.
+    * 
+    */
+  public int getRandomZombieType() {
+	  // BJPR: simple random function
+	  /*
+	   * This ask for a random number, then check for wich
+	   * subset of number from 0 to 100 it belongs.
+	   */
+	  
+	  int greenZombieWeigth = getZombieWeigth("green");
+	  int redZombieWeigth = getZombieWeigth("red");
+	  int grayZombieWeigth = getZombieWeigth("gray");
+	  int blackZombeWeigth = getZombieWeigth("black");
+	  
+	  double randomType = Math.floor(Math.random()* (greenZombieWeigth + 
+			  redZombieWeigth + grayZombieWeigth + blackZombeWeigth));
+	  
+	  if (randomType >= 0 && randomType <= greenZombieWeigth) {
+			return 0;
+		} else if (randomType > greenZombieWeigth && randomType <= redZombieWeigth + greenZombieWeigth) {
+			return 1;
+		} else if (randomType > redZombieWeigth + greenZombieWeigth 
+				&& randomType <= grayZombieWeigth + redZombieWeigth + greenZombieWeigth) {
+			return 2;
+		} else if (randomType + grayZombieWeigth + redZombieWeigth + greenZombieWeigth > 
+		grayZombieWeigth 
+		&& randomType <= redZombieWeigth + grayZombieWeigth + redZombieWeigth + greenZombieWeigth) {
+			return 3;
+		}
+	  
+	  /*
+	   * Error
+	   */
+	  return -1;
+  }
+  
+  /**
+   * Returns zombie weigths depending of the difficulty.
+   * @param type: ZOmbie type
+   * @return Zombie weigth
+   */
+  public int getZombieWeigth(String type) {
+	  // BJPR: zombie Prob.
+	  int greenProb = 0;
+	  int grayProb = 0;
+	  int redPorb = 0;
+	  int blackProb = 0;
+	 
+	  if(DM.gameskill == Skill.sk_baby){
+		  greenProb = 100;
+		  redPorb = 0;
+		  grayProb = 0;
+		  blackProb = 0;
+	  } else if(DM.gameskill == Skill.sk_easy) {
+		  greenProb = 70;
+		  redPorb = 20;
+		  grayProb = 10;
+		  blackProb = 0;
+	  } else if(DM.gameskill == Skill.sk_medium) {
+		  greenProb = 50;
+		  redPorb = 30;
+		  grayProb = 15;
+		  blackProb = 5;
+	  } else if(DM.gameskill == Skill.sk_hard) {
+		  greenProb = 35;
+		  redPorb = 30;
+		  grayProb = 20;
+		  blackProb = 15;
+	  } else if(DM.gameskill == Skill.sk_nightmare) {
+		  greenProb = 30;
+		  redPorb = 20;
+		  grayProb = 25;
+		  blackProb = 25;
+	  }
+	  
+	  
+	  if(type.equals("green")) {
+		  return greenProb;
+	  } else if(type.equals("red")) {
+		  return redPorb;
+	  } else if(type.equals("gray")){
+		  return grayProb;
+	  } else if(type.equals("black")) {
+		  return blackProb;
+	  }
+	  
+	  /*
+	   * error
+	   */
+	  return -1;
+  }
+    
+    
     //
     // TELEPORTATION
     //
@@ -3241,11 +3491,7 @@ public class Actions extends UnifiedGameMap {
      * @param x     fixed_t
      * @param y     fixed_t
      */
-    public boolean
-    CheckPosition
-    (mobj_t thing,
-     int x,
-     int y) {
+    public boolean CheckPosition(mobj_t thing, int x, int y) {
         int xl;
         int xh;
         int yl;

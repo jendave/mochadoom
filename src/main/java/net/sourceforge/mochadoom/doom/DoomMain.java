@@ -2174,10 +2174,11 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         ss = LL.PointInSubsector(x, y);
         // Angles stored in things are supposed to be "sanitized" against rollovers.
         an = (int) ((ANG45 * (mthing.angle / 45)) >>> ANGLETOFINESHIFT);
-
+        // BJPR Spawn example.
         mo = P.SpawnMobj(x + 20 * finecosine[an], y + 20 * finesine[an]
                 , ss.sector.floorheight
                 , mobjtype_t.MT_TFOG);
+        
 
         if (players[consoleplayer].viewz != 1) ;
         S.StartSound(mo, sfxenum_t.sfx_telept);  // don't start sound on first frame 
@@ -2654,10 +2655,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * consoleplayer, displayplayer, playeringame[] should be set.
      */
 
-    public void InitNew
-    (Skill skill,
-     int episode,
-     int map) {
+    public void InitNew(Skill skill, int episode, int map) {
         int i;
 
         if (paused) {
@@ -2730,6 +2728,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         viewactive = true;
         gameepisode = episode;
         gamemap = map;
+        // BJPR: Dificultad juego.
         gameskill = skill;
 
         viewactive = true;

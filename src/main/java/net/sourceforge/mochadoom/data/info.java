@@ -1112,7 +1112,6 @@ public class info {
                     MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_PICKUP | MF_NOTDMATCH,        // flags
                     StateNum.S_NULL        // raisestate
             ),
-
             new mobjinfo_t(        // MT_POSSESSED
                     3004,        // doomednum
                     StateNum.S_POSS_STND,        // spawnstate
@@ -2205,7 +2204,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC0
+            new mobjinfo_t(        // MT_MISC0 ARMOR
                     2018,        // doomednum
                     StateNum.S_ARM1,        // spawnstate
                     1000,        // spawnhealth
@@ -2231,7 +2230,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC1
+            new mobjinfo_t(        // MT_MISC1 MEGAARMOR
                     2019,        // doomednum
                     StateNum.S_ARM2,        // spawnstate
                     1000,        // spawnhealth
@@ -2257,7 +2256,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC2
+            new mobjinfo_t(        // MT_MISC2 HEALTH BONUS
                     2014,        // doomednum
                     StateNum.S_BON1,        // spawnstate
                     1000,        // spawnhealth
@@ -2283,7 +2282,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC3
+            new mobjinfo_t(        // MT_MISC3 ARMOR BONUS
                     2015,        // doomednum
                     StateNum.S_BON2,        // spawnstate
                     1000,        // spawnhealth
@@ -2490,8 +2489,8 @@ public class info {
                     MF_SPECIAL,        // flags
                     StateNum.S_NULL        // raisestate
             ),
-
-            new mobjinfo_t(        // MT_MISC11
+            // BJPR :  MEDIKIT
+            new mobjinfo_t(        // MT_MISC11 MEDIKIT
                     2012,        // doomednum
                     StateNum.S_MEDI,        // spawnstate
                     1000,        // spawnhealth
@@ -2751,7 +2750,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC17
+            new mobjinfo_t(        // MT_MISC17 BOX OF BULLETS
                     2048,        // doomednum
                     StateNum.S_AMMO,        // spawnstate
                     1000,        // spawnhealth
@@ -2881,7 +2880,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC22
+            new mobjinfo_t(        // MT_MISC22 SHOTGUN SHELL
                     2008,        // doomednum
                     StateNum.S_SHEL,        // spawnstate
                     1000,        // spawnhealth
@@ -2907,7 +2906,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC23
+            new mobjinfo_t(        // MT_MISC23 
                     2049,        // doomednum
                     StateNum.S_SBOX,        // spawnstate
                     1000,        // spawnhealth
@@ -4647,7 +4646,107 @@ public class info {
                     sfxenum_t.sfx_None,        // activesound
                     MF_NOBLOCKMAP,        // flags
                     StateNum.S_NULL        // raisestate
-            )
+            ),
+            new mobjinfo_t(        // BJPR: MT_GREENZOMBIE
+                3004,        // doomednum
+                StateNum.S_POSS_STND,        // spawnstate
+                20,        // spawnhealth
+                StateNum.S_POSS_RUN1,        // seestate
+                sfxenum_t.sfx_posit1,        // seesound
+                8,        // reactiontime
+                sfxenum_t.sfx_pistol,        // attacksound
+                StateNum.S_POSS_PAIN,        // painstate
+                200,        // painchance
+                sfxenum_t.sfx_popain,        // painsound
+                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
+                StateNum.S_NULL,        // missilestate
+                StateNum.S_POSS_DIE1,        // deathstate
+                StateNum.S_POSS_XDIE1,        // xdeathstate
+                sfxenum_t.sfx_podth1,        // deathsound
+                10,        // speed
+                20 * FRACUNIT,        // radius
+                56 * FRACUNIT,        // height
+                100,        // mass
+                0,        // damage
+                sfxenum_t.sfx_posact,        // activesound
+                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
+                StateNum.S_POSS_RAISE1        // raisestate
+        ),
+            new mobjinfo_t(        // BJPR: MT_REDZOMBIE
+                3004,        // doomednum
+                StateNum.S_POSS_STND,        // spawnstate
+                20,        // spawnhealth
+                StateNum.S_POSS_RUN1,        // seestate
+                sfxenum_t.sfx_posit1,        // seesound
+                8,        // reactiontime
+                sfxenum_t.sfx_pistol,        // attacksound
+                StateNum.S_POSS_PAIN,        // painstate
+                200,        // painchance
+                sfxenum_t.sfx_popain,        // painsound
+                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
+                StateNum.S_NULL,        // missilestate
+                StateNum.S_POSS_DIE1,        // deathstate
+                StateNum.S_POSS_XDIE1,        // xdeathstate
+                sfxenum_t.sfx_podth1,        // deathsound
+                30,        // speed
+                20 * FRACUNIT,        // radius
+                56 * FRACUNIT,        // height
+                100,        // mass
+                0,        // damage
+                sfxenum_t.sfx_posact,        // activesound
+                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
+                StateNum.S_POSS_RAISE1        // raisestate
+        ),
+            new mobjinfo_t(        // BJPR: MT_GRAYZOMBIE
+                3004,        // doomednum
+                StateNum.S_PLAY,        // spawnstate
+                20,        // spawnhealth
+                StateNum.S_POSS_RUN1,        // seestate
+                sfxenum_t.sfx_posit1,        // seesound
+                8,        // reactiontime
+                sfxenum_t.sfx_pistol,        // attacksound
+                StateNum.S_POSS_PAIN,        // painstate
+                200,        // painchance
+                sfxenum_t.sfx_popain,        // painsound
+                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
+                StateNum.S_NULL,        // missilestate
+                StateNum.S_POSS_DIE1,        // deathstate
+                StateNum.S_POSS_XDIE1,        // xdeathstate
+                sfxenum_t.sfx_podth1,        // deathsound
+                0,        // speed
+                20 * FRACUNIT,        // radius
+                56 * FRACUNIT,        // height
+                100,        // mass
+                0,        // damage
+                sfxenum_t.sfx_posact,        // activesound
+                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
+                StateNum.S_POSS_RAISE1        // raisestate
+        ),
+            new mobjinfo_t(        // BJPR: MT_BLACKZOMBIE
+                3004,        // doomednum
+                StateNum.S_POSS_STND,        // spawnstate
+                20,        // spawnhealth
+                StateNum.S_POSS_RUN1,        // seestate
+                sfxenum_t.sfx_posit1,        // seesound
+                8,        // reactiontime
+                sfxenum_t.sfx_pistol,        // attacksound
+                StateNum.S_POSS_PAIN,        // painstate
+                200,        // painchance
+                sfxenum_t.sfx_popain,        // painsound
+                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
+                StateNum.S_NULL,        // missilestate
+                StateNum.S_POSS_DIE1,        // deathstate
+                StateNum.S_POSS_XDIE1,        // xdeathstate
+                sfxenum_t.sfx_podth1,        // deathsound
+                25,        // speed
+                20 * FRACUNIT,        // radius
+                56 * FRACUNIT,        // height
+                100,        // mass
+                0,        // damage
+                sfxenum_t.sfx_posact,        // activesound
+                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
+                StateNum.S_POSS_RAISE1        // raisestate
+        )
     };
 
     static {
