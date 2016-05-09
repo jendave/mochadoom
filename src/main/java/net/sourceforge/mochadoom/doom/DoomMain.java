@@ -1289,8 +1289,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             DeferedPlayDemo(loaddemo);
             DoomLoop();  // never returns
         }
-
-
+        
         DoomLoop();  // never returns
     }
 
@@ -2128,7 +2127,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // clear everything else to defaults 
         p.PlayerReborn();
-
     }
 
     //
@@ -2730,6 +2728,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         gamemap = map;
         // BJPR: Dificultad juego.
         gameskill = skill;
+        
+        for(int i1=0; i1< MAXPLAYERS ; i1++) {
+          players[i1].updateGameSkill();
+        }
 
         viewactive = true;
 
