@@ -1531,22 +1531,32 @@ public class ActionFunctions implements DoomStatusAware {
     //
     class A_FireExample implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            int i;
+        	  int i;
+              long angle;
+              int damage;
 
-            S.StartSound(player.mo, sfxenum_t.sfx_shotgn);
-            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
 
-            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+              S.StartSound(player.mo, sfxenum_t.sfx_shotgn);
+              player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
 
-            player.SetPsprite(
-                    ps_flash,
-                    weaponinfo[player.readyweapon.ordinal()].flashstate);
+              player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] -= 2;
 
-            A.P_BulletSlope(player.mo);
+              player.SetPsprite(
+                      ps_flash,
+                      weaponinfo[player.readyweapon.ordinal()].flashstate);
 
-            for (i = 0; i < 7; i++)
-                A.P_EjemploDisparoSecundario(player.mo, false);
-        }
+              A.P_BulletSlope(player.mo);
+
+              for (i = 0; i < 20; i++) {
+                  damage = 5 * (RND.P_Random() % 3 + 1);
+                  angle = player.mo.angle;
+                  angle += (RND.P_Random() - RND.P_Random()) << 19;
+                  A.LineAttack(player.mo,
+                          angle,
+                          MISSILERANGE,
+                          A.bulletslope + ((RND.P_Random() - RND.P_Random()) << 5), damage);
+              }
+          }
     }
     
     //
