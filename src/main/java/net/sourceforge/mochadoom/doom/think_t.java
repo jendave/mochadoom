@@ -31,6 +31,7 @@ public enum think_t {
     A_Lower(2),
     A_Raise(2),
     A_Punch(2),
+    A_PunchAlternate(2),
     A_ReFire(2),
     A_FirePistol(2),
     A_FirePistolAlternate(2),

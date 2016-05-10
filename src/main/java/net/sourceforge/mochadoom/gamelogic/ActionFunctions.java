@@ -74,6 +74,7 @@ public class ActionFunctions implements DoomStatusAware {
         Lower = new A_Lower();
         Raise = new A_Raise();
         Punch = new A_Punch();
+        PunchAlternate = new A_PunchAlternate();
         ReFire = new A_ReFire();
         FirePistol = new A_FirePistol();
         FirePistolAlternate = new A_FirePistolAlternate();
@@ -192,6 +193,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 Lower;
     ActionType2 Raise;
     ActionType2 Punch;
+    ActionType2 PunchAlternate;
     ActionType2 ReFire;
     ActionType2 FirePistol;
     ActionType2 FirePistolAlternate;
@@ -304,6 +306,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_Punch:
                 st.acp2 = Punch;
+                break;
+            case A_PunchAlternate:
+                st.acp2 = PunchAlternate;
                 break;
             case A_ReFire:
                 st.acp2 = ReFire;
@@ -574,6 +579,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_Punch:
                 st.acp2 = Punch;
+                break;
+            case A_PunchAlternate:
+                st.acp2 = PunchAlternate;
                 break;
             case A_ReFire:
                 st.acp2 = ReFire;
@@ -2026,6 +2034,39 @@ public class ActionFunctions implements DoomStatusAware {
             int slope;
 
             damage = (RND.P_Random() % 10 + 1) << 1;
+
+            if (eval(player.powers[pw_strength]))
+                damage *= 10;
+
+            angle = player.mo.angle;
+            //angle = (angle+(RND.P_Random()-RND.P_Random())<<18)/*&BITS32*/;
+            // _D_: for some reason, punch didnt work until I change this
+            // I think it's because of "+" VS "<<" prioritys...
+            angle += (RND.P_Random() - RND.P_Random()) << 18;
+            slope = A.AimLineAttack(player.mo, angle, MELEERANGE);
+            A.LineAttack(player.mo, angle, MELEERANGE, slope, damage);
+
+            // turn to face target
+            if (eval(A.linetarget)) {
+                S.StartSound(player.mo, sfxenum_t.sfx_punch);
+                player.mo.angle = R.PointToAngle2(player.mo.x,
+                        player.mo.y,
+                        A.linetarget.x,
+                        A.linetarget.y) & BITS32;
+            }
+        }
+    }
+    
+    //
+    // A_Punch
+    //
+    class A_PunchAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            long angle; //angle_t
+            int damage;
+            int slope;
+
+            damage = (RND.P_Random() % 10 + 20) << 1;
 
             if (eval(player.powers[pw_strength]))
                 damage *= 10;

@@ -11,6 +11,10 @@ public enum StateNum {
     S_PUNCH3,
     S_PUNCH4,
     S_PUNCH5,
+    
+    S_PUNCH6,		// <----
+    S_PUNCH7,		// <----
+    
     S_PISTOL,
     S_PISTOLDOWN,
     S_PISTOLUP,
