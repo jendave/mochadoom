@@ -90,6 +90,7 @@ public class ActionFunctions implements DoomStatusAware {
         FireCGun = new A_FireCGun();
         GunFlash = new A_GunFlash();
         FireMissile = new A_FireMissile();
+        FireMissileAltern = new A_FireMissileAltern();
         Saw = new A_Saw();
         FirePlasma = new A_FirePlasma();
         BFGsound = new A_BFGsound();
@@ -209,6 +210,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 FireCGun;
     ActionType2 GunFlash;
     ActionType2 FireMissile;
+    ActionType2 FireMissileAltern;
     ActionType2 Saw;
     ActionType2 FirePlasma;
     ActionType2 BFGsound;
@@ -351,6 +353,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireMissile:
                 st.acp2 = FireMissile;
+                break;
+            case A_FireMissileAltern:
+                st.acp2 = FireMissileAltern;
                 break;
             case A_Saw:
                 st.acp2 = Saw;
@@ -624,6 +629,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireMissile:
                 st.acp2 = FireMissile;
+                break;
+            case A_FireMissileAltern:
+                st.acp2 = FireMissileAltern;
                 break;
             case A_Saw:
                 st.acp2 = Saw;
@@ -2150,6 +2158,17 @@ public class ActionFunctions implements DoomStatusAware {
         public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
+        }
+    }
+    
+    //
+    // A_FireMissileAltern
+    //
+    class A_FireMissileAltern implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
+            //A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
         }
     }
 

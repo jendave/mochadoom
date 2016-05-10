@@ -46,6 +46,7 @@ public enum think_t {
     A_FireCGun(2),
     A_GunFlash(2),
     A_FireMissile(2),
+    A_FireMissileAltern(2),
     A_Saw(2),
     A_FirePlasma(2),
     A_BFGsound(2),

@@ -67,16 +67,17 @@ public class items {
                             StateNum.S_PISTOL1,
                             StateNum.S_PISTOL5,
                             StateNum.S_PISTOLFLASH
-                    ), new weaponinfo_t(
-                    // shotgun
-                    AmmoType.am_shell,
-                    StateNum.S_SGUNUP,
-                    StateNum.S_SGUNDOWN,
-                    StateNum.S_SGUN,
-                    StateNum.S_SGUN1,
-                    StateNum.S_SGUN1,
-                    StateNum.S_SGUNFLASH1
-            ),
+                    ), 
+                    new weaponinfo_t(
+		                    // shotgun
+		                    AmmoType.am_shell,
+		                    StateNum.S_SGUNUP,
+		                    StateNum.S_SGUNDOWN,
+		                    StateNum.S_SGUN,
+		                    StateNum.S_SGUN1,
+		                    StateNum.S_SGUN1,
+		                    StateNum.S_SGUNFLASH1
+		            ),
                     new weaponinfo_t(
                             // chaingun
                             AmmoType.am_clip,
@@ -94,7 +95,7 @@ public class items {
                             StateNum.S_MISSILEDOWN,
                             StateNum.S_MISSILE,
                             StateNum.S_MISSILE1,
-                            StateNum.S_MISSILE1,
+                            StateNum.S_MISSILE4,
                             StateNum.S_MISSILEFLASH1
                     ),
                     new weaponinfo_t(
