@@ -55,7 +55,7 @@ public class items {
                             StateNum.S_PUNCHDOWN,
                             StateNum.S_PUNCH,
                             StateNum.S_PUNCH1,
-                            StateNum.S_PUNCH1,
+                            StateNum.S_PUNCH6,
                             StateNum.S_NULL
                     ),
                     new weaponinfo_t(

@@ -2058,7 +2058,7 @@ public class ActionFunctions implements DoomStatusAware {
     }
     
     //
-    // A_Punch
+    // A_PunchAlternate
     //
     class A_PunchAlternate implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
