@@ -7,6 +7,7 @@ import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.spritenum_t;
 import net.sourceforge.mochadoom.data.state_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.defines.SlopeType;
@@ -1600,12 +1601,12 @@ public class Actions extends UnifiedGameMap {
         return mobj;
     }
     // BJPR: Spawns the specific zombie, changing the sprite chosen.
-    public mobj_t SpawnZombieMobj(int x, int y, int z, mobj_t source) {
+    public void SpawnZombieMobj(int x, int y, int z, mobj_t source) {
       mobj_t mobj;
       mobjtype_t type;
       state_t st;
       mobjinfo_t info;
-      mobjinfo_t info2 = new mobjinfo_t(        // BJPR: MT_BLACKZOMBIE
+      mobjinfo_t info2 = new mobjinfo_t( 
           mobjinfo[source.type.ordinal()].doomednum,        // doomednum
           mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
           mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1630,6 +1631,9 @@ public class Actions extends UnifiedGameMap {
           mobjinfo[source.type.ordinal()].flags,        // flags
           mobjinfo[source.type.ordinal()].raisestate        // raisestate
   );
+   // somthing is occupying it's position?
+      if (!CheckPosition(source, x, y))
+          return; // no respwan
 
       mobj = new mobj_t(this);
       
@@ -1637,11 +1641,11 @@ public class Actions extends UnifiedGameMap {
        * Get the zombi's type
        */
       type = getRandomMobjtype_tZombie();
-   
+
       info = mobjinfo[type.ordinal()];
       mobj.type = type;
       mobj.info = info2;
-      mobj.info.missilestate = info.missilestate;
+      mobj.info.missilestate = StateNum.S_NULL;
       mobj.info.meleestate = StateNum.S_SARG_ATK1;
       mobj.info.speed = info.speed;
       
@@ -1678,8 +1682,6 @@ public class Actions extends UnifiedGameMap {
 
       mobj.function = think_t.P_MobjThinker;
       AddThinker(mobj);
-
-      return mobj;
   }
     
     /**
@@ -1689,7 +1691,7 @@ public class Actions extends UnifiedGameMap {
     public mobjtype_t getRandomMobjtype_tZombie() {
     	// BJPR: ramdom zombie factory
         int generatedZombieType = getRandomZombieType();
-        mobjtype_t type = null;
+        mobjtype_t type;
     	  
         switch (generatedZombieType) {
     		case 0:
@@ -2108,16 +2110,9 @@ public class Actions extends UnifiedGameMap {
         player_t player;
         int thrust; // fixed_t
         int temp;
-        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
-        
-        //Create array with zombie types.
-        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
-        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         
         //Zombie's inmunity to acid.
-        if(zombiearray.contains(target.type) && inflictor == null){
+        if(((mobjinfo[target.type.ordinal()]).getType()).equals("MT_ZOMBIE") && inflictor == null){
           //System.out.println("its acid");
           return;
         }
@@ -2251,10 +2246,6 @@ public class Actions extends UnifiedGameMap {
         List<mobjtype_t> noposiblezombiearray= new ArrayList<mobjtype_t>();
         
         //Create array with zombie types.
-        noposiblezombiearray.add(mobjtype_t.MT_REDZOMBIE);
-        noposiblezombiearray.add(mobjtype_t.MT_GREENZOMBIE);
-        noposiblezombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
-        noposiblezombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         noposiblezombiearray.add(mobjtype_t.MT_BARREL);
 
         // Maes: this seems necessary in order for barrel damage
@@ -2309,7 +2300,7 @@ public class Actions extends UnifiedGameMap {
             target.SetMobjState(target.info.xdeathstate);
         } else {
           target.SetMobjState(target.info.deathstate);
-          if(!(noposiblezombiearray.contains(target.type))){
+          if(!(noposiblezombiearray.contains(target.type) || ((mobjinfo[target.type.ordinal()]).getType()).equals("MT_ZOMBIE"))){
             //System.out.println(target.type);
             // Creates a thread that later respawns the zombie after some time.
             Thread t1 = new Thread(new Runnable() {

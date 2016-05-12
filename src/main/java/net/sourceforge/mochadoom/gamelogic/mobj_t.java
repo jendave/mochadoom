@@ -336,7 +336,6 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
             tics = st.tics;
             // BJPR: MEELEE ATTACK
             if(!(zombiearray.contains(this.type))){
-              
               sprite = st.sprite;
             }
             else{
