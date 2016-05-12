@@ -2,6 +2,7 @@ package net.sourceforge.mochadoom.data;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
+import net.sourceforge.mochadoom.rendering.LightsAndColors;
 
 public class mobjinfo_t {
     
@@ -75,5 +76,8 @@ public class mobjinfo_t {
      */
     public String getType(){
       return "mobjinfo_t";
+    }
+    public <V> V getColorMap(LightsAndColors<V> colormaps){
+      return colormaps.colormaps[colormaps.colormaps.length - 1];
     }
 }

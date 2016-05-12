@@ -5,9 +5,9 @@ import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SHOOTABLE;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SOLID;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
-import net.sourceforge.mochadoom.data.sounds;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
+import net.sourceforge.mochadoom.rendering.LightsAndColors;
 
 public class RedZombie_t extends Zombie_t {
   
@@ -43,9 +43,20 @@ public class RedZombie_t extends Zombie_t {
   public sfxenum_t activesound;
   public int flags;
   public StateNum raisestate;
+  public short[] colormap;
+  protected final static short REDCOLOR = -2983; 
   
   @Override
   public String getsubType(){
     return "MT_REDZOMBIE";
+  }
+  
+  public <V> V getColorMap(LightsAndColors<V> colormaps){
+    if(this.colormap == null){
+      for(int i=0; i < 256; i++){
+        colormap[i] = (short) ((REDCOLOR*999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 20])[i])/1000);
+      }
+    }
+    return (V) colormap;
   }
 }

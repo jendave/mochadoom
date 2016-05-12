@@ -8,6 +8,7 @@ import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 import net.sourceforge.mochadoom.data.sounds;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
+import net.sourceforge.mochadoom.rendering.LightsAndColors;
 
 public class GreenZombie_t extends Zombie_t {
 
@@ -43,9 +44,20 @@ public class GreenZombie_t extends Zombie_t {
   public sfxenum_t activesound;
   public int flags;
   public StateNum raisestate;
+  public short[] colormap;
+  protected final static short GREENCOLOR = 256; 
   
   @Override
   public String getsubType(){
     return "MT_GREENZOMBIE";
+  }
+  
+  public <V> V getColorMap(LightsAndColors<V> colormaps){
+    if(this.colormap == null){
+      for(int i=0; i < 256; i++){
+        colormap[i] = (short) ((GREENCOLOR*0.2 + 0.8*((short[]) colormaps.colormaps[colormaps.colormaps.length - 5])[i]));
+      }
+    }
+    return (V) colormap;
   }
 }
