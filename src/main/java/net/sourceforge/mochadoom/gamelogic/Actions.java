@@ -2395,7 +2395,7 @@ public class Actions extends UnifiedGameMap {
               public void run() {
                 try{
                  TimeUnit.SECONDS.sleep(getZombieSpawnTime());
-                } catch(InterruptedException e) {}      
+                } catch(InterruptedException e) {}
                 SpawnZombieMobj(target.x,target.y,target.z,target);
                 target.SetMobjState(StateNum.S_NULL);
                 RemoveMobj(target);
@@ -2445,15 +2445,15 @@ public class Actions extends UnifiedGameMap {
     public int getZombieSpawnTime() {
         // BJPR : Here is the zombi's SPAWN TIME.
         if(DM.gameskill == Skill.sk_baby){
-            return 5;
+            return ((int) Math.floor(Math.random()*3)) + 5; // 8 - 5
         } else if(DM.gameskill == Skill.sk_easy) {
-           return 4;
+           return ((int) Math.floor(Math.random()*3)) + 4; // 7 - 4
         } else if(DM.gameskill == Skill.sk_medium) {
-            return 3;
+            return ((int) Math.floor(Math.random()*3)) + 3; // 6 - 3
         } else if(DM.gameskill == Skill.sk_hard) {
-            return 2;
+            return ((int) Math.floor(Math.random()*3)) + 2; //5 - 2
         } else if(DM.gameskill == Skill.sk_nightmare) {
-           return 1;
+           return ((int) Math.floor(Math.random()*3)) + 1; // 4 - 1
         }
 
         return 100;
