@@ -20,6 +20,16 @@ public class GrayZombie_t extends Zombie_t {
         MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,StateNum.S_POSS_RAISE1);
   }
 
+  public GrayZombie_t(int doomednum2, StateNum spawnstate2, int spawnhealth2, StateNum seestate2, sfxenum_t seesound2,
+      int reactiontime2, sfxenum_t attacksound2, StateNum painstate2, int painchance2, sfxenum_t painsound2,
+      StateNum meleestate2, StateNum missilestate2, StateNum deathstate2, StateNum xdeathstate2, sfxenum_t deathsound2,
+      int speed2, int radius2, int height2, int mass2, int damage2, sfxenum_t activesound2, int flags2,
+      StateNum raisestate2) {
+    super(doomednum2, spawnstate2, spawnhealth2, seestate2, seesound2, reactiontime2, attacksound2, painstate2, painchance2,
+        painsound2, meleestate2, missilestate2, deathstate2, xdeathstate2, deathsound2, speed2, radius2, height2, mass2, damage2,
+        activesound2, flags2, raisestate2);
+  }
+
   public int doomednum;
   public StateNum spawnstate;
   public int spawnhealth;
@@ -54,6 +64,7 @@ public class GrayZombie_t extends Zombie_t {
   
   public <V> V getColorMap(LightsAndColors<V> colormaps){
     if(this.colormap == null){
+      this.colormap = new short[256];
       for(int i=0; i < 256; i++){
         colormap[i] = (short) ((GRAYCOLOR*999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 1])[i])/1000);
       }

@@ -255,16 +255,16 @@ public final class VisSprites<V>
             vis.colormap = colormaps.spritelights[index];
             // vis.pcolormap=index;
         }
-
+        
         // BJPR:  Zombie color.
+        if(thing.info.getType().equals("MT_ZOMBIE")){
         if(thing.zombiecolormap == null){
           vis.colormap = thing.info.getColorMap(colormaps);
           thing.zombiecolormap = (short[]) vis.colormap;
         }
-        else{ // Optimizaci�n para no calcular el color todo el tiempo. Solo cargar arreglo.
-          if(thing.info.getType().equals("MT_ZOMBIE")){
-            vis.colormap = (V) thing.zombiecolormap;
-          }
+        else{ // Optimización para no calcular el color todo el tiempo. Solo cargar arreglo.
+          vis.colormap = (V) thing.zombiecolormap;
+        }
         }
     }
 
