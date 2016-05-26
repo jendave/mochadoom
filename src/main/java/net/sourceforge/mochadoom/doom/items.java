@@ -107,7 +107,7 @@ public class items {
                             StateNum.S_PLASMADOWN,
                             StateNum.S_PLASMA,
                             StateNum.S_PLASMA1,
-                            StateNum.S_PLASMA1,
+                            StateNum.S_PLASMA3,		//S_PLASMA1 reemplazado por S_PLASMA3 para disparo secundario
                             StateNum.S_PLASMAFLASH1
                     ),
                     new weaponinfo_t(
