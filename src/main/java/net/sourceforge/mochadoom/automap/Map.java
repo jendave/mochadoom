@@ -214,6 +214,8 @@ import static net.sourceforge.mochadoom.rendering.line_t.ML_MAPPED;
 import static net.sourceforge.mochadoom.rendering.line_t.ML_SECRET;
 import static net.sourceforge.mochadoom.video.DoomVideoRenderer.V_NOSCALESTART;
 
+import net.sourceforge.mochadoom.data.mobjtype_t;
+
 public abstract class Map<T, V>
         implements IAutoMap<T, V> {
 
@@ -1596,6 +1598,11 @@ public abstract class Map<T, V>
                 drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
                         16 << FRACBITS, toBAMIndex(t.angle), color, t.x, t.y);
                 t = (mobj_t) t.snext;
+//                boolean var = (t.type==mobjtype_t.MT_GRAYZOMBIE) || (t.type==mobjtype_t.MT_GREENZOMBIE);
+//                var = var || (t.type==mobjtype_t.MT_REDZOMBIE) || (t.type==mobjtype_t.MT_BLACKZOMBIE);
+//                if(var) {
+//                  System.out.println("Este es un zombie!");
+//                }
             }
         }
     }
