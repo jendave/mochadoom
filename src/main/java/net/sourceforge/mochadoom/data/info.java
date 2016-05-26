@@ -5,6 +5,13 @@ import net.sourceforge.mochadoom.doom.think_t;
 
 import static net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
+
+import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
+import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
+
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_DROPOFF;
@@ -132,7 +139,7 @@ public class info {
             
    /*->*/   new state_t(spritenum_t.SPR_PISG, 0, 4, null, StateNum.S_PISTOL6, 0, 0),    // S_PISTOL5
    /*->*/   new state_t(spritenum_t.SPR_PISG, 1, 6, think_t.A_FirePistolAlternate, StateNum.S_PISTOL3, 0, 0),// S_PISTOL6
-            
+   
             new state_t(spritenum_t.SPR_PISF, 32768, 7, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PISTOLFLASH
             new state_t(spritenum_t.SPR_SHTG, 0, 1, think_t.A_WeaponReady, StateNum.S_SGUN, 0, 0),    // S_SGUN
             new state_t(spritenum_t.SPR_SHTG, 0, 1, think_t.A_Lower, StateNum.S_SGUNDOWN, 0, 0),    // S_SGUNDOWN
@@ -146,6 +153,11 @@ public class info {
             new state_t(spritenum_t.SPR_SHTG, 1, 5, null, StateNum.S_SGUN8, 0, 0),    // S_SGUN7
             new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_SGUN9, 0, 0),    // S_SGUN8
             new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_ReFire, StateNum.S_SGUN, 0, 0),    // S_SGUN9
+            
+   			//Code.110 Se agregan los state para el modo de disparo de ejemplo
+   			new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
+   			new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
+   			
             new state_t(spritenum_t.SPR_SHTF, 32768, 4, think_t.A_Light1, StateNum.S_SGUNFLASH2, 0, 0),    // S_SGUNFLASH1
             new state_t(spritenum_t.SPR_SHTF, 32769, 3, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_SGUNFLASH2
             new state_t(spritenum_t.SPR_SHT2, 0, 1, think_t.A_WeaponReady, StateNum.S_DSGUN, 0, 0),    // S_DSGUN
@@ -1092,32 +1104,7 @@ public class info {
     };
 
     public static mobjinfo_t[] mobjinfo = {
-            new mobjinfo_t(        // MT_PLAYER
-                    -1,        // doomednum
-                    StateNum.S_PLAY,        // spawnstate
-                    100,        // spawnhealth
-                    StateNum.S_PLAY_RUN1,        // seestate
-                    sfxenum_t.sfx_None,        // seesound
-                    0,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_PLAY_PAIN,        // painstate
-                    255,        // painchance
-                    sfxenum_t.sfx_plpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_PLAY_ATK1,        // missilestate
-                    StateNum.S_PLAY_DIE1,        // deathstate
-                    StateNum.S_PLAY_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_pldeth,        // deathsound
-                    0,        // speed
-                    16 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_None,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_PICKUP | MF_NOTDMATCH,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
-
+            new MT_Player_t(),
             new mobjinfo_t(        // MT_POSSESSED
                     3004,        // doomednum
                     StateNum.S_POSS_STND,        // spawnstate
@@ -2210,7 +2197,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC0
+            new mobjinfo_t(        // MT_MISC0 ARMOR
                     2018,        // doomednum
                     StateNum.S_ARM1,        // spawnstate
                     1000,        // spawnhealth
@@ -2236,7 +2223,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC1
+            new mobjinfo_t(        // MT_MISC1 MEGAARMOR
                     2019,        // doomednum
                     StateNum.S_ARM2,        // spawnstate
                     1000,        // spawnhealth
@@ -2262,7 +2249,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC2
+            new mobjinfo_t(        // MT_MISC2 HEALTH BONUS
                     2014,        // doomednum
                     StateNum.S_BON1,        // spawnstate
                     1000,        // spawnhealth
@@ -2288,7 +2275,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC3
+            new mobjinfo_t(        // MT_MISC3 ARMOR BONUS
                     2015,        // doomednum
                     StateNum.S_BON2,        // spawnstate
                     1000,        // spawnhealth
@@ -2495,8 +2482,8 @@ public class info {
                     MF_SPECIAL,        // flags
                     StateNum.S_NULL        // raisestate
             ),
-
-            new mobjinfo_t(        // MT_MISC11
+            // BJPR :  MEDIKIT
+            new mobjinfo_t(        // MT_MISC11 MEDIKIT
                     2012,        // doomednum
                     StateNum.S_MEDI,        // spawnstate
                     1000,        // spawnhealth
@@ -2756,7 +2743,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC17
+            new mobjinfo_t(        // MT_MISC17 BOX OF BULLETS
                     2048,        // doomednum
                     StateNum.S_AMMO,        // spawnstate
                     1000,        // spawnhealth
@@ -2886,7 +2873,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC22
+            new mobjinfo_t(        // MT_MISC22 SHOTGUN SHELL
                     2008,        // doomednum
                     StateNum.S_SHEL,        // spawnstate
                     1000,        // spawnhealth
@@ -2912,7 +2899,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC23
+            new mobjinfo_t(        // MT_MISC23 
                     2049,        // doomednum
                     StateNum.S_SBOX,        // spawnstate
                     1000,        // spawnhealth
@@ -4652,7 +4639,11 @@ public class info {
                     sfxenum_t.sfx_None,        // activesound
                     MF_NOBLOCKMAP,        // flags
                     StateNum.S_NULL        // raisestate
-            )
+            ),
+            new GreenZombie_t(),
+            new RedZombie_t(),
+            new GrayZombie_t(),
+            new BlackZombie_t()
     };
 
     static {

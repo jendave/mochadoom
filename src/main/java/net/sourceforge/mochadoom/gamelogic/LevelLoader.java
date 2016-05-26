@@ -670,12 +670,7 @@ public class LevelLoader extends AbstractLevelLoader {
 
 
     @Override
-    public void
-    SetupLevel
-            (int episode,
-             int map,
-             int playermask,
-             Skill skill) {
+    public void SetupLevel(int episode, int map, int playermask, Skill skill) {
         int i;
         String lumpname;
         int lumpnum;

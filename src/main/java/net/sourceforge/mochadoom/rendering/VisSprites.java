@@ -1,7 +1,12 @@
 package net.sourceforge.mochadoom.rendering;
 
 import net.sourceforge.mochadoom.system.IDoomSystem;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.gamelogic.mobj_t;
 import net.sourceforge.mochadoom.utils.C2JUtils;
 
@@ -227,7 +232,7 @@ public final class VisSprites<V>
         if (vis.x1 > x1)
             vis.startfrac += vis.xiscale * (vis.x1 - x1);
         vis.patch = lump;
-
+        
         // get light level
         if ((thing.flags & MF_SHADOW) != 0) {
             // shadow draw
@@ -249,6 +254,17 @@ public final class VisSprites<V>
 
             vis.colormap = colormaps.spritelights[index];
             // vis.pcolormap=index;
+        }
+        
+        // BJPR:  Zombie color.
+        if(thing.info.getType().equals("MT_ZOMBIE")){
+        if(thing.zombiecolormap == null){
+          vis.colormap = thing.info.getColorMap(colormaps);
+          thing.zombiecolormap = (short[]) vis.colormap;
+        }
+        else{ // Optimización para no calcular el color todo el tiempo. Solo cargar arreglo.
+          vis.colormap = (V) thing.zombiecolormap;
+        }
         }
     }
 

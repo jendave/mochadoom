@@ -138,6 +138,10 @@ public enum mobjtype_t {
     MT_MISC84,
     MT_MISC85,
     MT_MISC86,
+    MT_GREENZOMBIE,
+    MT_REDZOMBIE,
+    MT_GRAYZOMBIE,
+    MT_BLACKZOMBIE,
     NUMMOBJTYPES
 };
 

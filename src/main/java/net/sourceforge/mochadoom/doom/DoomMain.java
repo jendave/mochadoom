@@ -1289,8 +1289,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             DeferedPlayDemo(loaddemo);
             DoomLoop();  // never returns
         }
-
-
+        
         DoomLoop();  // never returns
     }
 
@@ -1936,6 +1935,9 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     mousebuttons(0, ev.data1 & 1);
                     mousebuttons(1, ev.data1 & 2);
                     mousebuttons(2, ev.data1 & 4);
+
+                    System.out.println("presiono el mouse: "+ ev.data1);
+                    
                     mousex = ev.data2 * (mouseSensitivity + 5) / 10;
                     mousey = ev.data3 * (mouseSensitivity + 5) / 10;
                 }
@@ -2125,7 +2127,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // clear everything else to defaults 
         p.PlayerReborn();
-
     }
 
     //
@@ -2171,10 +2172,11 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         ss = LL.PointInSubsector(x, y);
         // Angles stored in things are supposed to be "sanitized" against rollovers.
         an = (int) ((ANG45 * (mthing.angle / 45)) >>> ANGLETOFINESHIFT);
-
+        // BJPR Spawn example.
         mo = P.SpawnMobj(x + 20 * finecosine[an], y + 20 * finesine[an]
                 , ss.sector.floorheight
                 , mobjtype_t.MT_TFOG);
+        
 
         if (players[consoleplayer].viewz != 1) ;
         S.StartSound(mo, sfxenum_t.sfx_telept);  // don't start sound on first frame 
@@ -2651,10 +2653,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
      * consoleplayer, displayplayer, playeringame[] should be set.
      */
 
-    public void InitNew
-    (Skill skill,
-     int episode,
-     int map) {
+    public void InitNew(Skill skill, int episode, int map) {
         int i;
 
         if (paused) {
@@ -2727,7 +2726,12 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         viewactive = true;
         gameepisode = episode;
         gamemap = map;
+        // BJPR: Dificultad juego.
         gameskill = skill;
+        
+        for(int i1=0; i1< MAXPLAYERS ; i1++) {
+          players[i1].updateGameSkill();
+        }
 
         viewactive = true;
 

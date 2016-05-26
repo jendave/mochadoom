@@ -78,6 +78,8 @@ public class ActionFunctions implements DoomStatusAware {
         ReFire = new A_ReFire();
         FirePistol = new A_FirePistol();
         FirePistolAlternate = new A_FirePistolAlternate();
+        //Code.106 Se inicializa el disparo secundario
+        FireExample = new A_FireExample();
         Light0 = new A_Light0();
         Light1 = new A_Light1();
         Light2 = new A_Light2();
@@ -198,6 +200,8 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 ReFire;
     ActionType2 FirePistol;
     ActionType2 FirePistolAlternate;
+    //Code.105 Se declara el Disparo Secundario
+    ActionType2 FireExample;
     ActionType2 Light0;
     ActionType2 Light1;
     ActionType2 Light2;
@@ -288,7 +292,7 @@ public class ActionFunctions implements DoomStatusAware {
      */
 
     public void doWireState(state_t st) {
-        //System.out.println("Dispatching: "+action);
+      //  System.out.println("Dispatching: "+st.action);
         if (st.action == null) return;
         switch (st.action) {
             case P_MobjThinker:
@@ -320,6 +324,10 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FirePistolAlternate:
             	st.acp2 = FirePistolAlternate;
+            	break;
+            //Code.107 Se agrega el caso de disparo de example
+            case A_FireExample:
+            	st.acp2 = FireExample;
             	break;
             case A_Light1:
                 st.acp2 = Light1;
@@ -596,6 +604,10 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FirePistolAlternate:
             	st.acp2 = FirePistolAlternate;
+            	break;
+            //Code.108 Se agrega el caso de disparo de example
+            case A_FireExample:
+            	st.acp2 = FireExample;
             	break;
             case A_Light1:
                 st.acp2 = Light1;
@@ -1213,7 +1225,13 @@ public class ActionFunctions implements DoomStatusAware {
 
             A_FaceTarget(actor);
             if (EN.CheckMeleeRange(actor)) {
-                damage = ((RND.P_Random() % 10) + 1) * 4;
+              // BJPR: LETAAAL
+                if(actor.type == mobjtype_t.MT_BLACKZOMBIE){
+                  damage = 300;
+                }
+                else{
+                  damage = ((RND.P_Random() % 10) + 1) * 4;
+                }
                 A.DamageMobj(actor.target, actor, actor, damage);
             }
         }
@@ -1522,7 +1540,41 @@ public class ActionFunctions implements DoomStatusAware {
             A.P_GunShot2(player.mo, !eval(player.refire));
         }
     }
+    
+    //
+    // Code.104 implementacion ejemplo disparo secundario
+    // A_FireExample
+    //
+    class A_FireExample implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+        	  int i;
+              long angle;
+              int damage;
 
+
+              S.StartSound(player.mo, sfxenum_t.sfx_shotgn);
+              player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+
+              player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] -= 2;
+
+              player.SetPsprite(
+                      ps_flash,
+                      weaponinfo[player.readyweapon.ordinal()].flashstate);
+
+              A.P_BulletSlope(player.mo);
+
+              for (i = 0; i < 20; i++) {
+                  damage = 5 * (RND.P_Random() % 3 + 1);
+                  angle = player.mo.angle;
+                  angle += (RND.P_Random() - RND.P_Random()) << 19;
+                  A.LineAttack(player.mo,
+                          angle,
+                          MISSILERANGE,
+                          A.bulletslope + ((RND.P_Random() - RND.P_Random()) << 5), damage);
+              }
+          }
+    }
+    
     //
     // A_FireShotgun
     //
