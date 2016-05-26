@@ -1288,6 +1288,22 @@ public class Actions extends UnifiedGameMap {
 
         LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
     }
+    
+    void
+    Plasma2
+    (mobj_t mo,
+     boolean accurate) {
+        long angle;
+        int damage;
+
+        damage = 30 * (RND.P_Random() % 3 + 1);
+        angle = mo.angle;
+
+        if (!accurate)
+            angle += (RND.P_Random() - RND.P_Random()) << 18;
+
+        LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
+    }
 
     boolean Move(mobj_t actor) {
         // fixed_t
