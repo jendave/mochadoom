@@ -2168,7 +2168,6 @@ public class ActionFunctions implements DoomStatusAware {
         public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
-            //A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
         }
     }
 
