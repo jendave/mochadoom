@@ -74,6 +74,7 @@ public class ActionFunctions implements DoomStatusAware {
         Lower = new A_Lower();
         Raise = new A_Raise();
         Punch = new A_Punch();
+        PunchAlternate = new A_PunchAlternate();
         ReFire = new A_ReFire();
         FirePistol = new A_FirePistol();
         FirePistolAlternate = new A_FirePistolAlternate();
@@ -91,6 +92,7 @@ public class ActionFunctions implements DoomStatusAware {
         FireCGun = new A_FireCGun();
         GunFlash = new A_GunFlash();
         FireMissile = new A_FireMissile();
+        FireMissileAltern = new A_FireMissileAltern();
         Saw = new A_Saw();
         FirePlasma = new A_FirePlasma();
         BFGsound = new A_BFGsound();
@@ -194,6 +196,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 Lower;
     ActionType2 Raise;
     ActionType2 Punch;
+    ActionType2 PunchAlternate;
     ActionType2 ReFire;
     ActionType2 FirePistol;
     ActionType2 FirePistolAlternate;
@@ -211,6 +214,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 FireCGun;
     ActionType2 GunFlash;
     ActionType2 FireMissile;
+    ActionType2 FireMissileAltern;
     ActionType2 Saw;
     ActionType2 FirePlasma;
     ActionType2 BFGsound;
@@ -309,6 +313,9 @@ public class ActionFunctions implements DoomStatusAware {
             case A_Punch:
                 st.acp2 = Punch;
                 break;
+            case A_PunchAlternate:
+                st.acp2 = PunchAlternate;
+                break;
             case A_ReFire:
                 st.acp2 = ReFire;
                 break;
@@ -354,6 +361,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireMissile:
                 st.acp2 = FireMissile;
+                break;
+            case A_FireMissileAltern:
+                st.acp2 = FireMissileAltern;
                 break;
             case A_Saw:
                 st.acp2 = Saw;
@@ -583,6 +593,9 @@ public class ActionFunctions implements DoomStatusAware {
             case A_Punch:
                 st.acp2 = Punch;
                 break;
+            case A_PunchAlternate:
+                st.acp2 = PunchAlternate;
+                break;
             case A_ReFire:
                 st.acp2 = ReFire;
                 break;
@@ -628,6 +641,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireMissile:
                 st.acp2 = FireMissile;
+                break;
+            case A_FireMissileAltern:
+                st.acp2 = FireMissileAltern;
                 break;
             case A_Saw:
                 st.acp2 = Saw;
@@ -2100,6 +2116,39 @@ public class ActionFunctions implements DoomStatusAware {
             }
         }
     }
+    
+    //
+    // A_PunchAlternate
+    //
+    class A_PunchAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            long angle; //angle_t
+            int damage;
+            int slope;
+
+            damage = (RND.P_Random() % 10 + 20) << 1;
+
+            if (eval(player.powers[pw_strength]))
+                damage *= 10;
+
+            angle = player.mo.angle;
+            //angle = (angle+(RND.P_Random()-RND.P_Random())<<18)/*&BITS32*/;
+            // _D_: for some reason, punch didnt work until I change this
+            // I think it's because of "+" VS "<<" prioritys...
+            angle += (RND.P_Random() - RND.P_Random()) << 18;
+            slope = A.AimLineAttack(player.mo, angle, MELEERANGE);
+            A.LineAttack(player.mo, angle, MELEERANGE, slope, damage);
+
+            // turn to face target
+            if (eval(A.linetarget)) {
+                S.StartSound(player.mo, sfxenum_t.sfx_punch);
+                player.mo.angle = R.PointToAngle2(player.mo.x,
+                        player.mo.y,
+                        A.linetarget.x,
+                        A.linetarget.y) & BITS32;
+            }
+        }
+    }
 
 
     //
@@ -2158,6 +2207,16 @@ public class ActionFunctions implements DoomStatusAware {
     // A_FireMissile
     //
     class A_FireMissile implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
+        }
+    }
+    
+    //
+    // A_FireMissileAltern
+    //
+    class A_FireMissileAltern implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);

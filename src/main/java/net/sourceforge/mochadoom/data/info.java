@@ -125,6 +125,10 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 3, 5, null, StateNum.S_PUNCH4, 0, 0),        // S_PUNCH3
             new state_t(spritenum_t.SPR_PUNG, 2, 4, null, StateNum.S_PUNCH5, 0, 0),        // S_PUNCH4
             new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 0),    // S_PUNCH5
+            
+            new state_t(spritenum_t.SPR_PUNG, 1, 4, null, StateNum.S_PUNCH7, 0, 0),        // S_PUNCH6
+            new state_t(spritenum_t.SPR_PUNG, 2, 4, think_t.A_PunchAlternate, StateNum.S_PUNCH3, 0, 0),    // S_PUNCH7
+            
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_WeaponReady, StateNum.S_PISTOL, 0, 0),// S_PISTOL
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Lower, StateNum.S_PISTOLDOWN, 0, 0),    // S_PISTOLDOWN
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Raise, StateNum.S_PISTOLUP, 0, 0),    // S_PISTOLUP
@@ -181,12 +185,18 @@ public class info {
             new state_t(spritenum_t.SPR_CHGG, 1, 0, think_t.A_ReFire, StateNum.S_CHAIN, 0, 0),    // S_CHAIN3
             new state_t(spritenum_t.SPR_CHGF, 32768, 5, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH1
             new state_t(spritenum_t.SPR_CHGF, 32769, 5, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH2
+            
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_WeaponReady, StateNum.S_MISSILE, 0, 0),    // S_MISSILE
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_Lower, StateNum.S_MISSILEDOWN, 0, 0),    // S_MISSILEDOWN
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_Raise, StateNum.S_MISSILEUP, 0, 0),    // S_MISSILEUP
             new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE2, 0, 0),    // S_MISSILE1
             new state_t(spritenum_t.SPR_MISG, 1, 12, think_t.A_FireMissile, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE2
             new state_t(spritenum_t.SPR_MISG, 1, 0, think_t.A_ReFire, StateNum.S_MISSILE, 0, 0),    // S_MISSILE3
+            
+            new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE5, 0, 0),    // S_MISSILE4
+            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE6, 0, 0),    // S_MISSILE5
+            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE6
+            
             new state_t(spritenum_t.SPR_MISF, 32768, 3, think_t.A_Light1, StateNum.S_MISSILEFLASH2, 0, 0),    // S_MISSILEFLASH1
             new state_t(spritenum_t.SPR_MISF, 32769, 4, null, StateNum.S_MISSILEFLASH3, 0, 0),    // S_MISSILEFLASH2
             new state_t(spritenum_t.SPR_MISF, 32770, 4, think_t.A_Light2, StateNum.S_MISSILEFLASH4, 0, 0),    // S_MISSILEFLASH3
