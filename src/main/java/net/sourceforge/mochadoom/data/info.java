@@ -5,6 +5,13 @@ import net.sourceforge.mochadoom.doom.think_t;
 
 import static net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
+
+import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
+import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
+
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_DROPOFF;
@@ -1087,31 +1094,7 @@ public class info {
     };
 
     public static mobjinfo_t[] mobjinfo = {
-            new mobjinfo_t(        // MT_PLAYER
-                    -1,        // doomednum
-                    StateNum.S_PLAY,        // spawnstate
-                    100,        // spawnhealth
-                    StateNum.S_PLAY_RUN1,        // seestate
-                    sfxenum_t.sfx_None,        // seesound
-                    0,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_PLAY_PAIN,        // painstate
-                    255,        // painchance
-                    sfxenum_t.sfx_plpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_PLAY_ATK1,        // missilestate
-                    StateNum.S_PLAY_DIE1,        // deathstate
-                    StateNum.S_PLAY_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_pldeth,        // deathsound
-                    0,        // speed
-                    16 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_None,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_PICKUP | MF_NOTDMATCH,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new MT_Player_t(),
             new mobjinfo_t(        // MT_POSSESSED
                     3004,        // doomednum
                     StateNum.S_POSS_STND,        // spawnstate
@@ -4647,106 +4630,10 @@ public class info {
                     MF_NOBLOCKMAP,        // flags
                     StateNum.S_NULL        // raisestate
             ),
-            new mobjinfo_t(        // BJPR: MT_GREENZOMBIE
-                3004,        // doomednum
-                StateNum.S_POSS_STND,        // spawnstate
-                20,        // spawnhealth
-                StateNum.S_POSS_RUN1,        // seestate
-                sfxenum_t.sfx_posit1,        // seesound
-                8,        // reactiontime
-                sfxenum_t.sfx_pistol,        // attacksound
-                StateNum.S_POSS_PAIN,        // painstate
-                200,        // painchance
-                sfxenum_t.sfx_popain,        // painsound
-                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
-                StateNum.S_NULL,        // missilestate
-                StateNum.S_POSS_DIE1,        // deathstate
-                StateNum.S_POSS_XDIE1,        // xdeathstate
-                sfxenum_t.sfx_podth1,        // deathsound
-                10,        // speed
-                20 * FRACUNIT,        // radius
-                56 * FRACUNIT,        // height
-                100,        // mass
-                0,        // damage
-                sfxenum_t.sfx_posact,        // activesound
-                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                StateNum.S_POSS_RAISE1        // raisestate
-        ),
-            new mobjinfo_t(        // BJPR: MT_REDZOMBIE
-                3004,        // doomednum
-                StateNum.S_POSS_STND,        // spawnstate
-                20,        // spawnhealth
-                StateNum.S_POSS_RUN1,        // seestate
-                sfxenum_t.sfx_posit1,        // seesound
-                8,        // reactiontime
-                sfxenum_t.sfx_pistol,        // attacksound
-                StateNum.S_POSS_PAIN,        // painstate
-                200,        // painchance
-                sfxenum_t.sfx_popain,        // painsound
-                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
-                StateNum.S_NULL,        // missilestate
-                StateNum.S_POSS_DIE1,        // deathstate
-                StateNum.S_POSS_XDIE1,        // xdeathstate
-                sfxenum_t.sfx_podth1,        // deathsound
-                30,        // speed
-                20 * FRACUNIT,        // radius
-                56 * FRACUNIT,        // height
-                100,        // mass
-                0,        // damage
-                sfxenum_t.sfx_posact,        // activesound
-                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                StateNum.S_POSS_RAISE1        // raisestate
-        ),
-            new mobjinfo_t(        // BJPR: MT_GRAYZOMBIE
-                3004,        // doomednum
-                StateNum.S_PLAY,        // spawnstate
-                20,        // spawnhealth
-                StateNum.S_POSS_RUN1,        // seestate
-                sfxenum_t.sfx_posit1,        // seesound
-                8,        // reactiontime
-                sfxenum_t.sfx_pistol,        // attacksound
-                StateNum.S_POSS_PAIN,        // painstate
-                200,        // painchance
-                sfxenum_t.sfx_popain,        // painsound
-                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
-                StateNum.S_NULL,        // missilestate
-                StateNum.S_POSS_DIE1,        // deathstate
-                StateNum.S_POSS_XDIE1,        // xdeathstate
-                sfxenum_t.sfx_podth1,        // deathsound
-                0,        // speed
-                20 * FRACUNIT,        // radius
-                56 * FRACUNIT,        // height
-                100,        // mass
-                0,        // damage
-                sfxenum_t.sfx_posact,        // activesound
-                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                StateNum.S_POSS_RAISE1        // raisestate
-        ),
-            new mobjinfo_t(        // BJPR: MT_BLACKZOMBIE
-                3004,        // doomednum
-                StateNum.S_POSS_STND,        // spawnstate
-                20,        // spawnhealth
-                StateNum.S_POSS_RUN1,        // seestate
-                sfxenum_t.sfx_posit1,        // seesound
-                8,        // reactiontime
-                sfxenum_t.sfx_pistol,        // attacksound
-                StateNum.S_POSS_PAIN,        // painstate
-                200,        // painchance
-                sfxenum_t.sfx_popain,        // painsound
-                StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
-                StateNum.S_NULL,        // missilestate
-                StateNum.S_POSS_DIE1,        // deathstate
-                StateNum.S_POSS_XDIE1,        // xdeathstate
-                sfxenum_t.sfx_podth1,        // deathsound
-                25,        // speed
-                20 * FRACUNIT,        // radius
-                56 * FRACUNIT,        // height
-                100,        // mass
-                0,        // damage
-                sfxenum_t.sfx_posact,        // activesound
-                MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                StateNum.S_POSS_RAISE1        // raisestate
-        )
+            new GreenZombie_t(),
+            new RedZombie_t(),
+            new GrayZombie_t(),
+            new BlackZombie_t()
     };
 
     static {

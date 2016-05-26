@@ -7,6 +7,10 @@ import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.spritenum_t;
 import net.sourceforge.mochadoom.data.state_t;
+import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
 import net.sourceforge.mochadoom.defines.Card;
 import net.sourceforge.mochadoom.defines.Skill;
 import net.sourceforge.mochadoom.defines.SlopeType;
@@ -1600,36 +1604,14 @@ public class Actions extends UnifiedGameMap {
         return mobj;
     }
     // BJPR: Spawns the specific zombie, changing the sprite chosen.
-    public mobj_t SpawnZombieMobj(int x, int y, int z, mobj_t source) {
+    public void SpawnZombieMobj(int x, int y, int z, mobj_t source) {
       mobj_t mobj;
       mobjtype_t type;
       state_t st;
       mobjinfo_t info;
-      mobjinfo_t info2 = new mobjinfo_t(        // BJPR: MT_BLACKZOMBIE
-          mobjinfo[source.type.ordinal()].doomednum,        // doomednum
-          mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
-          mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
-          mobjinfo[source.type.ordinal()].seestate,        // seestate
-          mobjinfo[source.type.ordinal()].seesound,        // seesound
-          mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
-          mobjinfo[source.type.ordinal()].attacksound,        // attacksound
-          mobjinfo[source.type.ordinal()].painstate,        // painstate
-          mobjinfo[source.type.ordinal()].painchance,        // painchance
-          mobjinfo[source.type.ordinal()].painsound,        // painsound
-          mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
-          mobjinfo[source.type.ordinal()].missilestate,        // missilestate
-          mobjinfo[source.type.ordinal()].deathstate,        // deathstate
-          mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
-          mobjinfo[source.type.ordinal()].deathsound,        // deathsound
-          mobjinfo[source.type.ordinal()].speed,        // speed
-          mobjinfo[source.type.ordinal()].radius,        // radius
-          mobjinfo[source.type.ordinal()].height,        // height
-          mobjinfo[source.type.ordinal()].mass,        // mass
-          mobjinfo[source.type.ordinal()].damage,        // damage
-          mobjinfo[source.type.ordinal()].activesound,        // activesound
-          mobjinfo[source.type.ordinal()].flags,        // flags
-          mobjinfo[source.type.ordinal()].raisestate        // raisestate
-  );
+   // somthing is occupying it's position?
+      if (!CheckPosition(source, x, y))
+          return; // no respwan
 
       mobj = new mobj_t(this);
       
@@ -1637,11 +1619,12 @@ public class Actions extends UnifiedGameMap {
        * Get the zombi's type
        */
       type = getRandomMobjtype_tZombie();
-   
+      mobjinfo_t info2 = GetZombieType(type,source);
+      // BJPR: AQUI PROBLEMA
       info = mobjinfo[type.ordinal()];
       mobj.type = type;
       mobj.info = info2;
-      mobj.info.missilestate = info.missilestate;
+      mobj.info.missilestate = StateNum.S_NULL;
       mobj.info.meleestate = StateNum.S_SARG_ATK1;
       mobj.info.speed = info.speed;
       
@@ -1678,10 +1661,117 @@ public class Actions extends UnifiedGameMap {
 
       mobj.function = think_t.P_MobjThinker;
       AddThinker(mobj);
-
-      return mobj;
   }
     
+    private mobjinfo_t GetZombieType(mobjtype_t type, mobj_t source) {
+      if(type == mobjtype_t.MT_GREENZOMBIE){
+        return new GreenZombie_t( 
+            mobjinfo[source.type.ordinal()].doomednum,        // doomednum
+            mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
+            mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
+            mobjinfo[source.type.ordinal()].seestate,        // seestate
+            mobjinfo[source.type.ordinal()].seesound,        // seesound
+            mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
+            mobjinfo[source.type.ordinal()].attacksound,        // attacksound
+            mobjinfo[source.type.ordinal()].painstate,        // painstate
+            mobjinfo[source.type.ordinal()].painchance,        // painchance
+            mobjinfo[source.type.ordinal()].painsound,        // painsound
+            mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
+            mobjinfo[source.type.ordinal()].missilestate,        // missilestate
+            mobjinfo[source.type.ordinal()].deathstate,        // deathstate
+            mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
+            mobjinfo[source.type.ordinal()].deathsound,        // deathsound
+            mobjinfo[source.type.ordinal()].speed,        // speed
+            mobjinfo[source.type.ordinal()].radius,        // radius
+            mobjinfo[source.type.ordinal()].height,        // height
+            mobjinfo[source.type.ordinal()].mass,        // mass
+            mobjinfo[source.type.ordinal()].damage,        // damage
+            mobjinfo[source.type.ordinal()].activesound,        // activesound
+            mobjinfo[source.type.ordinal()].flags,        // flags
+            mobjinfo[source.type.ordinal()].raisestate        // raisestate
+      );
+      } else if (type == mobjtype_t.MT_REDZOMBIE){
+        return new RedZombie_t( 
+            mobjinfo[source.type.ordinal()].doomednum,        // doomednum
+            mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
+            mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
+            mobjinfo[source.type.ordinal()].seestate,        // seestate
+            mobjinfo[source.type.ordinal()].seesound,        // seesound
+            mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
+            mobjinfo[source.type.ordinal()].attacksound,        // attacksound
+            mobjinfo[source.type.ordinal()].painstate,        // painstate
+            mobjinfo[source.type.ordinal()].painchance,        // painchance
+            mobjinfo[source.type.ordinal()].painsound,        // painsound
+            mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
+            mobjinfo[source.type.ordinal()].missilestate,        // missilestate
+            mobjinfo[source.type.ordinal()].deathstate,        // deathstate
+            mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
+            mobjinfo[source.type.ordinal()].deathsound,        // deathsound
+            mobjinfo[source.type.ordinal()].speed,        // speed
+            mobjinfo[source.type.ordinal()].radius,        // radius
+            mobjinfo[source.type.ordinal()].height,        // height
+            mobjinfo[source.type.ordinal()].mass,        // mass
+            mobjinfo[source.type.ordinal()].damage,        // damage
+            mobjinfo[source.type.ordinal()].activesound,        // activesound
+            mobjinfo[source.type.ordinal()].flags,        // flags
+            mobjinfo[source.type.ordinal()].raisestate        // raisestate
+      );
+      } else if (type == mobjtype_t.MT_GRAYZOMBIE){
+        return new GrayZombie_t( 
+            mobjinfo[source.type.ordinal()].doomednum,        // doomednum
+            mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
+            mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
+            mobjinfo[source.type.ordinal()].seestate,        // seestate
+            mobjinfo[source.type.ordinal()].seesound,        // seesound
+            mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
+            mobjinfo[source.type.ordinal()].attacksound,        // attacksound
+            mobjinfo[source.type.ordinal()].painstate,        // painstate
+            mobjinfo[source.type.ordinal()].painchance,        // painchance
+            mobjinfo[source.type.ordinal()].painsound,        // painsound
+            mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
+            mobjinfo[source.type.ordinal()].missilestate,        // missilestate
+            mobjinfo[source.type.ordinal()].deathstate,        // deathstate
+            mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
+            mobjinfo[source.type.ordinal()].deathsound,        // deathsound
+            mobjinfo[source.type.ordinal()].speed,        // speed
+            mobjinfo[source.type.ordinal()].radius,        // radius
+            mobjinfo[source.type.ordinal()].height,        // height
+            mobjinfo[source.type.ordinal()].mass,        // mass
+            mobjinfo[source.type.ordinal()].damage,        // damage
+            mobjinfo[source.type.ordinal()].activesound,        // activesound
+            mobjinfo[source.type.ordinal()].flags,        // flags
+            mobjinfo[source.type.ordinal()].raisestate        // raisestate
+        );
+      } else{
+        return new BlackZombie_t( 
+            mobjinfo[source.type.ordinal()].doomednum,        // doomednum
+            mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
+            mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
+            mobjinfo[source.type.ordinal()].seestate,        // seestate
+            mobjinfo[source.type.ordinal()].seesound,        // seesound
+            mobjinfo[source.type.ordinal()].reactiontime,        // reactiontime
+            mobjinfo[source.type.ordinal()].attacksound,        // attacksound
+            mobjinfo[source.type.ordinal()].painstate,        // painstate
+            mobjinfo[source.type.ordinal()].painchance,        // painchance
+            mobjinfo[source.type.ordinal()].painsound,        // painsound
+            mobjinfo[source.type.ordinal()].meleestate,        // meleestate MAES: BE careful with "0 - null" states!
+            mobjinfo[source.type.ordinal()].missilestate,        // missilestate
+            mobjinfo[source.type.ordinal()].deathstate,        // deathstate
+            mobjinfo[source.type.ordinal()].xdeathstate,        // xdeathstate
+            mobjinfo[source.type.ordinal()].deathsound,        // deathsound
+            mobjinfo[source.type.ordinal()].speed,        // speed
+            mobjinfo[source.type.ordinal()].radius,        // radius
+            mobjinfo[source.type.ordinal()].height,        // height
+            mobjinfo[source.type.ordinal()].mass,        // mass
+            mobjinfo[source.type.ordinal()].damage,        // damage
+            mobjinfo[source.type.ordinal()].activesound,        // activesound
+            mobjinfo[source.type.ordinal()].flags,        // flags
+            mobjinfo[source.type.ordinal()].raisestate        // raisestate
+       );
+      }
+    }
+
+
     /**
      * 
      * @return mobjtype_t : Zombie's type, green, gray, red or black.
@@ -1689,7 +1779,7 @@ public class Actions extends UnifiedGameMap {
     public mobjtype_t getRandomMobjtype_tZombie() {
     	// BJPR: ramdom zombie factory
         int generatedZombieType = getRandomZombieType();
-        mobjtype_t type = null;
+        mobjtype_t type;
     	  
         switch (generatedZombieType) {
     		case 0:
@@ -2108,16 +2198,9 @@ public class Actions extends UnifiedGameMap {
         player_t player;
         int thrust; // fixed_t
         int temp;
-        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
-        
-        //Create array with zombie types.
-        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
-        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         
         //Zombie's inmunity to acid.
-        if(zombiearray.contains(target.type) && inflictor == null){
+        if(((mobjinfo[target.type.ordinal()]).getType()).equals("MT_ZOMBIE") && inflictor == null){
           //System.out.println("its acid");
           return;
         }
@@ -2251,10 +2334,6 @@ public class Actions extends UnifiedGameMap {
         List<mobjtype_t> noposiblezombiearray= new ArrayList<mobjtype_t>();
         
         //Create array with zombie types.
-        noposiblezombiearray.add(mobjtype_t.MT_REDZOMBIE);
-        noposiblezombiearray.add(mobjtype_t.MT_GREENZOMBIE);
-        noposiblezombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
-        noposiblezombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         noposiblezombiearray.add(mobjtype_t.MT_BARREL);
 
         // Maes: this seems necessary in order for barrel damage
@@ -2309,14 +2388,14 @@ public class Actions extends UnifiedGameMap {
             target.SetMobjState(target.info.xdeathstate);
         } else {
           target.SetMobjState(target.info.deathstate);
-          if(!(noposiblezombiearray.contains(target.type))){
+          if(!(noposiblezombiearray.contains(target.type) || ((mobjinfo[target.type.ordinal()]).getType()).equals("MT_ZOMBIE"))){
             //System.out.println(target.type);
             // Creates a thread that later respawns the zombie after some time.
             Thread t1 = new Thread(new Runnable() {
               public void run() {
                 try{
                  TimeUnit.SECONDS.sleep(getZombieSpawnTime());
-                } catch(InterruptedException e) {}      
+                } catch(InterruptedException e) {}
                 SpawnZombieMobj(target.x,target.y,target.z,target);
                 target.SetMobjState(StateNum.S_NULL);
                 RemoveMobj(target);
@@ -2366,15 +2445,15 @@ public class Actions extends UnifiedGameMap {
     public int getZombieSpawnTime() {
         // BJPR : Here is the zombi's SPAWN TIME.
         if(DM.gameskill == Skill.sk_baby){
-            return 5;
+            return ((int) Math.floor(Math.random()*3)) + 5; // 8 - 5
         } else if(DM.gameskill == Skill.sk_easy) {
-           return 4;
+           return ((int) Math.floor(Math.random()*3)) + 4; // 7 - 4
         } else if(DM.gameskill == Skill.sk_medium) {
-            return 3;
+            return ((int) Math.floor(Math.random()*3)) + 3; // 6 - 3
         } else if(DM.gameskill == Skill.sk_hard) {
-            return 2;
+            return ((int) Math.floor(Math.random()*3)) + 2; //5 - 2
         } else if(DM.gameskill == Skill.sk_nightmare) {
-           return 1;
+           return ((int) Math.floor(Math.random()*3)) + 1; // 4 - 1
         }
 
         return 100;

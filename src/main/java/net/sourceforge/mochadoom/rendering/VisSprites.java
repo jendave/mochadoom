@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sun.prism.paint.Color;
-
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.gamelogic.mobj_t;
 import net.sourceforge.mochadoom.utils.C2JUtils;
@@ -42,14 +40,6 @@ public final class VisSprites<V>
     private final static boolean DEBUG = false;
 
     private final static boolean RANGECHECK = false;
-    
-    protected final static short REDCOLOR = -2983; 
-    
-    protected final static short GREENCOLOR = 256; 
-    
-    protected final static short GRAYCOLOR =  16912; 
-    
-    protected final static short BLACKCOLOR = 0; 
 
     protected IDoomSystem I;
 
@@ -265,46 +255,16 @@ public final class VisSprites<V>
             vis.colormap = colormaps.spritelights[index];
             // vis.pcolormap=index;
         }
-        short[] array = new short[256];
-        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
         
-        //Create array with zombie types.
-        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
-        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
-        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         // BJPR:  Zombie color.
+        if(thing.info.getType().equals("MT_ZOMBIE")){
         if(thing.zombiecolormap == null){
-          if(thing.type.equals(mobjtype_t.MT_REDZOMBIE)){
-            for(int i=0; i < 256; i++){
-                array[i] = (short) ((REDCOLOR*999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 20])[i])/1000);
-            }
-            vis.colormap = (V) array; 
-          }
-          else if(thing.type.equals(mobjtype_t.MT_GREENZOMBIE)){
-            for(int i=0; i < 256; i++){
-              array[i] = (short) ((GREENCOLOR*0.2 + 0.8*((short[]) colormaps.colormaps[colormaps.colormaps.length - 5])[i]));
-            }
-            vis.colormap = (V) array;
-          }
-          else if(thing.type.equals(mobjtype_t.MT_GRAYZOMBIE)){
-            for(int i=0; i < 256; i++){
-              array[i] = (short) ((GRAYCOLOR*999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 1])[i])/1000);
-            }
-            vis.colormap = (V) array;
-          }
-          else if(thing.type.equals(mobjtype_t.MT_BLACKZOMBIE)){
-            for(int i=0; i < 256; i++){
-              array[i] = (short) ((BLACKCOLOR*9999 + ((short[]) colormaps.colormaps[colormaps.colormaps.length - 1])[i])/10000);
-            }
-            vis.colormap = (V) array;
-          }
-          thing.zombiecolormap = array;
+          vis.colormap = thing.info.getColorMap(colormaps);
+          thing.zombiecolormap = (short[]) vis.colormap;
         }
-        else{ // Optimización para no calcular el color todo el tiempo. Solo cargar arreglo.
-          if(zombiearray.contains(thing.type)){
-            vis.colormap = (V) thing.zombiecolormap;
-          }
+        else{ // OptimizaciÃ³n para no calcular el color todo el tiempo. Solo cargar arreglo.
+          vis.colormap = (V) thing.zombiecolormap;
+        }
         }
     }
 

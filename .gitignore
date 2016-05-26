@@ -1,5 +1,7 @@
 .DS_Store
 .idea/
+.project
+.classpath
 mochadoom.iml
 doomsav0.dsg
 target/
