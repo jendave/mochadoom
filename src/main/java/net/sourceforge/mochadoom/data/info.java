@@ -10,6 +10,7 @@ import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Medikit_t;
 import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
 
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
@@ -2447,7 +2448,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC10
+            new mobjinfo_t(        // MT_MISC10 Stimpack_t
                     2011,        // doomednum
                     StateNum.S_STIM,        // spawnstate
                     1000,        // spawnhealth
@@ -2473,7 +2474,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
             // BJPR :  MEDIKIT
-            new mobjinfo_t(        // MT_MISC11 MEDIKIT
+            new Medikit_t(        // MT_MISC11 MEDIKIT
                     2012,        // doomednum
                     StateNum.S_MEDI,        // spawnstate
                     1000,        // spawnhealth
@@ -2499,7 +2500,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC12
+            new mobjinfo_t(        // MT_MISC12 SuperCharge_t Recupera vida 200%
                     2013,        // doomednum
                     StateNum.S_SOUL,        // spawnstate
                     1000,        // spawnhealth

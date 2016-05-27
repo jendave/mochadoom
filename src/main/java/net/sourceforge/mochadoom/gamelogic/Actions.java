@@ -2217,7 +2217,31 @@ public class Actions extends UnifiedGameMap {
         player = target.player;
         if ((player != null) && DM.gameskill == Skill.sk_baby)
             damage >>= 1;   // take half damage in trainer mode
-
+        
+        if (source.info.getType().equals("MT_ZOMBIE") && player != null){
+            switch (source.type) {
+              case MT_GREENZOMBIE:
+                  player.poisonPlayer(1, 3000);
+                  break;
+              case MT_REDZOMBIE:
+                  player.poisonPlayer(2, 1000);
+                  break;
+              case MT_GRAYZOMBIE:
+                  player.poisonPlayer(3, 1000);
+                  break;
+              case MT_BLACKZOMBIE:
+                  player.mo.health = 0;
+                  break;
+              default:
+                  break;
+             }
+         }
+          // BJPR: just for testing
+         /*if(inflictor.type == mobjtype_t.MT_POSSESSED && player != null){
+            player.poisonPlayer(5, 1000);
+            System.out.println("poison");
+            
+         }*/
 
         // Some close combat weapons should not
         // inflict thrust and push the victim out of reach,
