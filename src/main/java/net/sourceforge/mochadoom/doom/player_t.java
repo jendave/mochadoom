@@ -860,6 +860,7 @@ public class player_t /*extends mobj_t */
       if(poison >= this.poisonDamage){
         this.poisonDamage = 0;
         this.poisonFreq = 0;
+        this.poisoned = false;
       }
     }
     /**
