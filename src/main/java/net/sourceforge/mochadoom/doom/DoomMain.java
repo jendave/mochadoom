@@ -1935,8 +1935,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     mousebuttons(0, ev.data1 & 1);
                     mousebuttons(1, ev.data1 & 2);
                     mousebuttons(2, ev.data1 & 4);
-
-                    System.out.println("presiono el mouse: "+ ev.data1);
+                    System.out.println("boton de mouse: " + ev.data1);	// commit antiguo
                     
                     mousex = ev.data2 * (mouseSensitivity + 5) / 10;
                     mousey = ev.data3 * (mouseSensitivity + 5) / 10;

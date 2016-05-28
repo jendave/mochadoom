@@ -276,6 +276,8 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
                                 (MEV.getButton() == MouseEvent.BUTTON3 ? 4 : 0);
                 event.data2 = event.data3 = 0;
                 
+                System.out.println("Boton de mouse: " + event.data1);	// commit antiguo
+                
                 DM.PostEvent(event);
                 //System.err.println( "b");
                 break;
