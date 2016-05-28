@@ -2226,6 +2226,18 @@ public class ActionFunctions implements DoomStatusAware {
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
         }
     }
+    // Secundario de A_FirePlasma
+    class A_FirePlasmaAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+
+            player.SetPsprite(
+                    ps_flash,
+                    weaponinfo[player.readyweapon.ordinal()].flashstate);
+
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
+        }
+    }
 
     class A_XScream implements ActionType1 {
         public void invoke(mobj_t actor) {
