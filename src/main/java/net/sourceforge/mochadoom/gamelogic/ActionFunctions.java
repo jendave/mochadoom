@@ -93,6 +93,7 @@ public class ActionFunctions implements DoomStatusAware {
         FireMissile = new A_FireMissile();
         Saw = new A_Saw();
         FirePlasma = new A_FirePlasma();
+        FirePlasma2 = new A_FirePlasmaAlternate();
         BFGsound = new A_BFGsound();
         FireBFG = new A_FireBFG();
         BFGSpray = new A_BFGSpray();
@@ -213,6 +214,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 FireMissile;
     ActionType2 Saw;
     ActionType2 FirePlasma;
+    ActionType2 FirePlasma2;	// secundario plasma
     ActionType2 BFGsound;
     ActionType2 FireBFG;
     ActionType1 BFGSpray;
@@ -360,6 +362,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FirePlasma:
                 st.acp2 = FirePlasma;
+                break;
+            case A_FirePlasmaAlternate:	//secundario plasma gun
+                st.acp2 = FirePlasma2;
                 break;
             case A_BFGsound:
                 st.acp2 = BFGsound;
@@ -634,6 +639,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FirePlasma:
                 st.acp2 = FirePlasma;
+                break;
+            case A_FirePlasmaAlternate:
+                st.acp2 = FirePlasma2;
                 break;
             case A_BFGsound:
                 st.acp2 = BFGsound;
