@@ -202,6 +202,9 @@ public class info {
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Lower, StateNum.S_PLASMADOWN, 0, 0),    // S_PLASMADOWN
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Raise, StateNum.S_PLASMAUP, 0, 0),    // S_PLASMAUP
             new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasma, StateNum.S_PLASMA2, 0, 0),    // S_PLASMA1
+            
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA3, 0, 0),    // plasma secundario
+            
             new state_t(spritenum_t.SPR_PLSG, 1, 20, think_t.A_ReFire, StateNum.S_PLASMA, 0, 0),    // S_PLASMA2
             new state_t(spritenum_t.SPR_PLSF, 32768, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH1
             new state_t(spritenum_t.SPR_PLSF, 32769, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH2

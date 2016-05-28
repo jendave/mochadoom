@@ -2238,6 +2238,8 @@ public class ActionFunctions implements DoomStatusAware {
     class A_FirePlasmaAlternate implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+            
+            System.out.println("A_FirePlasmaAlternate");
 
             player.SetPsprite(
                     ps_flash,
