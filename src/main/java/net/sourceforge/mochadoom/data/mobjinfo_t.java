@@ -77,6 +77,13 @@ public class mobjinfo_t {
     public String getType(){
       return "mobjinfo_t";
     }
+    /**
+     * isMonster, asks if object is monster.
+     * @return true if it is a monster object.
+     */
+    public boolean isMonster(){
+      return false;
+    }
     public <V> V getColorMap(LightsAndColors<V> colormaps){
       return colormaps.colormaps[colormaps.colormaps.length - 1];
     }

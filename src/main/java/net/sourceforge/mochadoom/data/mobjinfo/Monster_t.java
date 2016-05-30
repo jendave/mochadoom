@@ -17,6 +17,11 @@ public abstract class Monster_t extends mobjinfo_t{
   public abstract String getsubType();
   
   @Override
+  public boolean isMonster(){
+    return true;
+  }
+  
+  @Override
   public String getType(){
     return "MT_MONSTER";
   }

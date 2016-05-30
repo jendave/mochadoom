@@ -2015,7 +2015,8 @@ public class Actions extends UnifiedGameMap {
             z = ONCEILINGZ;
         else
             z = ONFLOORZ;
-
+        
+        // BJPR: AQUÍ Spawn mapa inicial.
         mobj = SpawnMobj(x, y, z, mobjtype_t.values()[i]);
         mobj.spawnpoint.copyFrom(mthing);
 
