@@ -1929,6 +1929,32 @@ public class Actions extends UnifiedGameMap {
             z = ONFLOORZ;
 
         mobj = SpawnMobj(x, y, z, mobjtype_t.values()[i]);
+        //BJPR: MONSTER SPAWN
+        int zombieDistance = 40;
+
+        if(mobj.info.speed > 0){
+            if(DM.gameskill == Skill.sk_baby){
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+            } else if(DM.gameskill == Skill.sk_easy) {
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+            } else if(DM.gameskill == Skill.sk_medium) {
+                SpawnMobj((mthing.x + zombieDistance) << FRACBITS, (mthing.y + zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+            } else if(DM.gameskill == Skill.sk_hard) {
+                SpawnMobj((mthing.x + zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y + zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+            } else if(DM.gameskill == Skill.sk_nightmare) {
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+                SpawnMobj((mthing.x + zombieDistance) << FRACBITS, (mthing.y - zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+                SpawnMobj((mthing.x + zombieDistance) << FRACBITS, (mthing.y + zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+                SpawnMobj((mthing.x - zombieDistance) << FRACBITS, (mthing.y + zombieDistance) << FRACBITS, z, mobjtype_t.MT_GREENZOMBIE);
+            }
+
+
+        }
+
+
         mobj.spawnpoint.copyFrom(mthing);
 
         if (mobj.tics > 0)
