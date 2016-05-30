@@ -6,7 +6,11 @@ import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
-
+/**
+ * more info in this site: <a href="http://doom.wikia.com/wiki/Boss_Brain">Boss Brain</a> 
+ * @author Joaquin
+ *
+ */
 public class BossBrain_t extends Monster_t {
   
   public BossBrain_t() {

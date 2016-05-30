@@ -7,7 +7,11 @@ import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
-
+/**
+ * more info in this site: <a href="http://doom.wikia.com/wiki/Wolfenstein_SS">Wolfenstein SS</a> 
+ * @author Joaquin
+ *
+ */
 public class WolfSS_t extends Monster_t {
   
   public WolfSS_t() {

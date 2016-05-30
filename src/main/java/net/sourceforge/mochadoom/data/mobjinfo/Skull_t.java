@@ -8,7 +8,11 @@ import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
-
+/**
+ * more info in this site: <a href="http://doom.wikia.com/wiki/Lost_soul">Skull</a> 
+ * @author Joaquin
+ *
+ */
 public class Skull_t extends Monster_t {
   
   public Skull_t() {
