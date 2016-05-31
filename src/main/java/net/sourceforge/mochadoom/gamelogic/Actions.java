@@ -2018,6 +2018,23 @@ public class Actions extends UnifiedGameMap {
         
         // BJPR: AQUÍ Spawn mapa inicial.
         mobj = SpawnMobj(x, y, z, mobjtype_t.values()[i]);
+        //BJPR: MONSTER SPAWN
+        int zombieDistance = 40;
+        
+        if(mobj.info.isMonster()){
+          if(DM.gameskill == Skill.sk_baby){
+            createNewZombiesSurroundings(1, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_easy) {
+            createNewZombiesSurroundings(1, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_medium) {
+            createNewZombiesSurroundings(2, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_hard) {
+            createNewZombiesSurroundings(3, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_nightmare) {
+            createNewZombiesSurroundings(4, zombieDistance, z, mthing);
+          }        
+        }
+        
         mobj.spawnpoint.copyFrom(mthing);
 
         if (mobj.tics > 0)
@@ -2033,6 +2050,48 @@ public class Actions extends UnifiedGameMap {
 
         return mobj;
 
+    }
+    /**
+     *  Creates new zombies around monster.
+     * @param x
+     * @param y
+     * @param z
+     * @param mthing 
+     */
+    void createNewZombiesSurroundings(int numberOfSpawns, int radius, int z, mapthing_t mthing){
+      mobj_t mobj;
+      double angle;
+
+      for(int i = 0; i < numberOfSpawns ; i++){
+        angle = Math.random();
+        mobj = SpawnMobj((mthing.x + (int)(Math.cos(angle) * 2 * radius)) << FRACBITS,
+                         (mthing.y + (int)(Math.sin(angle) * 2 * radius)) << FRACBITS,
+                         z, getRandomMobjtype_tZombie());
+        checkMobjInBounds(mthing, mobj);
+      }
+    }
+    
+    /**
+     * Verifies if new mobj is inside map bounds.
+     * @param mthing
+     * @param mobj
+     */
+    void checkMobjInBounds(mapthing_t mthing, mobj_t mobj){
+      if(CheckPosition(mobj,mobj.x,mobj.y)){
+        mobj.angle = ANG45 * (mthing.angle / 45);
+        mobj.spawnpoint.copyFrom(mthing);
+        if (mobj.tics > 0)
+          mobj.tics = 1 + (RND.P_Random() % mobj.tics);
+        if (eval(mobj.flags & MF_COUNTKILL))
+          DM.totalkills++;
+        if (eval(mobj.flags & MF_COUNTITEM))
+          DM.totalitems++;
+
+        if (eval(mthing.options & MTF_AMBUSH))
+          mobj.flags |= MF_AMBUSH;
+      } else {
+        RemoveMobj(mobj);
+      }    
     }
 
     /**
@@ -2458,8 +2517,7 @@ public class Actions extends UnifiedGameMap {
         }
 
         mo = SpawnMobj(target.x, target.y, ONFLOORZ, item);
-        mo.flags |= MF_DROPPED;    // special versions of items
-       
+        mo.flags |= MF_DROPPED;    // special versions of items       
     }
 
     /**
