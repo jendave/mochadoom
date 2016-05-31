@@ -206,8 +206,8 @@ public class info {
             new state_t(spritenum_t.SPR_PLSG, 1, 20, think_t.A_ReFire, StateNum.S_PLASMA, 0, 0),    // S_PLASMA2
             new state_t(spritenum_t.SPR_PLSF, 32768, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH1
             new state_t(spritenum_t.SPR_PLSF, 32769, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH2
-            new state_t(spritenum_t.SPR_PLSG, 0, 3, null, StateNum.S_PLASMA3, 0, 0),    // S_PLASMA3
-            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA2, 0, 0),    // S_PLASMA4
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, null, StateNum.S_PLASMA4, 0, 0),    // S_PLASMA3
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA1, 0, 0),    // S_PLASMA4
             //new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
    			//new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
             
