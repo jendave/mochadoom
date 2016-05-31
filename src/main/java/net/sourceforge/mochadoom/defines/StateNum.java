@@ -91,8 +91,8 @@ public enum StateNum {
     S_PLASMA2,
     S_PLASMAFLASH1,
     S_PLASMAFLASH2,
-    
     S_PLASMA3,	// secundario plasma
+    S_PLASMA4,	// secundario plasma
     
     S_BFG,
     S_BFGDOWN,

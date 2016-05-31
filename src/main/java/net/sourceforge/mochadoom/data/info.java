@@ -198,16 +198,21 @@ public class info {
             new state_t(spritenum_t.SPR_SAWG, 0, 4, think_t.A_Saw, StateNum.S_SAW2, 0, 0),    // S_SAW1
             new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_Saw, StateNum.S_SAW3, 0, 0),    // S_SAW2
             new state_t(spritenum_t.SPR_SAWG, 1, 0, think_t.A_ReFire, StateNum.S_SAW, 0, 0),    // S_SAW3
+            
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_WeaponReady, StateNum.S_PLASMA, 0, 0),    // S_PLASMA
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Lower, StateNum.S_PLASMADOWN, 0, 0),    // S_PLASMADOWN
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Raise, StateNum.S_PLASMAUP, 0, 0),    // S_PLASMAUP
             new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasma, StateNum.S_PLASMA2, 0, 0),    // S_PLASMA1
-            
-            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA3, 0, 0),    // plasma secundario
-            
             new state_t(spritenum_t.SPR_PLSG, 1, 20, think_t.A_ReFire, StateNum.S_PLASMA, 0, 0),    // S_PLASMA2
             new state_t(spritenum_t.SPR_PLSF, 32768, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH1
             new state_t(spritenum_t.SPR_PLSF, 32769, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH2
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, null, StateNum.S_PLASMA3, 0, 0),    // S_PLASMA3
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA2, 0, 0),    // S_PLASMA4
+            //new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
+   			//new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
+            
+            
+            
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_WeaponReady, StateNum.S_BFG, 0, 0),    // S_BFG
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Lower, StateNum.S_BFGDOWN, 0, 0),    // S_BFGDOWN
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Raise, StateNum.S_BFGUP, 0, 0),    // S_BFGUP

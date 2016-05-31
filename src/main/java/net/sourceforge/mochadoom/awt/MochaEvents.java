@@ -280,7 +280,7 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
                 // 1: click izquierdo
                 // 2: click rueda
                 // 4: click derecho
-                System.out.println("Boton de mouse: " + event.data1);	// commit antiguo
+                //System.out.println("Boton de mouse: " + event.data1);	// commit antiguo
                 
                 DM.PostEvent(event);
                 //System.err.println( "b");
