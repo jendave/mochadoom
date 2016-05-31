@@ -1595,16 +1595,45 @@ public abstract class Map<T, V>
             // MAES: get first on the list.
             t = LL.sectors[i].thinglist;
             while (t != null) {
+              if(t.info.getType().equals("MT_ZOMBIE")) {
+                drawZombie(t);
+              } else {
                 drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
                         16 << FRACBITS, toBAMIndex(t.angle), color, t.x, t.y);
-                t = (mobj_t) t.snext;
-//                boolean var = (t.type==mobjtype_t.MT_GRAYZOMBIE) || (t.type==mobjtype_t.MT_GREENZOMBIE);
-//                var = var || (t.type==mobjtype_t.MT_REDZOMBIE) || (t.type==mobjtype_t.MT_BLACKZOMBIE);
-//                if(var) {
-//                  System.out.println("Este es un zombie!");
-//                }
+              }
+              t = (mobj_t) t.snext;
             }
         }
+    }
+    
+    /**
+     * Draws a zombie with his correspondant color.
+     * @param zombie the zombie that has to be drawed.
+     */
+    private void drawZombie(mobj_t zombie) {
+      String type = zombie.info.getsubType();
+      int green = V.getBaseColor(GREENS);
+      int red = V.getBaseColor(REDS);
+      int gray = V.getBaseColor(GRAYS);
+      int yellow = V.getBaseColor(YELLOWS);
+      switch(type) {
+        case "MT_GREENZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), green, zombie.x, zombie.y);
+          break;
+        case "MT_REDZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), red, zombie.x, zombie.y);
+          break;
+        case "MT_GRAYZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), gray, zombie.x, zombie.y);
+          break;
+        case "MT_BLACKZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), yellow, zombie.x, zombie.y);
+          break;
+      }
     }
 
     public final void drawMarks() {
