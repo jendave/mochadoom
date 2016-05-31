@@ -2620,11 +2620,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     int d_episode;
     int d_map;
 
-    public void
-    DeferedInitNew
-            (Skill skill,
-             int episode,
-             int map) {
+    public void DeferedInitNew(Skill skill, int episode, int map) {
         d_skill = skill;
         d_episode = episode;
         d_map = map;
