@@ -183,6 +183,11 @@ public class info {
             new state_t(spritenum_t.SPR_CHGG, 0, 4, think_t.A_FireCGun, StateNum.S_CHAIN2, 0, 0),    // S_CHAIN1
             new state_t(spritenum_t.SPR_CHGG, 1, 4, think_t.A_FireCGun, StateNum.S_CHAIN3, 0, 0),    // S_CHAIN2
             new state_t(spritenum_t.SPR_CHGG, 1, 0, think_t.A_ReFire, StateNum.S_CHAIN, 0, 0),    // S_CHAIN3
+
+			new state_t(spritenum_t.SPR_CHGG, 0, 1, think_t.A_FireCGunAltern, StateNum.S_CHAIN5, 0, 0),    // S_CHAIN4
+			new state_t(spritenum_t.SPR_CHGG, 1, 1, think_t.A_FireCGunAltern, StateNum.S_CHAIN3, 0, 0),    // S_CHAIN5
+
+
             new state_t(spritenum_t.SPR_CHGF, 32768, 5, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH1
             new state_t(spritenum_t.SPR_CHGF, 32769, 5, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH2
             

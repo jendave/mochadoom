@@ -68,6 +68,10 @@ public enum StateNum {
     S_CHAIN1,
     S_CHAIN2,
     S_CHAIN3,
+
+    S_CHAIN4,
+    S_CHAIN5,
+
     S_CHAINFLASH1,
     S_CHAINFLASH2,
     S_MISSILE,

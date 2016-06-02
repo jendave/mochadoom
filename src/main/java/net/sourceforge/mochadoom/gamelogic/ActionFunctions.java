@@ -90,6 +90,7 @@ public class ActionFunctions implements DoomStatusAware {
         LoadShotgun2 = new A_LoadShotgun2();
         CloseShotgun2 = new A_CloseShotgun2();
         FireCGun = new A_FireCGun();
+        FireCGunAltern = new A_FireCGunAltern();
         GunFlash = new A_GunFlash();
         FireMissile = new A_FireMissile();
         FireMissileAltern = new A_FireMissileAltern();
@@ -212,6 +213,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 LoadShotgun2;
     ActionType2 CloseShotgun2;
     ActionType2 FireCGun;
+    ActionType2 FireCGunAltern;
     ActionType2 GunFlash;
     ActionType2 FireMissile;
     ActionType2 FireMissileAltern;
@@ -355,6 +357,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireCGun:
                 st.acp2 = FireCGun;
+                break;
+            case A_FireCGunAltern:
+                st.acp2 = FireCGunAltern;
                 break;
             case A_GunFlash:
                 st.acp2 = GunFlash;
@@ -635,6 +640,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireCGun:
                 st.acp2 = FireCGun;
+                break;
+            case A_FireCGunAltern:
+                st.acp2 = FireCGunAltern;
                 break;
             case A_GunFlash:
                 st.acp2 = GunFlash;
@@ -2271,6 +2279,32 @@ public class ActionFunctions implements DoomStatusAware {
         }
     }
 
+    class A_FireCGunAltern implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            // For convenience.
+            int readyweap = player.readyweapon.ordinal();
+            int flashstate = weaponinfo[readyweap].flashstate.ordinal();
+            int current_state = psp.state.id;
+
+            S.StartSound(player.mo, sfxenum_t.sfx_pistol);
+            if (!eval(player.ammo[weaponinfo[readyweap].ammo.ordinal()]))
+                return;
+
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+            player.ammo[weaponinfo[readyweap].ammo.ordinal()]--;
+
+            // MAES: Code to alternate between two different gun flashes
+            // needed a clear rewrite, as it was way too messy.
+            // We know that the flash states are a certain amount away from
+            // the firing states. This amount is two frames.
+            player.SetPsprite(ps_flash, StateNum.values()[flashstate + current_state - StateNum.S_CHAIN4.ordinal()-1]
+            );
+
+            A.P_BulletSlope(player.mo);
+
+            A.P_GunShot(player.mo, !eval(player.refire));
+        }
+    }
     //
     // A_FirePlasma
     //
