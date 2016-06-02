@@ -1607,7 +1607,8 @@ public abstract class Map<T, V>
     }
     
     /**
-     * Draws a zombie with his correspondant color.
+     * Draws a zombie with his correspondant color. The black zombie in the map
+     * is showed yellow.
      * @param zombie the zombie that has to be drawed.
      */
     private void drawZombie(mobj_t zombie) {
@@ -1662,7 +1663,6 @@ public abstract class Map<T, V>
     public final void Drawer() {
         if (!DM.automapactive)
             return;
-        // System.out.println("Drawing map");
         if (overlay < 1)
             V.FillRect(BACKGROUND, FB, 0, 0, f_w, f_h); // BACKGROUND
         if (grid)
@@ -1709,6 +1709,15 @@ public abstract class Map<T, V>
         finit_width = SCREENWIDTH;
         finit_height = SCREENHEIGHT - 32 * vs.getSafeScaling();
     }
+    
+    /* Displace the map by moveMapX pixels to the right and by moveMapY pixels down */
+    private static int moveMapX = 0;
+    private static int moveMapY = 0;
+    
+    private void setMoveMap(int x, int y) {
+      moveMapX = x;
+      moveMapY = y;
+    }
 
     public static final class HiColor
             extends Map<byte[], short[]> {
@@ -1718,7 +1727,10 @@ public abstract class Map<T, V>
         }
 
         protected final void PUTDOT(int xx, int yy, int cc) {
-            fb[(yy) * f_w + (xx)] = (short) (cc);
+          /* If the point is not out of the window and not over the status bar */
+          if (!((yy + moveMapY) >= (SCREENHEIGHT - ST.getHeight()) || (xx + moveMapX)>=SCREENWIDTH)) {
+            fb[(yy + moveMapY) * f_w + (xx + moveMapX)] = (short) (cc);
+          }
         }
 
         protected final void drawCrosshair(int color) {
