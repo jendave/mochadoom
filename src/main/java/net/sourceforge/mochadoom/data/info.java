@@ -127,7 +127,9 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 0),    // S_PUNCH5
             
             new state_t(spritenum_t.SPR_PUNG, 1, 12, null, StateNum.S_PUNCH7, 0, 0),        // S_PUNCH6
-            new state_t(spritenum_t.SPR_PUNG, 2, 4, think_t.A_PunchAlternate, StateNum.S_PUNCH3, 0, 0),    // S_PUNCH7
+            new state_t(spritenum_t.SPR_PUNG, 2, 1, think_t.A_PunchAlternate, StateNum.S_PUNCH8, 0, 0),    // S_PUNCH7
+            new state_t(spritenum_t.SPR_PUNG, 3, 15, null, StateNum.S_PUNCH9, 0, 0),        // S_PUNCH8
+            new state_t(spritenum_t.SPR_PUNG, 2, 1, null, StateNum.S_PUNCH5, 0, 0),        // S_PUNCH9
             
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_WeaponReady, StateNum.S_PISTOL, 0, 0),// S_PISTOL
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Lower, StateNum.S_PISTOLDOWN, 0, 0),    // S_PISTOLDOWN

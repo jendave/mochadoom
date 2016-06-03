@@ -14,6 +14,8 @@ public enum StateNum {
     
     S_PUNCH6,		// <----
     S_PUNCH7,		// <----
+    S_PUNCH8,		// <----
+    S_PUNCH9,		// <----
     
     S_PISTOL,
     S_PISTOLDOWN,
