@@ -36,6 +36,7 @@ public enum mobjtype_t {
     MT_HEADSHOT,
     MT_ROCKET,
     MT_PLASMA,
+    MT_ALTERNATEPLASMA,
     MT_BFG,
     MT_ARACHPLAZ,
     MT_PUFF,

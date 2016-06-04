@@ -122,6 +122,8 @@ public enum StateNum {
     S_RBALLX3,
     S_PLASBALL,
     S_PLASBALL2,
+    S_PLASBALL3, // FIXME: 
+    S_PLASBALL4,
     S_PLASEXP,
     S_PLASEXP2,
     S_PLASEXP3,

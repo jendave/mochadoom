@@ -2245,7 +2245,7 @@ public class ActionFunctions implements DoomStatusAware {
                     ps_flash,
                     weaponinfo[player.readyweapon.ordinal()].flashstate);
 
-            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ALTERNATEPLASMA);
         }
     }
 
