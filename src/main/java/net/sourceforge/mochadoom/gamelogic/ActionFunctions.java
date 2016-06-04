@@ -2293,6 +2293,11 @@ public class ActionFunctions implements DoomStatusAware {
             player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
             player.ammo[weaponinfo[readyweap].ammo.ordinal()]--;
 
+            // Damage the player when using the Alternative mode of the MachineGun,
+            // this is because it is faster than the normal mode but in exchange
+            // it damages the player
+            player.DamagePlayer(1);
+
             // MAES: Code to alternate between two different gun flashes
             // needed a clear rewrite, as it was way too messy.
             // We know that the flash states are a certain amount away from

@@ -852,6 +852,14 @@ public class player_t /*extends mobj_t */
      * that the player origin is in a special sector
      */
 
+    // Function to damage the player when using the MachineGun
+    public void DamagePlayer(int n){
+        if(this.mo.health-n > 0) {
+            this.health[0] = this.health[0] - n;
+            this.mo.health = this.health[0];
+        }
+    }
+
     protected void PlayerInSpecialSector() {
         sector_t sector;
 
