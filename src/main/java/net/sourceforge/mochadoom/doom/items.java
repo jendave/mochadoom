@@ -118,7 +118,7 @@ public class items {
                             StateNum.S_BFGDOWN,
                             StateNum.S_BFG,
                             StateNum.S_BFG1,
-                            StateNum.S_BFG1,
+                            StateNum.S_BFG5,
                             StateNum.S_BFGFLASH1
                     ),
                     new weaponinfo_t(

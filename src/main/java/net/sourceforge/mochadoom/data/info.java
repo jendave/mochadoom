@@ -227,6 +227,12 @@ public class info {
             new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_GunFlash, StateNum.S_BFG3, 0, 0),    // S_BFG2
             new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_FireBFG, StateNum.S_BFG4, 0, 0),    // S_BFG3
             new state_t(spritenum_t.SPR_BFGG, 1, 20, think_t.A_ReFire, StateNum.S_BFG, 0, 0),    // S_BFG4
+
+			new state_t(spritenum_t.SPR_BFGG, 0, 20, think_t.A_BFGsound, StateNum.S_BFG6, 0, 0),    // S_BFG5
+			new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_GunFlash, StateNum.S_BFG7, 0, 0),    // S_BFG6
+			new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_FireBFGAltern, StateNum.S_BFG8, 0, 0),    // S_BFG7
+			new state_t(spritenum_t.SPR_BFGG, 1, 20, think_t.A_ReFire, StateNum.S_BFG, 0, 0),    // S_BFG8
+
             new state_t(spritenum_t.SPR_BFGF, 32768, 11, think_t.A_Light1, StateNum.S_BFGFLASH2, 0, 0),    // S_BFGFLASH1
             new state_t(spritenum_t.SPR_BFGF, 32769, 6, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_BFGFLASH2
             new state_t(spritenum_t.SPR_BLUD, 2, 8, null, StateNum.S_BLOOD2, 0, 0),    // S_BLOOD1

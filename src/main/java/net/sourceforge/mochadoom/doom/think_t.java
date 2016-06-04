@@ -53,6 +53,7 @@ public enum think_t {
     A_FirePlasma(2),
     A_BFGsound(2),
     A_FireBFG(2),
+    A_FireBFGAltern(2),
     A_BFGSpray(1),
     A_Explode(1),
     A_Pain(1),

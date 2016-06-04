@@ -98,6 +98,7 @@ public class ActionFunctions implements DoomStatusAware {
         FirePlasma = new A_FirePlasma();
         BFGsound = new A_BFGsound();
         FireBFG = new A_FireBFG();
+        FireBFGAltern = new A_FireBFGAltern();
         BFGSpray = new A_BFGSpray();
         Explode = new A_Explode();
         Pain = new A_Pain();
@@ -221,6 +222,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 FirePlasma;
     ActionType2 BFGsound;
     ActionType2 FireBFG;
+    ActionType2 FireBFGAltern;
     ActionType1 BFGSpray;
     ActionType1 Explode;
     ActionType1 Pain;
@@ -381,6 +383,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireBFG:
                 st.acp2 = FireBFG;
+                break;
+            case A_FireBFGAltern:
+                st.acp2 = FireBFGAltern;
                 break;
             case A_BFGSpray:
                 st.acp1 = BFGSpray;
@@ -664,6 +669,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireBFG:
                 st.acp2 = FireBFG;
+                break;
+            case A_FireBFGAltern:
+                st.acp2 = FireBFGAltern;
                 break;
             case A_BFGSpray:
                 st.acp1 = BFGSpray;
@@ -2246,6 +2254,21 @@ public class ActionFunctions implements DoomStatusAware {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] -= BFGCELLS;
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_BFG);
         }
+    }
+
+    class A_FireBFGAltern implements ActionType2 {
+
+
+        // plasma cells for a bfg attack
+        // IDEA: make action functions partially parametrizable?
+        private static final int BFGCELLS = 40;
+
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] -= BFGCELLS;
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_BFG);
+            System.out.print("TEST------FIREBFGALTERN");
+        }
+
     }
 
 
