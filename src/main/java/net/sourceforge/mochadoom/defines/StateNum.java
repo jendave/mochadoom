@@ -85,7 +85,6 @@ public enum StateNum {
     
     S_MISSILE4,		// <---
     S_MISSILE5,		// <---
-    S_MISSILE6,		// <---
     
     S_MISSILEFLASH1,
     S_MISSILEFLASH2,

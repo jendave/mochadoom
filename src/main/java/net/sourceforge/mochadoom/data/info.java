@@ -198,9 +198,8 @@ public class info {
             new state_t(spritenum_t.SPR_MISG, 1, 12, think_t.A_FireMissile, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE2
             new state_t(spritenum_t.SPR_MISG, 1, 0, think_t.A_ReFire, StateNum.S_MISSILE, 0, 0),    // S_MISSILE3
             
-            new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE5, 0, 0),    // S_MISSILE4
-            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE6, 0, 0),    // S_MISSILE5
-            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE6
+            new state_t(spritenum_t.SPR_MISG, 0, 5, think_t.A_GunFlash, StateNum.S_MISSILE5, 0, 0),    // S_MISSILE4
+            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE5
             
             new state_t(spritenum_t.SPR_MISF, 32768, 3, think_t.A_Light1, StateNum.S_MISSILEFLASH2, 0, 0),    // S_MISSILEFLASH1
             new state_t(spritenum_t.SPR_MISF, 32769, 4, null, StateNum.S_MISSILEFLASH3, 0, 0),    // S_MISSILEFLASH2

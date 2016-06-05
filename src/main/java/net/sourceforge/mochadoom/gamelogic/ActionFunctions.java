@@ -2274,14 +2274,27 @@ public class ActionFunctions implements DoomStatusAware {
         }
     }
 
-
+    
     //
     // A_FireMissile
     //
+    static int ADDED_MISSILES = 0;
+    
     class A_FireMissile implements ActionType2 {
+    	
+    	
         public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
+            
+            if( ADDED_MISSILES > 0 ){
+            	ADDED_MISSILES--;
+            	
+            	player.SetPsprite(
+            			ps_weapon,
+            			StateNum.S_MISSILE1,
+            			StateNum.S_MISSILE1);
+            }
         }
     }
     
@@ -2290,8 +2303,7 @@ public class ActionFunctions implements DoomStatusAware {
     //
     class A_FireMissileAltern implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
-            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ROCKET);
+            ADDED_MISSILES++;
         }
     }
 
