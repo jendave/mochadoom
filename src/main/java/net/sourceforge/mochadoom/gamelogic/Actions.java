@@ -1620,13 +1620,13 @@ public class Actions extends UnifiedGameMap {
        */
       type = getRandomMobjtype_tZombie();
       mobjinfo_t info2 = GetZombieType(type,source);
-      // BJPR: AQUI PROBLEMA
       info = mobjinfo[type.ordinal()];
       mobj.type = type;
       mobj.info = info2;
       mobj.info.missilestate = StateNum.S_NULL;
       mobj.info.meleestate = StateNum.S_SARG_ATK1;
       mobj.info.speed = info.speed;
+      mobj.info.spawnhealth = info.spawnhealth;
       
       mobj.x = x;
       mobj.y = y;
@@ -2020,7 +2020,7 @@ public class Actions extends UnifiedGameMap {
         mobj = SpawnMobj(x, y, z, mobjtype_t.values()[i]);
         //BJPR: MONSTER SPAWN
         int zombieDistance = 40;
-        
+        //System.out.println(DM.gameskill);
         if(mobj.info.isMonster()){
           if(DM.gameskill == Skill.sk_baby){
             createNewZombiesSurroundings(1, zombieDistance, z, mthing);
@@ -2028,11 +2028,13 @@ public class Actions extends UnifiedGameMap {
             createNewZombiesSurroundings(1, zombieDistance, z, mthing);
           } else if(DM.gameskill == Skill.sk_medium) {
             createNewZombiesSurroundings(2, zombieDistance, z, mthing);
-          } else if(DM.gameskill == Skill.sk_hard) {
+          } else if(DM.gameskill == Skill.sk_hard && (DM.hordemode == 0)) {
             createNewZombiesSurroundings(3, zombieDistance, z, mthing);
           } else if(DM.gameskill == Skill.sk_nightmare) {
             createNewZombiesSurroundings(4, zombieDistance, z, mthing);
-          }        
+          } else if(DM.gameskill == Skill.sk_hard && (DM.hordemode == 1)) {
+            createNewZombiesSurroundings(30, zombieDistance, z, mthing);
+          }  
         }
         
         mobj.spawnpoint.copyFrom(mthing);

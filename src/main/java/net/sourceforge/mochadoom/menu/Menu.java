@@ -337,8 +337,8 @@ public class Menu extends AbstractDoomMenu {
                         new menuitem_t(1, "M_ROUGH", ChooseSkill, 'h'),
                         new menuitem_t(1, "M_HURT", ChooseSkill, 'h'),
                         new menuitem_t(1, "M_ULTRA", ChooseSkill, 'u'),
-                        new menuitem_t(1, "M_NMARE", ChooseSkill, 'n'),
-                        new menuitem_t(1, "M_EPI3", ChooseSkill, 'h')};
+                        new menuitem_t(1, "M_HRDM", ChooseSkill, 'h') , 
+                        new menuitem_t(1, "M_NMARE", ChooseSkill, 'n')};
 
         NewDef = new menu_t(newg_end, // # of menu items
                 EpiDef, // previous menu
@@ -1922,11 +1922,11 @@ public class Menu extends AbstractDoomMenu {
      * newgame_e enum;
      */
     public static final int killthings = 0, toorough = 1, hurtme = 2, violence = 3,
-            nightmare = 4, horde = 5, newg_end = 6;
+            nightmare = 5, horde = 4, newg_end = 6;
 
     private static final String[] gammamsg = {"GAMMALVL0",
 
-            "GAMMALVL1", "GAMMALVL2", "GAMMALVL3", "GAMMALVL4", "GAMMALVL5"};
+            "GAMMALVL1", "GAMMALVL2", "GAMMALVL3", "GAMMALVL4"};
 
     /**
      * sound_e enum
