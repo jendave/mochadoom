@@ -852,6 +852,14 @@ public class player_t /*extends mobj_t */
      * that the player origin is in a special sector
      */
 
+    // Function to damage the player when using some Weapons
+    public void DamagePlayer(int n){
+        if(this.mo.health-n > 0) {
+            this.mo.health = this.mo.health - n;    // health
+            this.health[0] = this.mo.health;        // health UI label
+        }
+    }
+
     protected void PlayerInSpecialSector() {
         sector_t sector;
 
