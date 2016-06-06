@@ -1662,11 +1662,7 @@ public abstract class Map<T, V>
     public final void Drawer() {
         if (!DM.automapactive)
             return;
-<<<<<<< HEAD
         if (overlay < 1 && !DM.isMyMapCheat())
-=======
-        if (overlay < 1)
->>>>>>> fdb788a5b62b92ea680197b55a29f76fffbd4f35
             V.FillRect(BACKGROUND, FB, 0, 0, f_w, f_h); // BACKGROUND
         if (grid)
             drawGrid(V.getBaseColor(GRIDCOLORS));
