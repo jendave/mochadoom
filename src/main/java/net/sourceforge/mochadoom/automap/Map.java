@@ -923,7 +923,6 @@ public abstract class Map<T, V>
     /**
      * Handle events (user inputs) in automap mode
      */
-
     public final boolean Responder(event_t ev) {
 
         boolean rc;
@@ -1633,8 +1632,7 @@ public abstract class Map<T, V>
     public final void Drawer() {
         if (!DM.automapactive)
             return;
-        // System.out.println("Drawing map");
-        if (overlay < 1)
+        if (overlay < 1 && !DM.isMyMapCheat())
             V.FillRect(BACKGROUND, FB, 0, 0, f_w, f_h); // BACKGROUND
         if (grid)
             drawGrid(V.getBaseColor(GRIDCOLORS));

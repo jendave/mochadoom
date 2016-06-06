@@ -39,6 +39,7 @@ import net.sourceforge.mochadoom.menu.DoomRandom;
 import net.sourceforge.mochadoom.menu.Menu;
 import net.sourceforge.mochadoom.menu.MenuMisc;
 import net.sourceforge.mochadoom.menu.Settings;
+import net.sourceforge.mochadoom.menu.cheatseq_t;
 import net.sourceforge.mochadoom.network.DummyNetworkDriver;
 import net.sourceforge.mochadoom.rendering.Renderer;
 import net.sourceforge.mochadoom.rendering.UnifiedRenderer;
@@ -228,6 +229,12 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     private boolean fullscreen = false;
     private GameState oldgamestate = GameState.GS_MINUS_ONE;
     private int borderdrawcount;
+    
+    // no background map cheat
+    private char cheat_mymap_seq[] = {'m', 'a', 'r', 'c', 'o', 'p', 'o', 'l', 'o', 0xff};    
+    cheatseq_t cheat_mymap = new cheatseq_t(cheat_mymap_seq, 0);
+    // mytired toggle mode
+    private boolean dm_mymap = false;
 
     /**
      * D_Display
@@ -271,8 +278,11 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             case GS_LEVEL:
                 if (!eval(gametic))
                     break;
-                if (automapactive)
-                    AM.Drawer();
+                if (automapactive){
+                  if (dm_mymap)
+                    R.RenderPlayerView(players[displayplayer]);
+                  AM.Drawer();                                      
+                }
                 if (wipe || (!R.isFullHeight() && fullscreen) ||
                         (inhelpscreensstate && !inhelpscreens)
                         || (DD.justDoneReading()))
@@ -381,6 +391,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             VI.FinishUpdate();             // page flip or blit buffer
         } while (!done);
 
+    }
+    
+    public boolean isMyMapCheat() {
+        return dm_mymap;
     }
 
 
@@ -1910,6 +1924,14 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     }
                 return true; 
             } */
+                if (cheat_mymap.CheckCheat((char) ev.data1)) {                    
+                    dm_mymap = !dm_mymap;
+                    if(dm_mymap) {
+                        players[0].message = String.format("Custom Map On!");
+                    }else{
+                        players[0].message = String.format("Custom Map Off!");
+                    }
+                }
 
                 if (ev.data1 < NUMKEYS)
                     gamekeydown[ev.data1] = true;
