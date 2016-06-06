@@ -1797,16 +1797,6 @@ public class StatusBar extends AbstractStatusBar {
         }
 
     }
-    
-    class st_map_t implements StatusBarWidget {
-
-      @Override
-      public void update(boolean refresh) {
-        // TODO Auto-generated method stub
-        
-      }
-      
-    }
 
     class st_percent_t
             implements StatusBarWidget {
