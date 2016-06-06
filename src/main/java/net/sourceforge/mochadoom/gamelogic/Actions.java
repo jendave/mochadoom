@@ -1627,7 +1627,7 @@ public class Actions extends UnifiedGameMap {
       mobj.info.meleestate = StateNum.S_SARG_ATK1;
       mobj.info.speed = info.speed;
       mobj.info.spawnhealth = info.spawnhealth;
-      
+
       mobj.x = x;
       mobj.y = y;
       mobj.radius = info.radius;
@@ -1665,7 +1665,7 @@ public class Actions extends UnifiedGameMap {
     
     private mobjinfo_t GetZombieType(mobjtype_t type, mobj_t source) {
       if(type == mobjtype_t.MT_GREENZOMBIE){
-        return new GreenZombie_t( 
+        return new GreenZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1691,7 +1691,7 @@ public class Actions extends UnifiedGameMap {
             mobjinfo[source.type.ordinal()].raisestate        // raisestate
       );
       } else if (type == mobjtype_t.MT_REDZOMBIE){
-        return new RedZombie_t( 
+        return new RedZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1717,7 +1717,7 @@ public class Actions extends UnifiedGameMap {
             mobjinfo[source.type.ordinal()].raisestate        // raisestate
       );
       } else if (type == mobjtype_t.MT_GRAYZOMBIE){
-        return new GrayZombie_t( 
+        return new GrayZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1743,7 +1743,7 @@ public class Actions extends UnifiedGameMap {
             mobjinfo[source.type.ordinal()].raisestate        // raisestate
         );
       } else{
-        return new BlackZombie_t( 
+        return new BlackZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -2015,7 +2015,7 @@ public class Actions extends UnifiedGameMap {
             z = ONCEILINGZ;
         else
             z = ONFLOORZ;
-        
+
         // BJPR: AQUÍ Spawn mapa inicial.
         mobj = SpawnMobj(x, y, z, mobjtype_t.values()[i]);
         //BJPR: MONSTER SPAWN
@@ -2034,9 +2034,9 @@ public class Actions extends UnifiedGameMap {
             createNewZombiesSurroundings(4, zombieDistance, z, mthing);
           } else if(DM.gameskill == Skill.sk_hard && (DM.hordemode == 1)) {
             createNewZombiesSurroundings(30, zombieDistance, z, mthing);
-          }  
+          }
         }
-        
+
         mobj.spawnpoint.copyFrom(mthing);
 
         if (mobj.tics > 0)
@@ -2058,7 +2058,7 @@ public class Actions extends UnifiedGameMap {
      * @param x
      * @param y
      * @param z
-     * @param mthing 
+     * @param mthing
      */
     void createNewZombiesSurroundings(int numberOfSpawns, int radius, int z, mapthing_t mthing){
       mobj_t mobj;
@@ -2072,7 +2072,7 @@ public class Actions extends UnifiedGameMap {
         checkMobjInBounds(mthing, mobj);
       }
     }
-    
+
     /**
      * Verifies if new mobj is inside map bounds.
      * @param mthing
@@ -2093,7 +2093,7 @@ public class Actions extends UnifiedGameMap {
           mobj.flags |= MF_AMBUSH;
       } else {
         RemoveMobj(mobj);
-      }    
+      }
     }
 
     /**
@@ -2279,7 +2279,7 @@ public class Actions extends UnifiedGameMap {
         player = target.player;
         if ((player != null) && DM.gameskill == Skill.sk_baby)
             damage >>= 1;   // take half damage in trainer mode
-        
+
         if (source.info.getType().equals("MT_ZOMBIE") && player != null){
             switch (source.type) {
               case MT_GREENZOMBIE:
@@ -2302,7 +2302,7 @@ public class Actions extends UnifiedGameMap {
          /*if(inflictor.type == mobjtype_t.MT_POSSESSED && player != null){
             player.poisonPlayer(5, 1000);
             System.out.println("poison");
-            
+
          }*/
 
         // Some close combat weapons should not
@@ -2519,7 +2519,7 @@ public class Actions extends UnifiedGameMap {
         }
 
         mo = SpawnMobj(target.x, target.y, ONFLOORZ, item);
-        mo.flags |= MF_DROPPED;    // special versions of items       
+        mo.flags |= MF_DROPPED;    // special versions of items
     }
 
     /**
