@@ -90,6 +90,7 @@ public class ActionFunctions implements DoomStatusAware {
         LoadShotgun2 = new A_LoadShotgun2();
         CloseShotgun2 = new A_CloseShotgun2();
         FireCGun = new A_FireCGun();
+        FireCGunAltern = new A_FireCGunAltern();
         GunFlash = new A_GunFlash();
         FireMissile = new A_FireMissile();
         FireMissileAltern = new A_FireMissileAltern();
@@ -97,6 +98,7 @@ public class ActionFunctions implements DoomStatusAware {
         FirePlasma = new A_FirePlasma();
         BFGsound = new A_BFGsound();
         FireBFG = new A_FireBFG();
+        FireBFGAltern = new A_FireBFGAltern();
         BFGSpray = new A_BFGSpray();
         Explode = new A_Explode();
         Pain = new A_Pain();
@@ -212,6 +214,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 LoadShotgun2;
     ActionType2 CloseShotgun2;
     ActionType2 FireCGun;
+    ActionType2 FireCGunAltern;
     ActionType2 GunFlash;
     ActionType2 FireMissile;
     ActionType2 FireMissileAltern;
@@ -219,6 +222,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 FirePlasma;
     ActionType2 BFGsound;
     ActionType2 FireBFG;
+    ActionType2 FireBFGAltern;
     ActionType1 BFGSpray;
     ActionType1 Explode;
     ActionType1 Pain;
@@ -356,6 +360,9 @@ public class ActionFunctions implements DoomStatusAware {
             case A_FireCGun:
                 st.acp2 = FireCGun;
                 break;
+            case A_FireCGunAltern:
+                st.acp2 = FireCGunAltern;
+                break;
             case A_GunFlash:
                 st.acp2 = GunFlash;
                 break;
@@ -376,6 +383,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireBFG:
                 st.acp2 = FireBFG;
+                break;
+            case A_FireBFGAltern:
+                st.acp2 = FireBFGAltern;
                 break;
             case A_BFGSpray:
                 st.acp1 = BFGSpray;
@@ -636,6 +646,9 @@ public class ActionFunctions implements DoomStatusAware {
             case A_FireCGun:
                 st.acp2 = FireCGun;
                 break;
+            case A_FireCGunAltern:
+                st.acp2 = FireCGunAltern;
+                break;
             case A_GunFlash:
                 st.acp2 = GunFlash;
                 break;
@@ -656,6 +669,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FireBFG:
                 st.acp2 = FireBFG;
+                break;
+            case A_FireBFGAltern:
+                st.acp2 = FireBFGAltern;
                 break;
             case A_BFGSpray:
                 st.acp1 = BFGSpray;
@@ -2240,6 +2256,23 @@ public class ActionFunctions implements DoomStatusAware {
         }
     }
 
+    class A_FireBFGAltern implements ActionType2 {
+        // plasma cells for a bfg attack
+        // IDEA: make action functions partially parametrizable?
+
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()] = 0;
+            //A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_BFG);
+            int bfgcount = -800000000;
+            long playerPosition = player.mo.angle;
+            //missiles arround the player
+            for(bfgcount = -1000000000; bfgcount<=1000000000; bfgcount+=200000000){
+                A.SpawnPlayerMissileWithAngle(player.mo, mobjtype_t.MT_BFG, playerPosition + bfgcount);
+            }
+        }
+
+    }
+
 
     //
     // A_FireCGun
@@ -2271,6 +2304,37 @@ public class ActionFunctions implements DoomStatusAware {
         }
     }
 
+    class A_FireCGunAltern implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            // For convenience.
+            int readyweap = player.readyweapon.ordinal();
+            int flashstate = weaponinfo[readyweap].flashstate.ordinal();
+            int current_state = psp.state.id;
+
+            S.StartSound(player.mo, sfxenum_t.sfx_pistol);
+            if (!eval(player.ammo[weaponinfo[readyweap].ammo.ordinal()]))
+                return;
+
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+            player.ammo[weaponinfo[readyweap].ammo.ordinal()]--;
+
+            // Damage the player when using the Alternative mode of the MachineGun,
+            // this is because it is faster than the normal mode but in exchange
+            // it damages the player
+            player.DamagePlayer(1);
+
+            // MAES: Code to alternate between two different gun flashes
+            // needed a clear rewrite, as it was way too messy.
+            // We know that the flash states are a certain amount away from
+            // the firing states. This amount is two frames.
+            player.SetPsprite(ps_flash, StateNum.values()[flashstate + current_state - StateNum.S_CHAIN4.ordinal()-1]
+            );
+
+            A.P_BulletSlope(player.mo);
+
+            A.P_GunShot(player.mo, !eval(player.refire));
+        }
+    }
     //
     // A_FirePlasma
     //

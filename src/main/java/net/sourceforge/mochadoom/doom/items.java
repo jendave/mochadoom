@@ -88,7 +88,7 @@ public class items {
                             StateNum.S_CHAINDOWN,
                             StateNum.S_CHAIN,
                             StateNum.S_CHAIN1,
-                            StateNum.S_CHAIN1,
+                            StateNum.S_CHAIN4,
                             StateNum.S_CHAINFLASH1
                     ),
                     new weaponinfo_t(
@@ -118,7 +118,7 @@ public class items {
                             StateNum.S_BFGDOWN,
                             StateNum.S_BFG,
                             StateNum.S_BFG1,
-                            StateNum.S_BFG1,
+                            StateNum.S_BFG5,
                             StateNum.S_BFGFLASH1
                     ),
                     new weaponinfo_t(

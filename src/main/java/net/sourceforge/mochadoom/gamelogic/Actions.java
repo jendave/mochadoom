@@ -2181,6 +2181,52 @@ public class Actions extends UnifiedGameMap {
         CheckMissileSpawn(th);
     }
 
+    public void SpawnPlayerMissileWithAngle(mobj_t source, mobjtype_t type, long an) {
+        mobj_t th;
+
+        int x, y, z, slope; // think_t
+
+        // see which target is to be aimed at
+
+        slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+
+        if (linetarget == null) {
+            an += 1 << 26;
+            an &= BITS32;
+            slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+
+            if (linetarget == null) {
+                an -= 2 << 26;
+                an &= BITS32;
+                slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+            }
+
+            if (linetarget == null) {
+                an = an & BITS32;
+                // angle should be "sane"..right?
+                // Just this line allows freelook.
+                slope = ((source.player.lookdir) << FRACBITS) / 173;
+            }
+        }
+
+        x = source.x;
+        y = source.y;
+        z = source.z + 4 * 8 * FRACUNIT + slope;
+
+        th = SpawnMobj(x, y, z, type);
+
+        if (th.info.seesound != null)
+            S.StartSound(th, th.info.seesound);
+
+        th.target = source;
+        th.angle = an;
+        th.momx = FixedMul(th.info.speed, finecosine(an));
+        th.momy = FixedMul(th.info.speed, finesine(an));
+        th.momz = FixedMul(th.info.speed, slope);
+
+        CheckMissileSpawn(th);
+    }
+
     //
     // P_DamageMobj
     // Damages both enemies and players
