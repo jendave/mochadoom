@@ -1099,7 +1099,7 @@ public class player_t /*extends mobj_t */
                 if (psp.tics != -1) {
                     psp.tics--;
                     if (!eval(psp.tics))
-                        this.SetPsprite(i, psp.state.nextstate);
+                        this.SetPsprite(i, psp.state.nextstate, null);
                 }
             }
         }
@@ -1112,7 +1112,7 @@ public class player_t /*extends mobj_t */
      * /* P_SetPsprite
      */
 
-    public void SetPsprite(int position, StateNum newstate) {
+    public void SetPsprite(int position, StateNum newstate, StateNum nextstate) {
         pspdef_t psp;
         state_t state;
 
@@ -1142,9 +1142,12 @@ public class player_t /*extends mobj_t */
                 if (psp.state == null)
                     break;
             }
-
-            newstate = psp.state.nextstate;
-
+            
+            if( nextstate != null )
+            	newstate = nextstate;
+            else
+            	newstate = psp.state.nextstate;
+            
         } while (psp.tics == 0);
         // an initial state of 0 could cycle through
     }
@@ -1291,7 +1294,7 @@ public class player_t /*extends mobj_t */
         pendingweapon = weapontype_t.wp_nochange;
         psprites[ps_weapon].sy = WEAPONBOTTOM;
 
-        this.SetPsprite(ps_weapon, newstate);
+        this.SetPsprite(ps_weapon, newstate, null);
     }
 
     /**
@@ -1357,7 +1360,8 @@ public class player_t /*extends mobj_t */
         // Now set appropriate weapon overlay.
         this.SetPsprite(
                 ps_weapon,
-                weaponinfo[readyweapon.ordinal()].downstate);
+                weaponinfo[readyweapon.ordinal()].downstate,
+                null);
 
         return false;
     }
@@ -1371,7 +1375,8 @@ public class player_t /*extends mobj_t */
     public void DropWeapon() {
         this.SetPsprite(
                 ps_weapon,
-                weaponinfo[readyweapon.ordinal()].downstate);
+                weaponinfo[readyweapon.ordinal()].downstate,
+                null);
     }
 
     /**

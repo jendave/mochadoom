@@ -50,6 +50,7 @@ public enum think_t {
     A_FireMissile(2),
     A_FireMissileAltern(2),
     A_Saw(2),
+    A_SawAlternate(2),
     A_FirePlasma(2),
     A_FirePlasmaAlternate(2),	// modo secundario plasma
     A_BFGsound(2),

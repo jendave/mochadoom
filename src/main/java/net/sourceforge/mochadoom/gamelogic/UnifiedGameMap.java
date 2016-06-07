@@ -735,7 +735,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
 
             player.mo.SetMobjState(StateNum.S_PLAY_ATK1);
             newstate = weaponinfo[player.readyweapon.ordinal()].atkstate;
-            player.SetPsprite(player_t.ps_weapon, newstate);
+            player.SetPsprite(player_t.ps_weapon, newstate, null);
             NoiseAlert(player.mo, player.mo);
         }
         
@@ -750,7 +750,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
 
             player.mo.SetMobjState(StateNum.S_PLAY_ATK1);
             newstate = weaponinfo[player.readyweapon.ordinal()].atkaltern;
-            player.SetPsprite(player_t.ps_weapon, newstate);
+            player.SetPsprite(player_t.ps_weapon, newstate, null);
             NoiseAlert(player.mo, player.mo);
         }
 

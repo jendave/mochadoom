@@ -27,6 +27,7 @@ public class weaponinfo_t {
         this.downstate = downstate;
         this.readystate = readystate;
         this.atkstate = atkstate;
+        this.atkaltern = atkaltern;
         this.flashstate = flashstate;
     }*/
     public AmmoType ammo;

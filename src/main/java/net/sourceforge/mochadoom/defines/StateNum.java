@@ -14,6 +14,8 @@ public enum StateNum {
     
     S_PUNCH6,		// <----
     S_PUNCH7,		// <----
+    S_PUNCH8,		// <----
+    S_PUNCH9,		// <----
     
     S_PISTOL,
     S_PISTOLDOWN,
@@ -69,8 +71,8 @@ public enum StateNum {
     S_CHAIN2,
     S_CHAIN3,
 
-    S_CHAIN4,
-    S_CHAIN5,
+    S_CHAIN4,	// <---
+    S_CHAIN5,	// <---
 
     S_CHAINFLASH1,
     S_CHAINFLASH2,
@@ -83,7 +85,6 @@ public enum StateNum {
     
     S_MISSILE4,		// <---
     S_MISSILE5,		// <---
-    S_MISSILE6,		// <---
     
     S_MISSILEFLASH1,
     S_MISSILEFLASH2,
@@ -96,6 +97,9 @@ public enum StateNum {
     S_SAW1,
     S_SAW2,
     S_SAW3,
+    
+    S_SAW4,			// <---
+    S_SAW5,			// <---
     
     S_PLASMA,
     S_PLASMADOWN,
