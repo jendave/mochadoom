@@ -1289,6 +1289,22 @@ public class Actions extends UnifiedGameMap {
         LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
     }
 
+    /*void
+    Plasma2
+    (mobj_t mo,
+     boolean accurate) {
+        long angle;
+        int damage;
+
+        damage = 30 * (RND.P_Random() % 3 + 1);
+        angle = mo.angle;
+
+        if (!accurate)
+            angle += (RND.P_Random() - RND.P_Random()) << 18;
+
+        LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
+    }*/
+
     boolean Move(mobj_t actor) {
         // fixed_t
         int tryx;
@@ -1620,14 +1636,14 @@ public class Actions extends UnifiedGameMap {
        */
       type = getRandomMobjtype_tZombie();
       mobjinfo_t info2 = GetZombieType(type,source);
-      // BJPR: AQUI PROBLEMA
       info = mobjinfo[type.ordinal()];
       mobj.type = type;
       mobj.info = info2;
       mobj.info.missilestate = StateNum.S_NULL;
       mobj.info.meleestate = StateNum.S_SARG_ATK1;
       mobj.info.speed = info.speed;
-      
+      mobj.info.spawnhealth = info.spawnhealth;
+
       mobj.x = x;
       mobj.y = y;
       mobj.radius = info.radius;
@@ -1665,7 +1681,7 @@ public class Actions extends UnifiedGameMap {
     
     private mobjinfo_t GetZombieType(mobjtype_t type, mobj_t source) {
       if(type == mobjtype_t.MT_GREENZOMBIE){
-        return new GreenZombie_t( 
+        return new GreenZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1691,7 +1707,7 @@ public class Actions extends UnifiedGameMap {
             mobjinfo[source.type.ordinal()].raisestate        // raisestate
       );
       } else if (type == mobjtype_t.MT_REDZOMBIE){
-        return new RedZombie_t( 
+        return new RedZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1717,7 +1733,7 @@ public class Actions extends UnifiedGameMap {
             mobjinfo[source.type.ordinal()].raisestate        // raisestate
       );
       } else if (type == mobjtype_t.MT_GRAYZOMBIE){
-        return new GrayZombie_t( 
+        return new GrayZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -1743,7 +1759,7 @@ public class Actions extends UnifiedGameMap {
             mobjinfo[source.type.ordinal()].raisestate        // raisestate
         );
       } else{
-        return new BlackZombie_t( 
+        return new BlackZombie_t(
             mobjinfo[source.type.ordinal()].doomednum,        // doomednum
             mobjinfo[source.type.ordinal()].spawnstate,        // spawnstate
             mobjinfo[source.type.ordinal()].spawnhealth,        // spawnhealth
@@ -2016,7 +2032,27 @@ public class Actions extends UnifiedGameMap {
         else
             z = ONFLOORZ;
 
+        // BJPR: AQUÍ Spawn mapa inicial.
         mobj = SpawnMobj(x, y, z, mobjtype_t.values()[i]);
+        //BJPR: MONSTER SPAWN
+        int zombieDistance = 40;
+        //System.out.println(DM.gameskill);
+        if(mobj.info.isMonster()){
+          if(DM.gameskill == Skill.sk_baby){
+            createNewZombiesSurroundings(1, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_easy) {
+            createNewZombiesSurroundings(1, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_medium) {
+            createNewZombiesSurroundings(2, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_hard && (DM.hordemode == 0)) {
+            createNewZombiesSurroundings(3, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_nightmare) {
+            createNewZombiesSurroundings(4, zombieDistance, z, mthing);
+          } else if(DM.gameskill == Skill.sk_hard && (DM.hordemode == 1)) {
+            createNewZombiesSurroundings(30, zombieDistance, z, mthing);
+          }
+        }
+
         mobj.spawnpoint.copyFrom(mthing);
 
         if (mobj.tics > 0)
@@ -2032,6 +2068,48 @@ public class Actions extends UnifiedGameMap {
 
         return mobj;
 
+    }
+    /**
+     *  Creates new zombies around monster.
+     * @param x
+     * @param y
+     * @param z
+     * @param mthing
+     */
+    void createNewZombiesSurroundings(int numberOfSpawns, int radius, int z, mapthing_t mthing){
+      mobj_t mobj;
+      double angle;
+
+      for(int i = 0; i < numberOfSpawns ; i++){
+        angle = Math.random();
+        mobj = SpawnMobj((mthing.x + (int)(Math.cos(angle) * 2 * radius)) << FRACBITS,
+                         (mthing.y + (int)(Math.sin(angle) * 2 * radius)) << FRACBITS,
+                         z, getRandomMobjtype_tZombie());
+        checkMobjInBounds(mthing, mobj);
+      }
+    }
+
+    /**
+     * Verifies if new mobj is inside map bounds.
+     * @param mthing
+     * @param mobj
+     */
+    void checkMobjInBounds(mapthing_t mthing, mobj_t mobj){
+      if(CheckPosition(mobj,mobj.x,mobj.y)){
+        mobj.angle = ANG45 * (mthing.angle / 45);
+        mobj.spawnpoint.copyFrom(mthing);
+        if (mobj.tics > 0)
+          mobj.tics = 1 + (RND.P_Random() % mobj.tics);
+        if (eval(mobj.flags & MF_COUNTKILL))
+          DM.totalkills++;
+        if (eval(mobj.flags & MF_COUNTITEM))
+          DM.totalitems++;
+
+        if (eval(mthing.options & MTF_AMBUSH))
+          mobj.flags |= MF_AMBUSH;
+      } else {
+        RemoveMobj(mobj);
+      }
     }
 
     /**
@@ -2181,6 +2259,52 @@ public class Actions extends UnifiedGameMap {
         CheckMissileSpawn(th);
     }
 
+    public void SpawnPlayerMissileWithAngle(mobj_t source, mobjtype_t type, long an) {
+        mobj_t th;
+
+        int x, y, z, slope; // think_t
+
+        // see which target is to be aimed at
+
+        slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+
+        if (linetarget == null) {
+            an += 1 << 26;
+            an &= BITS32;
+            slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+
+            if (linetarget == null) {
+                an -= 2 << 26;
+                an &= BITS32;
+                slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+            }
+
+            if (linetarget == null) {
+                an = an & BITS32;
+                // angle should be "sane"..right?
+                // Just this line allows freelook.
+                slope = ((source.player.lookdir) << FRACBITS) / 173;
+            }
+        }
+
+        x = source.x;
+        y = source.y;
+        z = source.z + 4 * 8 * FRACUNIT + slope;
+
+        th = SpawnMobj(x, y, z, type);
+
+        if (th.info.seesound != null)
+            S.StartSound(th, th.info.seesound);
+
+        th.target = source;
+        th.angle = an;
+        th.momx = FixedMul(th.info.speed, finecosine(an));
+        th.momy = FixedMul(th.info.speed, finesine(an));
+        th.momz = FixedMul(th.info.speed, slope);
+
+        CheckMissileSpawn(th);
+    }
+
     //
     // P_DamageMobj
     // Damages both enemies and players
@@ -2204,6 +2328,15 @@ public class Actions extends UnifiedGameMap {
           //System.out.println("its acid");
           return;
         }
+
+        if(inflictor.type == mobjtype_t.MT_ALTERNATEPLASMA){
+        	// si tiene velocidad es monstruo
+        	// BJPR: luego deberia ser target.isMonster()
+        	if(target.info.speed > 0){
+        		target.burnMobj(30, 1000);
+        	}
+        }
+
         if (!eval(target.flags & MF_SHOOTABLE))
             return; // shouldn't happen...
 
@@ -2218,6 +2351,30 @@ public class Actions extends UnifiedGameMap {
         if ((player != null) && DM.gameskill == Skill.sk_baby)
             damage >>= 1;   // take half damage in trainer mode
 
+        if (source.info.getType().equals("MT_ZOMBIE") && player != null){
+            switch (source.type) {
+              case MT_GREENZOMBIE:
+                  player.poisonPlayer(1, 3000);
+                  break;
+              case MT_REDZOMBIE:
+                  player.poisonPlayer(2, 1000);
+                  break;
+              case MT_GRAYZOMBIE:
+                  player.poisonPlayer(3, 1000);
+                  break;
+              case MT_BLACKZOMBIE:
+                  player.mo.health = 0;
+                  break;
+              default:
+                  break;
+             }
+         }
+          // BJPR: just for testing
+         /*if(inflictor.type == mobjtype_t.MT_POSSESSED && player != null){
+            player.poisonPlayer(5, 1000);
+            System.out.println("poison");
+
+         }*/
 
         // Some close combat weapons should not
         // inflict thrust and push the victim out of reach,
@@ -2434,7 +2591,6 @@ public class Actions extends UnifiedGameMap {
 
         mo = SpawnMobj(target.x, target.y, ONFLOORZ, item);
         mo.flags |= MF_DROPPED;    // special versions of items
-       
     }
 
     /**
@@ -3661,6 +3817,17 @@ public class Actions extends UnifiedGameMap {
         int oldx, oldy; // fixed_t    
         boolean side, oldside; // both were int
         line_t ld;
+
+
+        if(thing.burned && System.currentTimeMillis() - thing.lastBurnDamage > thing.burnFreq){
+        	thing.lastBurnDamage = System.currentTimeMillis();
+        	System.out.println("burn");
+        	int newHealth = thing.health - thing.burnDamage;
+        	thing.health = newHealth > 0? newHealth: 0;
+        	if(thing.health == 0){
+        		KillMobj(thing, thing);
+        	}
+        }
 
         floatok = false;
         if (!CheckPosition(thing, x, y))

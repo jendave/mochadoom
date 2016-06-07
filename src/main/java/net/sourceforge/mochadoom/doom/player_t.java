@@ -134,6 +134,10 @@ public class player_t /*extends mobj_t */
         readyweapon = weapontype_t.wp_fist;
         this.cmd = new ticcmd_t();
         //weaponinfo=new weaponinfo_t();
+        this.poisoned = false;
+        this.poisonDamage = 0;
+        this.poisonFreq = 0;
+        this.lastPoisonDamage = 0;
     }
 
     public final static int CF_NOCLIP = 1; // No damage, no health loss.
@@ -281,6 +285,12 @@ public class player_t /*extends mobj_t */
     // True if secret level has been done.
     public boolean didsecret;
 
+    // BJPR: poison variables
+    
+    private boolean poisoned;
+    private int poisonDamage;
+    private int poisonFreq;
+    private long lastPoisonDamage;
     /**
      * It's probably faster to clone the null player
      */
@@ -302,6 +312,10 @@ public class player_t /*extends mobj_t */
         this.attacker = null;
         this.backpack = false;
         this.bob = 0;
+        this.poisoned = false;
+        this.poisonDamage = 0;
+        this.poisonFreq = 0;
+        this.lastPoisonDamage = 0;
 
     }
 
@@ -762,7 +776,6 @@ public class player_t /*extends mobj_t */
 
     public boolean GiveArmor(int armortype) {
         int hits;
-
         hits = armortype * 100;
         if (armorpoints[0] >= hits)
             return false; // don't pick up
@@ -828,7 +841,28 @@ public class player_t /*extends mobj_t */
         powers[power] = 1;
         return true;
     }
-
+    /**
+     * poisonPlayer , this sets the poison effect in player.
+     * @param poison type of poison.
+     * @param frequency Damage frequency of poison.
+     */
+    public void poisonPlayer(int poison, int frequency){
+      this.poisoned = true;
+      this.poisonDamage = poison;
+      this.poisonFreq = frequency;
+      this.lastPoisonDamage = System.currentTimeMillis();
+    }
+    /**
+     * PickedMedikit. recovers poison damage.
+     * @param poison type of poison.
+     */
+    public void PickedMedikit(int poison){
+      if(poison >= this.poisonDamage){
+        this.poisonDamage = 0;
+        this.poisonFreq = 0;
+        this.poisoned = false;
+      }
+    }
     /**
      * G_PlayerFinishLevel
      * Called when a player completes a level.
@@ -851,6 +885,14 @@ public class player_t /*extends mobj_t */
      * Called every tic frame
      * that the player origin is in a special sector
      */
+
+    // Function to damage the player when using some Weapons
+    public void DamagePlayer(int n){
+        if(this.mo.health-n > 0) {
+            this.mo.health = this.mo.health - n;    // health
+            this.health[0] = this.mo.health;        // health UI label
+        }
+    }
 
     protected void PlayerInSpecialSector() {
         sector_t sector;
@@ -1494,6 +1536,16 @@ public class player_t /*extends mobj_t */
                 player.fixedcolormap = 0;
         } else
             player.fixedcolormap = 0;
+        
+     // BJPR: apply poison damage
+        if(player.poisoned && System.currentTimeMillis() - player.lastPoisonDamage > player.poisonFreq){
+              player.lastPoisonDamage = System.currentTimeMillis();
+            int newHealth = player.health[0] - player.poisonDamage;
+            player.health[0] = newHealth > 0? newHealth: 0;
+            if(player.health[0] == 0){
+                player.playerstate = PST_DEAD;
+            }
+        }
     }
 
     /**

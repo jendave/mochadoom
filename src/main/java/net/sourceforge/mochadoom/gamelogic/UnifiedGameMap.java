@@ -2046,6 +2046,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             // bonus items
             case SPR_BON1:
                 player.health[0]++; // can go over 100%
+                player.PickedMedikit(1); // BJPR: Small medikit
                 if (player.health[0] > 200)
                     player.health[0] = 200;
                 player.mo.health = player.health[0];
@@ -2062,7 +2063,8 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
                 break;
 
             case SPR_SOUL:
-                player.health[0] += 100;
+                player.health[0] += 100; 
+                player.PickedMedikit(3); // BJPR: soul medikit
                 if (player.health[0] > 200)
                     player.health[0] = 200;
                 player.mo.health = player.health[0];
@@ -2073,6 +2075,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             case SPR_MEGA:
                 if (!DM.isCommercial())
                     return;
+                player.PickedMedikit(3); // BJPR: mega medikit
                 player.health[0] = 200;
                 player.mo.health = player.health[0];
                 player.GiveArmor(2);
@@ -2132,12 +2135,14 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
 
             // medikits, heals
             case SPR_STIM:
+                player.PickedMedikit(2); // BJPR: medium medikit
                 if (!player.GiveBody(10))
                     return;
                 player.message = GOTSTIM;
                 break;
 
             case SPR_MEDI:
+                player.PickedMedikit(3); // BJPR: normal medikit
                 if (!player.GiveBody(25))
                     return;
 

@@ -70,10 +70,10 @@ public enum StateNum {
     S_CHAIN1,
     S_CHAIN2,
     S_CHAIN3,
-    
+
     S_CHAIN4,	// <---
     S_CHAIN5,	// <---
-    
+
     S_CHAINFLASH1,
     S_CHAINFLASH2,
     S_MISSILE,
@@ -108,6 +108,9 @@ public enum StateNum {
     S_PLASMA2,
     S_PLASMAFLASH1,
     S_PLASMAFLASH2,
+    S_PLASMA3,	// secundario plasma
+    S_PLASMA4,	// secundario plasma
+    
     S_BFG,
     S_BFGDOWN,
     S_BFGUP,
@@ -115,6 +118,10 @@ public enum StateNum {
     S_BFG2,
     S_BFG3,
     S_BFG4,
+    S_BFG5,
+    S_BFG6,
+    S_BFG7,
+    S_BFG8,
     S_BFGFLASH1,
     S_BFGFLASH2,
     S_BLOOD1,
@@ -136,6 +143,8 @@ public enum StateNum {
     S_RBALLX3,
     S_PLASBALL,
     S_PLASBALL2,
+    S_PLASBALL3, // FIXME: 
+    S_PLASBALL4,
     S_PLASEXP,
     S_PLASEXP2,
     S_PLASEXP3,

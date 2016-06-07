@@ -89,6 +89,11 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
 
     public mobj_t() {
         this.spawnpoint = new mapthing_t();
+        this.burned = false;
+        this.burnDamage = 0;
+        this.burnFreq = 0;
+        this.lastBurnDamage = 0;
+        
     }
 
     public mobj_t(Actions A) {
@@ -299,6 +304,19 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     public static final int MF_TRANSLATION = 0xc000000;
     // Hmm ???.
     public static final int MF_TRANSSHIFT = 26;
+    
+    // Variables for alternative shot for plasma gun
+    public boolean burned;
+    public int burnDamage;
+    public int burnFreq;
+    public long lastBurnDamage;
+    
+    public void burnMobj(int burn, int frequency){
+    	 this.burned = true;
+    	 this.burnDamage = burn;
+    	 this.burnFreq = frequency;
+    	 this.lastBurnDamage = System.currentTimeMillis();
+    }
 
     /*
       * The following methods were for the most part "contextless" and
