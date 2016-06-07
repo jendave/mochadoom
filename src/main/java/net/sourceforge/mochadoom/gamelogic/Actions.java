@@ -1288,6 +1288,22 @@ public class Actions extends UnifiedGameMap {
 
         LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
     }
+    
+    /*void
+    Plasma2
+    (mobj_t mo,
+     boolean accurate) {
+        long angle;
+        int damage;
+
+        damage = 30 * (RND.P_Random() % 3 + 1);
+        angle = mo.angle;
+
+        if (!accurate)
+            angle += (RND.P_Random() - RND.P_Random()) << 18;
+
+        LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
+    }*/
 
     boolean Move(mobj_t actor) {
         // fixed_t
@@ -2250,6 +2266,15 @@ public class Actions extends UnifiedGameMap {
           //System.out.println("its acid");
           return;
         }
+        
+        if(inflictor.type == mobjtype_t.MT_ALTERNATEPLASMA){
+        	// si tiene velocidad es monstruo
+        	// BJPR: luego deberia ser target.isMonster()
+        	if(target.info.speed > 0){
+        		target.burnMobj(30, 1000);
+        	}
+        }
+        
         if (!eval(target.flags & MF_SHOOTABLE))
             return; // shouldn't happen...
 
@@ -3708,6 +3733,17 @@ public class Actions extends UnifiedGameMap {
         boolean side, oldside; // both were int
         line_t ld;
 
+        
+        if(thing.burned && System.currentTimeMillis() - thing.lastBurnDamage > thing.burnFreq){
+        	thing.lastBurnDamage = System.currentTimeMillis();
+        	System.out.println("burn");
+        	int newHealth = thing.health - thing.burnDamage;
+        	thing.health = newHealth > 0? newHealth: 0;
+        	if(thing.health == 0){
+        		KillMobj(thing, thing);
+        	}
+        }
+        
         floatok = false;
         if (!CheckPosition(thing, x, y))
             return false;       // solid wall or thing

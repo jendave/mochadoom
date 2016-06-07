@@ -2,16 +2,15 @@ package net.sourceforge.mochadoom.data;
 
 import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.think_t;
-
 import static net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
-
+import net.sourceforge.mochadoom.data.mobjinfo.AlternatePlasma_t;
 import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Plasma_t;
 import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
-
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_DROPOFF;
@@ -213,6 +212,7 @@ public class info {
             new state_t(spritenum_t.SPR_SAWG, 0, 4, think_t.A_Saw, StateNum.S_SAW2, 0, 0),    // S_SAW1
             new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_Saw, StateNum.S_SAW3, 0, 0),    // S_SAW2
             new state_t(spritenum_t.SPR_SAWG, 1, 0, think_t.A_ReFire, StateNum.S_SAW, 0, 0),    // S_SAW3
+            
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_WeaponReady, StateNum.S_PLASMA, 0, 0),    // S_PLASMA
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Lower, StateNum.S_PLASMADOWN, 0, 0),    // S_PLASMADOWN
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Raise, StateNum.S_PLASMAUP, 0, 0),    // S_PLASMAUP
@@ -220,6 +220,13 @@ public class info {
             new state_t(spritenum_t.SPR_PLSG, 1, 20, think_t.A_ReFire, StateNum.S_PLASMA, 0, 0),    // S_PLASMA2
             new state_t(spritenum_t.SPR_PLSF, 32768, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH1
             new state_t(spritenum_t.SPR_PLSF, 32769, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH2
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, null, StateNum.S_PLASMA4, 0, 0),    // S_PLASMA3
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA1, 0, 0),    // S_PLASMA4
+            //new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
+   			//new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
+            
+            
+            
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_WeaponReady, StateNum.S_BFG, 0, 0),    // S_BFG
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Lower, StateNum.S_BFGDOWN, 0, 0),    // S_BFGDOWN
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Raise, StateNum.S_BFGUP, 0, 0),    // S_BFGUP
@@ -254,6 +261,8 @@ public class info {
             new state_t(spritenum_t.SPR_BAL2, 32772, 6, null, StateNum.S_NULL, 0, 0),    // S_RBALLX3
             new state_t(spritenum_t.SPR_PLSS, 32768, 6, null, StateNum.S_PLASBALL2, 0, 0),    // S_PLASBALL
             new state_t(spritenum_t.SPR_PLSS, 32769, 6, null, StateNum.S_PLASBALL, 0, 0),    // S_PLASBALL2
+            new state_t(spritenum_t.SPR_PLSS, 32768, 6, null, StateNum.S_PLASBALL4, 0, 0),    // S_PLASBALL
+            new state_t(spritenum_t.SPR_PLSS, 32769, 6, null, StateNum.S_PLASBALL3, 0, 0),    // S_PLASBALL2
             new state_t(spritenum_t.SPR_PLSE, 32768, 4, null, StateNum.S_PLASEXP2, 0, 0),    // S_PLASEXP
             new state_t(spritenum_t.SPR_PLSE, 32769, 4, null, StateNum.S_PLASEXP3, 0, 0),    // S_PLASEXP2
             new state_t(spritenum_t.SPR_PLSE, 32770, 4, null, StateNum.S_PLASEXP4, 0, 0),    // S_PLASEXP3
@@ -1974,31 +1983,9 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_PLASMA
-                    -1,        // doomednum
-                    StateNum.S_PLASBALL,        // spawnstate
-                    1000,        // spawnhealth
-                    StateNum.S_NULL,        // seestate
-                    sfxenum_t.sfx_plasma,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_NULL,        // painstate
-                    0,        // painchance
-                    sfxenum_t.sfx_None,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_NULL,        // missilestate
-                    StateNum.S_PLASEXP,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_firxpl,        // deathsound
-                    25 * FRACUNIT,        // speed
-                    13 * FRACUNIT,        // radius
-                    8 * FRACUNIT,        // height
-                    100,        // mass
-                    5,        // damage
-                    sfxenum_t.sfx_None,        // activesound
-                    MF_NOBLOCKMAP | MF_MISSILE | MF_DROPOFF | MF_NOGRAVITY,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new Plasma_t(),
+            
+            new AlternatePlasma_t(),
 
             new mobjinfo_t(        // MT_BFG
                     -1,        // doomednum

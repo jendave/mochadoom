@@ -96,6 +96,7 @@ public class ActionFunctions implements DoomStatusAware {
         FireMissileAltern = new A_FireMissileAltern();
         Saw = new A_Saw();
         FirePlasma = new A_FirePlasma();
+        FirePlasma2 = new A_FirePlasmaAlternate();
         BFGsound = new A_BFGsound();
         FireBFG = new A_FireBFG();
         FireBFGAltern = new A_FireBFGAltern();
@@ -220,6 +221,7 @@ public class ActionFunctions implements DoomStatusAware {
     ActionType2 FireMissileAltern;
     ActionType2 Saw;
     ActionType2 FirePlasma;
+    ActionType2 FirePlasma2;	// secundario plasma
     ActionType2 BFGsound;
     ActionType2 FireBFG;
     ActionType2 FireBFGAltern;
@@ -377,6 +379,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FirePlasma:
                 st.acp2 = FirePlasma;
+                break;
+            case A_FirePlasmaAlternate:	//secundario plasma gun
+                st.acp2 = FirePlasma2;
                 break;
             case A_BFGsound:
                 st.acp2 = BFGsound;
@@ -663,6 +668,9 @@ public class ActionFunctions implements DoomStatusAware {
                 break;
             case A_FirePlasma:
                 st.acp2 = FirePlasma;
+                break;
+            case A_FirePlasmaAlternate:
+                st.acp2 = FirePlasma2;
                 break;
             case A_BFGsound:
                 st.acp2 = BFGsound;
@@ -2347,6 +2355,20 @@ public class ActionFunctions implements DoomStatusAware {
                     weaponinfo[player.readyweapon.ordinal()].flashstate);
 
             A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
+        }
+    }
+    // Secundario de A_FirePlasma
+    class A_FirePlasmaAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+           player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+            
+            System.out.println("PlasmaAlternate");
+
+            player.SetPsprite(
+                    ps_flash,
+                    weaponinfo[player.readyweapon.ordinal()].flashstate);
+
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_ALTERNATEPLASMA);
         }
     }
 

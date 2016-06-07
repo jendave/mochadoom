@@ -96,6 +96,7 @@ public enum StateNum {
     S_SAW1,
     S_SAW2,
     S_SAW3,
+    
     S_PLASMA,
     S_PLASMADOWN,
     S_PLASMAUP,
@@ -103,6 +104,9 @@ public enum StateNum {
     S_PLASMA2,
     S_PLASMAFLASH1,
     S_PLASMAFLASH2,
+    S_PLASMA3,	// secundario plasma
+    S_PLASMA4,	// secundario plasma
+    
     S_BFG,
     S_BFGDOWN,
     S_BFGUP,
@@ -135,6 +139,8 @@ public enum StateNum {
     S_RBALLX3,
     S_PLASBALL,
     S_PLASBALL2,
+    S_PLASBALL3, // FIXME: 
+    S_PLASBALL4,
     S_PLASEXP,
     S_PLASEXP2,
     S_PLASEXP3,
