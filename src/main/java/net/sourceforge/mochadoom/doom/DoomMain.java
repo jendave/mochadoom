@@ -1128,12 +1128,12 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // Iff additonal PWAD files are used, print modified banner
 
-        if (modifiedgame)
+        /*if (modifiedgame)
             // Generate WAD loading alert. Abort upon denial.
             if (!I.GenerateAlert(Strings.MODIFIED_GAME_TITLE, Strings.MODIFIED_GAME_DIALOG)) {
                 W.CloseAllHandles();
                 System.exit(-2);
-            }
+            }*/
 
         // Check and print which version is executed.
         switch (getGameMode()) {
@@ -1958,7 +1958,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     mousebuttons(1, ev.data1 & 2);
                     mousebuttons(2, ev.data1 & 4);
 
-                    System.out.println("presiono el mouse: "+ ev.data1);
+                    //System.out.println("presiono el mouse: "+ ev.data1);
                     
                     mousex = ev.data2 * (mouseSensitivity + 5) / 10;
                     mousey = ev.data3 * (mouseSensitivity + 5) / 10;
@@ -2642,11 +2642,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     int d_episode;
     int d_map;
 
-    public void
-    DeferedInitNew
-            (Skill skill,
-             int episode,
-             int map) {
+    public void DeferedInitNew(Skill skill, int episode, int map) {
         d_skill = skill;
         d_episode = episode;
         d_map = map;
@@ -2667,8 +2663,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         InitNew(d_skill, d_episode, d_map);
         gameaction = gameaction_t.ga_nothing;
     }
-
-
+    /**
+     * playing Horde Mode when hordemode = 1;
+     */
+    public int hordemode;
     /**
      * G_InitNew
      * Can be called by the startup code or the menu task,
@@ -2682,11 +2680,18 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             paused = false;
             S.ResumeSound();
         }
-
-
+        System.out.println(skill);
+        // BJPR: horde mode.
+        if(skill == Skill.sk_horde){
+          skill = Skill.sk_hard;
+          hordemode = 1;
+        }
+        else {
+          hordemode = 0;
+        }
         if (skill.ordinal() > Skill.sk_nightmare.ordinal())
             skill = Skill.sk_nightmare;
-
+        
 
         // This was quite messy with SPECIAL and commented parts.
         // Supposedly hacks to make the latest edition work.

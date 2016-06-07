@@ -3,9 +3,10 @@ package net.sourceforge.mochadoom.data.mobjinfo;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SHOOTABLE;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SOLID;
+import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOGRAVITY;
+import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_JUSTHIT;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
-import net.sourceforge.mochadoom.data.sounds;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.rendering.LightsAndColors;
@@ -18,7 +19,7 @@ public class GreenZombie_t extends Zombie_t {
         ,200,sfxenum_t.sfx_popain,StateNum.S_NULL,StateNum.S_NULL,
         StateNum.S_POSS_DIE1,StateNum.S_POSS_XDIE1,sfxenum_t.sfx_podth1,
         10,20 * FRACUNIT,56 * FRACUNIT,100,0,sfxenum_t.sfx_posact,
-        MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,StateNum.S_POSS_RAISE1);
+        MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL | MF_NOGRAVITY | MF_JUSTHIT,StateNum.S_POSS_RAISE1);
   }
 
   public GreenZombie_t(int doomednum2, StateNum spawnstate2, int spawnhealth2, StateNum seestate2, sfxenum_t seesound2,

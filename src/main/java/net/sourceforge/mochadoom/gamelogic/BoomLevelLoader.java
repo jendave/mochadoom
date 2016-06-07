@@ -1287,6 +1287,7 @@ public class BoomLevelLoader
             mobj = P.SpawnMapThing(mt/* , i */);
             if (mobj != null && mobj.info.speed == 0)
                 mobjlist[mobjcount++] = mobj;
+            
         }
 
         W.UnlockLumpNum(lump); // cph - release the data

@@ -28,6 +28,37 @@ import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SHOOTABLE;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SOLID;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SPAWNCEILING;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SPECIAL;
+import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
+
+import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Baby_t;
+import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.BossBrain_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Bruiser_t;
+import net.sourceforge.mochadoom.data.mobjinfo.ChainGuy_t;
+import net.sourceforge.mochadoom.data.mobjinfo.CommanderKeen_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Cyborg_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Fatso_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Head_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Knight_t;
+import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Medikit_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Pain_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Possessed_t;
+import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Sergeant_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Shadows_t;
+import net.sourceforge.mochadoom.data.mobjinfo.ShotGuy_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Skull_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Spider_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Troop_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Undead_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Vile_t;
+import net.sourceforge.mochadoom.data.mobjinfo.WolfSS_t;
+import net.sourceforge.mochadoom.defines.StateNum;
+import net.sourceforge.mochadoom.doom.think_t;
 
 // Emacs style mode select   -*- C++ -*- 
 //-----------------------------------------------------------------------------
@@ -124,10 +155,10 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 3, 5, null, StateNum.S_PUNCH4, 0, 0),        // S_PUNCH3
             new state_t(spritenum_t.SPR_PUNG, 2, 4, null, StateNum.S_PUNCH5, 0, 0),        // S_PUNCH4
             new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 0),    // S_PUNCH5
-            
+
             new state_t(spritenum_t.SPR_PUNG, 1, 4, null, StateNum.S_PUNCH7, 0, 0),        // S_PUNCH6
             new state_t(spritenum_t.SPR_PUNG, 2, 4, think_t.A_PunchAlternate, StateNum.S_PUNCH3, 0, 0),    // S_PUNCH7
-            
+
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_WeaponReady, StateNum.S_PISTOL, 0, 0),// S_PISTOL
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Lower, StateNum.S_PISTOLDOWN, 0, 0),    // S_PISTOLDOWN
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Raise, StateNum.S_PISTOLUP, 0, 0),    // S_PISTOLUP
@@ -189,18 +220,17 @@ public class info {
 
             new state_t(spritenum_t.SPR_CHGF, 32768, 5, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH1
             new state_t(spritenum_t.SPR_CHGF, 32769, 5, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH2
-            
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_WeaponReady, StateNum.S_MISSILE, 0, 0),    // S_MISSILE
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_Lower, StateNum.S_MISSILEDOWN, 0, 0),    // S_MISSILEDOWN
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_Raise, StateNum.S_MISSILEUP, 0, 0),    // S_MISSILEUP
             new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE2, 0, 0),    // S_MISSILE1
             new state_t(spritenum_t.SPR_MISG, 1, 12, think_t.A_FireMissile, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE2
             new state_t(spritenum_t.SPR_MISG, 1, 0, think_t.A_ReFire, StateNum.S_MISSILE, 0, 0),    // S_MISSILE3
-            
+
             new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE5, 0, 0),    // S_MISSILE4
             new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE6, 0, 0),    // S_MISSILE5
             new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE6
-            
+
             new state_t(spritenum_t.SPR_MISF, 32768, 3, think_t.A_Light1, StateNum.S_MISSILEFLASH2, 0, 0),    // S_MISSILEFLASH1
             new state_t(spritenum_t.SPR_MISF, 32769, 4, null, StateNum.S_MISSILEFLASH3, 0, 0),    // S_MISSILEFLASH2
             new state_t(spritenum_t.SPR_MISF, 32770, 4, think_t.A_Light2, StateNum.S_MISSILEFLASH4, 0, 0),    // S_MISSILEFLASH3
@@ -212,7 +242,6 @@ public class info {
             new state_t(spritenum_t.SPR_SAWG, 0, 4, think_t.A_Saw, StateNum.S_SAW2, 0, 0),    // S_SAW1
             new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_Saw, StateNum.S_SAW3, 0, 0),    // S_SAW2
             new state_t(spritenum_t.SPR_SAWG, 1, 0, think_t.A_ReFire, StateNum.S_SAW, 0, 0),    // S_SAW3
-            
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_WeaponReady, StateNum.S_PLASMA, 0, 0),    // S_PLASMA
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Lower, StateNum.S_PLASMADOWN, 0, 0),    // S_PLASMADOWN
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Raise, StateNum.S_PLASMAUP, 0, 0),    // S_PLASMAUP
@@ -224,9 +253,9 @@ public class info {
             new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA1, 0, 0),    // S_PLASMA4
             //new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
    			//new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
-            
-            
-            
+
+
+
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_WeaponReady, StateNum.S_BFG, 0, 0),    // S_BFG
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Lower, StateNum.S_BFGDOWN, 0, 0),    // S_BFGDOWN
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Raise, StateNum.S_BFGUP, 0, 0),    // S_BFGUP
@@ -1125,83 +1154,12 @@ public class info {
 
     public static mobjinfo_t[] mobjinfo = {
             new MT_Player_t(),
-            new mobjinfo_t(        // MT_POSSESSED
-                    3004,        // doomednum
-                    StateNum.S_POSS_STND,        // spawnstate
-                    20,        // spawnhealth
-                    StateNum.S_POSS_RUN1,        // seestate
-                    sfxenum_t.sfx_posit1,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_pistol,        // attacksound
-                    StateNum.S_POSS_PAIN,        // painstate
-                    200,        // painchance
-                    sfxenum_t.sfx_popain,        // painsound
-                    StateNum.S_NULL,        // meleestate MAES: BE careful with "0 - null" states!
-                    StateNum.S_POSS_ATK1,        // missilestate
-                    StateNum.S_POSS_DIE1,        // deathstate
-                    StateNum.S_POSS_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_podth1,        // deathsound
-                    8,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_posact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_POSS_RAISE1        // raisestate
-            ),
 
-            new mobjinfo_t(        // MT_SHOTGUY
-                    9,        // doomednum
-                    StateNum.S_SPOS_STND,        // spawnstate
-                    30,        // spawnhealth
-                    StateNum.S_SPOS_RUN1,        // seestate
-                    sfxenum_t.sfx_posit2,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_shotgn,        // attacksound MAES: Weird, this was 0 :-S
-                    StateNum.S_SPOS_PAIN,        // painstate
-                    170,        // painchance
-                    sfxenum_t.sfx_popain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_SPOS_ATK1,        // missilestate
-                    StateNum.S_SPOS_DIE1,        // deathstate
-                    StateNum.S_SPOS_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_podth2,        // deathsound
-                    8,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_posact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_SPOS_RAISE1        // raisestate
-            ),
+            new Possessed_t(),        // MT_POSSESSED
 
-            new mobjinfo_t(        // MT_VILE
-                    64,        // doomednum
-                    StateNum.S_VILE_STND,        // spawnstate
-                    700,        // spawnhealth
-                    StateNum.S_VILE_RUN1,        // seestate
-                    sfxenum_t.sfx_vilsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_VILE_PAIN,        // painstate
-                    10,        // painchance
-                    sfxenum_t.sfx_vipain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_VILE_ATK1,        // missilestate
-                    StateNum.S_VILE_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_vildth,        // deathsound
-                    15,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    500,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_vilact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new ShotGuy_t(),        // MT_SHOTGUY
+
+            new Vile_t(),        // MT_VILE
 
             new mobjinfo_t(        // MT_FIRE
                     -1,        // doomednum
@@ -1229,31 +1187,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_UNDEAD
-                    66,        // doomednum
-                    StateNum.S_SKEL_STND,        // spawnstate
-                    300,        // spawnhealth
-                    StateNum.S_SKEL_RUN1,        // seestate
-                    sfxenum_t.sfx_skesit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_SKEL_PAIN,        // painstate
-                    100,        // painchance
-                    sfxenum_t.sfx_popain,        // painsound
-                    StateNum.S_SKEL_FIST1,        // meleestate
-                    StateNum.S_SKEL_MISS1,        // missilestate
-                    StateNum.S_SKEL_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_skedth,        // deathsound
-                    10,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    500,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_skeact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_SKEL_RAISE1        // raisestate
-            ),
+            new Undead_t(),        // MT_UNDEAD
 
             new mobjinfo_t(        // MT_TRACER
                     -1,        // doomednum
@@ -1307,31 +1241,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_FATSO
-                    67,        // doomednum
-                    StateNum.S_FATT_STND,        // spawnstate
-                    600,        // spawnhealth
-                    StateNum.S_FATT_RUN1,        // seestate
-                    sfxenum_t.sfx_mansit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_FATT_PAIN,        // painstate
-                    80,        // painchance
-                    sfxenum_t.sfx_mnpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_FATT_ATK1,        // missilestate
-                    StateNum.S_FATT_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_mandth,        // deathsound
-                    8,        // speed
-                    48 * FRACUNIT,        // radius
-                    64 * FRACUNIT,        // height
-                    1000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_posact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_FATT_RAISE1        // raisestate
-            ),
+            new Fatso_t(),        // MT_FATSO
 
             new mobjinfo_t(        // MT_FATSHOT
                     -1,        // doomednum
@@ -1359,161 +1269,17 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_CHAINGUY
-                    65,        // doomednum
-                    StateNum.S_CPOS_STND,        // spawnstate
-                    70,        // spawnhealth
-                    StateNum.S_CPOS_RUN1,        // seestate
-                    sfxenum_t.sfx_posit2,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_CPOS_PAIN,        // painstate
-                    170,        // painchance
-                    sfxenum_t.sfx_popain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_CPOS_ATK1,        // missilestate
-                    StateNum.S_CPOS_DIE1,        // deathstate
-                    StateNum.S_CPOS_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_podth2,        // deathsound
-                    8,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_posact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_CPOS_RAISE1        // raisestate
-            ),
+            new ChainGuy_t(),        // MT_CHAINGUY
 
-            new mobjinfo_t(        // MT_TROOP
-                    3001,        // doomednum
-                    StateNum.S_TROO_STND,        // spawnstate
-                    60,        // spawnhealth
-                    StateNum.S_TROO_RUN1,        // seestate
-                    sfxenum_t.sfx_bgsit1,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_TROO_PAIN,        // painstate
-                    200,        // painchance
-                    sfxenum_t.sfx_popain,        // painsound
-                    StateNum.S_TROO_ATK1,        // meleestate
-                    StateNum.S_TROO_ATK1,        // missilestate
-                    StateNum.S_TROO_DIE1,        // deathstate
-                    StateNum.S_TROO_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_bgdth1,        // deathsound
-                    8,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_bgact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_TROO_RAISE1        // raisestate
-            ),
+            new Troop_t(),       // MT_TROOP
 
-            new mobjinfo_t(        // MT_SERGEANT
-                    3002,        // doomednum
-                    StateNum.S_SARG_STND,        // spawnstate
-                    150,        // spawnhealth
-                    StateNum.S_SARG_RUN1,        // seestate
-                    sfxenum_t.sfx_sgtsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_sgtatk,        // attacksound
-                    StateNum.S_SARG_PAIN,        // painstate
-                    180,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_SARG_ATK1,        // meleestate
-                    StateNum.S_NULL,        // missilestate
-                    StateNum.S_SARG_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_sgtdth,        // deathsound
-                    10,        // speed
-                    30 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    400,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_SARG_RAISE1        // raisestate
-            ),
+            new Sergeant_t(),        // MT_SERGEANT
 
-            new mobjinfo_t(        // MT_SHADOWS
-                    58,        // doomednum
-                    StateNum.S_SARG_STND,        // spawnstate
-                    150,        // spawnhealth
-                    StateNum.S_SARG_RUN1,        // seestate
-                    sfxenum_t.sfx_sgtsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_sgtatk,        // attacksound
-                    StateNum.S_SARG_PAIN,        // painstate
-                    180,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_SARG_ATK1,        // meleestate
-                    StateNum.S_NULL,        // missilestate
-                    StateNum.S_SARG_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_sgtdth,        // deathsound
-                    10,        // speed
-                    30 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    400,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_SHADOW | MF_COUNTKILL,        // flags
-                    StateNum.S_SARG_RAISE1        // raisestate
-            ),
+            new Shadows_t(),        // MT_SHADOWS
 
-            new mobjinfo_t(        // MT_HEAD
-                    3005,        // doomednum
-                    StateNum.S_HEAD_STND,        // spawnstate
-                    400,        // spawnhealth
-                    StateNum.S_HEAD_RUN1,        // seestate
-                    sfxenum_t.sfx_cacsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_HEAD_PAIN,        // painstate
-                    128,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_HEAD_ATK1,        // missilestate
-                    StateNum.S_HEAD_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_cacdth,        // deathsound
-                    8,        // speed
-                    31 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    400,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_FLOAT | MF_NOGRAVITY | MF_COUNTKILL,        // flags
-                    StateNum.S_HEAD_RAISE1        // raisestate
-            ),
+            new Head_t(),        // MT_HEAD
 
-            new mobjinfo_t(        // MT_BRUISER
-                    3003,        // doomednum
-                    StateNum.S_BOSS_STND,        // spawnstate
-                    1000,        // spawnhealth
-                    StateNum.S_BOSS_RUN1,        // seestate
-                    sfxenum_t.sfx_brssit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_BOSS_PAIN,        // painstate
-                    50,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_BOSS_ATK1,        // meleestate
-                    StateNum.S_BOSS_ATK1,        // missilestate
-                    StateNum.S_BOSS_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_brsdth,        // deathsound
-                    8,        // speed
-                    24 * FRACUNIT,        // radius
-                    64 * FRACUNIT,        // height
-                    1000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_BOSS_RAISE1        // raisestate
-            ),
+            new Bruiser_t(),        // MT_BRUISER
 
             new mobjinfo_t(        // MT_BRUISERSHOT
                     -1,        // doomednum
@@ -1541,239 +1307,23 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_KNIGHT
-                    69,        // doomednum
-                    StateNum.S_BOS2_STND,        // spawnstate
-                    500,        // spawnhealth
-                    StateNum.S_BOS2_RUN1,        // seestate
-                    sfxenum_t.sfx_kntsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_BOS2_PAIN,        // painstate
-                    50,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_BOS2_ATK1,        // meleestate
-                    StateNum.S_BOS2_ATK1,        // missilestate
-                    StateNum.S_BOS2_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_kntdth,        // deathsound
-                    8,        // speed
-                    24 * FRACUNIT,        // radius
-                    64 * FRACUNIT,        // height
-                    1000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_BOS2_RAISE1        // raisestate
-            ),
+            new Knight_t(),        // MT_KNIGHT
 
-            new mobjinfo_t(        // MT_SKULL
-                    3006,        // doomednum
-                    StateNum.S_SKULL_STND,        // spawnstate
-                    100,        // spawnhealth
-                    StateNum.S_SKULL_RUN1,        // seestate
-                    sfxenum_t.sfx_None,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_sklatk,        // attacksound
-                    StateNum.S_SKULL_PAIN,        // painstate
-                    256,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_SKULL_ATK1,        // missilestate
-                    StateNum.S_SKULL_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_firxpl,        // deathsound
-                    8,        // speed
-                    16 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    50,        // mass
-                    3,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_FLOAT | MF_NOGRAVITY,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new Skull_t(),        // MT_SKULL
 
-            new mobjinfo_t(        // MT_SPIDER
-                    7,        // doomednum
-                    StateNum.S_SPID_STND,        // spawnstate
-                    3000,        // spawnhealth
-                    StateNum.S_SPID_RUN1,        // seestate
-                    sfxenum_t.sfx_spisit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_shotgn,        // attacksound
-                    StateNum.S_SPID_PAIN,        // painstate
-                    40,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_SPID_ATK1,        // missilestate
-                    StateNum.S_SPID_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_spidth,        // deathsound
-                    12,        // speed
-                    128 * FRACUNIT,        // radius
-                    100 * FRACUNIT,        // height
-                    1000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new Spider_t(),        // MT_SPIDER
 
-            new mobjinfo_t(        // MT_BABY
-                    68,        // doomednum
-                    StateNum.S_BSPI_STND,        // spawnstate
-                    500,        // spawnhealth
-                    StateNum.S_BSPI_SIGHT,        // seestate
-                    sfxenum_t.sfx_bspsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_BSPI_PAIN,        // painstate
-                    128,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_BSPI_ATK1,        // missilestate
-                    StateNum.S_BSPI_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_bspdth,        // deathsound
-                    12,        // speed
-                    64 * FRACUNIT,        // radius
-                    64 * FRACUNIT,        // height
-                    600,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_bspact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_BSPI_RAISE1        // raisestate
-            ),
+            new Baby_t(),        // MT_BABY
 
-            new mobjinfo_t(        // MT_CYBORG
-                    16,        // doomednum
-                    StateNum.S_CYBER_STND,        // spawnstate
-                    4000,        // spawnhealth
-                    StateNum.S_CYBER_RUN1,        // seestate
-                    sfxenum_t.sfx_cybsit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_CYBER_PAIN,        // painstate
-                    20,        // painchance
-                    sfxenum_t.sfx_dmpain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_CYBER_ATK1,        // missilestate
-                    StateNum.S_CYBER_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_cybdth,        // deathsound
-                    16,        // speed
-                    40 * FRACUNIT,        // radius
-                    110 * FRACUNIT,        // height
-                    1000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new Cyborg_t(),        // MT_CYBORG
 
-            new mobjinfo_t(        // MT_PAIN
-                    71,        // doomednum
-                    StateNum.S_PAIN_STND,        // spawnstate
-                    400,        // spawnhealth
-                    StateNum.S_PAIN_RUN1,        // seestate
-                    sfxenum_t.sfx_pesit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_PAIN_PAIN,        // painstate
-                    128,        // painchance
-                    sfxenum_t.sfx_pepain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_PAIN_ATK1,        // missilestate
-                    StateNum.S_PAIN_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_pedth,        // deathsound
-                    8,        // speed
-                    31 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    400,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_dmact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_FLOAT | MF_NOGRAVITY | MF_COUNTKILL,        // flags
-                    StateNum.S_PAIN_RAISE1        // raisestate
-            ),
+            new Pain_t(),        // MT_PAIN
 
-            new mobjinfo_t(        // MT_WOLFSS
-                    84,        // doomednum
-                    StateNum.S_SSWV_STND,        // spawnstate
-                    50,        // spawnhealth
-                    StateNum.S_SSWV_RUN1,        // seestate
-                    sfxenum_t.sfx_sssit,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_SSWV_PAIN,        // painstate
-                    170,        // painchance
-                    sfxenum_t.sfx_popain,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_SSWV_ATK1,        // missilestate
-                    StateNum.S_SSWV_DIE1,        // deathstate
-                    StateNum.S_SSWV_XDIE1,        // xdeathstate
-                    sfxenum_t.sfx_ssdth,        // deathsound
-                    8,        // speed
-                    20 * FRACUNIT,        // radius
-                    56 * FRACUNIT,        // height
-                    100,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_posact,        // activesound
-                    MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_SSWV_RAISE1        // raisestate
-            ),
+            new WolfSS_t(),        // MT_WOLFSS
 
-            new mobjinfo_t(        // MT_KEEN
-                    72,        // doomednum
-                    StateNum.S_KEENSTND,        // spawnstate
-                    100,        // spawnhealth
-                    StateNum.S_NULL,        // seestate
-                    sfxenum_t.sfx_None,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_KEENPAIN,        // painstate
-                    256,        // painchance
-                    sfxenum_t.sfx_keenpn,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_NULL,        // missilestate
-                    StateNum.S_COMMKEEN,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_keendt,        // deathsound
-                    0,        // speed
-                    16 * FRACUNIT,        // radius
-                    72 * FRACUNIT,        // height
-                    10000000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_None,        // activesound
-                    MF_SOLID | MF_SPAWNCEILING | MF_NOGRAVITY | MF_SHOOTABLE | MF_COUNTKILL,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new CommanderKeen_t(),        // MT_KEEN
 
-            new mobjinfo_t(        // MT_BOSSBRAIN
-                    88,        // doomednum
-                    StateNum.S_BRAIN,        // spawnstate
-                    250,        // spawnhealth
-                    StateNum.S_NULL,        // seestate
-                    sfxenum_t.sfx_None,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_BRAIN_PAIN,        // painstate
-                    255,        // painchance
-                    sfxenum_t.sfx_bospn,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_NULL,        // missilestate
-                    StateNum.S_BRAIN_DIE1,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_bosdth,        // deathsound
-                    0,        // speed
-                    16 * FRACUNIT,        // radius
-                    16 * FRACUNIT,        // height
-                    10000000,        // mass
-                    0,        // damage
-                    sfxenum_t.sfx_None,        // activesound
-                    MF_SOLID | MF_SHOOTABLE,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new BossBrain_t(),        // MT_BOSSBRAIN
 
             new mobjinfo_t(        // MT_BOSSSPIT
                     89,        // doomednum
@@ -1984,7 +1534,7 @@ public class info {
             ),
 
             new Plasma_t(),
-            
+
             new AlternatePlasma_t(),
 
             new mobjinfo_t(        // MT_BFG
@@ -2455,7 +2005,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC10
+            new mobjinfo_t(        // MT_MISC10 Stimpack_t
                     2011,        // doomednum
                     StateNum.S_STIM,        // spawnstate
                     1000,        // spawnhealth
@@ -2481,7 +2031,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
             // BJPR :  MEDIKIT
-            new mobjinfo_t(        // MT_MISC11 MEDIKIT
+            new Medikit_t(        // MT_MISC11 MEDIKIT
                     2012,        // doomednum
                     StateNum.S_MEDI,        // spawnstate
                     1000,        // spawnhealth
@@ -2507,7 +2057,7 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_MISC12
+            new mobjinfo_t(        // MT_MISC12 SuperCharge_t Recupera vida 200%
                     2013,        // doomednum
                     StateNum.S_SOUL,        // spawnstate
                     1000,        // spawnhealth
