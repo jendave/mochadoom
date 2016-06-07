@@ -1289,6 +1289,22 @@ public class Actions extends UnifiedGameMap {
         LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
     }
 
+    /*void
+    Plasma2
+    (mobj_t mo,
+     boolean accurate) {
+        long angle;
+        int damage;
+
+        damage = 30 * (RND.P_Random() % 3 + 1);
+        angle = mo.angle;
+
+        if (!accurate)
+            angle += (RND.P_Random() - RND.P_Random()) << 18;
+
+        LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
+    }*/
+
     boolean Move(mobj_t actor) {
         // fixed_t
         int tryx;
@@ -2243,6 +2259,52 @@ public class Actions extends UnifiedGameMap {
         CheckMissileSpawn(th);
     }
 
+    public void SpawnPlayerMissileWithAngle(mobj_t source, mobjtype_t type, long an) {
+        mobj_t th;
+
+        int x, y, z, slope; // think_t
+
+        // see which target is to be aimed at
+
+        slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+
+        if (linetarget == null) {
+            an += 1 << 26;
+            an &= BITS32;
+            slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+
+            if (linetarget == null) {
+                an -= 2 << 26;
+                an &= BITS32;
+                slope = AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+            }
+
+            if (linetarget == null) {
+                an = an & BITS32;
+                // angle should be "sane"..right?
+                // Just this line allows freelook.
+                slope = ((source.player.lookdir) << FRACBITS) / 173;
+            }
+        }
+
+        x = source.x;
+        y = source.y;
+        z = source.z + 4 * 8 * FRACUNIT + slope;
+
+        th = SpawnMobj(x, y, z, type);
+
+        if (th.info.seesound != null)
+            S.StartSound(th, th.info.seesound);
+
+        th.target = source;
+        th.angle = an;
+        th.momx = FixedMul(th.info.speed, finecosine(an));
+        th.momy = FixedMul(th.info.speed, finesine(an));
+        th.momz = FixedMul(th.info.speed, slope);
+
+        CheckMissileSpawn(th);
+    }
+
     //
     // P_DamageMobj
     // Damages both enemies and players
@@ -2266,6 +2328,15 @@ public class Actions extends UnifiedGameMap {
           //System.out.println("its acid");
           return;
         }
+
+        if(inflictor.type == mobjtype_t.MT_ALTERNATEPLASMA){
+        	// si tiene velocidad es monstruo
+        	// BJPR: luego deberia ser target.isMonster()
+        	if(target.info.speed > 0){
+        		target.burnMobj(30, 1000);
+        	}
+        }
+
         if (!eval(target.flags & MF_SHOOTABLE))
             return; // shouldn't happen...
 
@@ -3746,6 +3817,17 @@ public class Actions extends UnifiedGameMap {
         int oldx, oldy; // fixed_t    
         boolean side, oldside; // both were int
         line_t ld;
+
+
+        if(thing.burned && System.currentTimeMillis() - thing.lastBurnDamage > thing.burnFreq){
+        	thing.lastBurnDamage = System.currentTimeMillis();
+        	System.out.println("burn");
+        	int newHealth = thing.health - thing.burnDamage;
+        	thing.health = newHealth > 0? newHealth: 0;
+        	if(thing.health == 0){
+        		KillMobj(thing, thing);
+        	}
+        }
 
         floatok = false;
         if (!CheckPosition(thing, x, y))

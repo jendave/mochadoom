@@ -1,7 +1,20 @@
 package net.sourceforge.mochadoom.data;
 
+import net.sourceforge.mochadoom.defines.StateNum;
+import net.sourceforge.mochadoom.doom.think_t;
+import static net.sourceforge.mochadoom.data.sounds.sfxenum_t;
+import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
+import net.sourceforge.mochadoom.data.mobjinfo.AlternatePlasma_t;
+import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
+import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Plasma_t;
+import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
+import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_DROPOFF;
+import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_FLOAT;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_MISSILE;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOBLOCKMAP;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOBLOOD;
@@ -9,6 +22,8 @@ import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOCLIP;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOGRAVITY;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOSECTOR;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_NOTDMATCH;
+import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_PICKUP;
+import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SHADOW;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SHOOTABLE;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SOLID;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SPAWNCEILING;
@@ -140,6 +155,10 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 3, 5, null, StateNum.S_PUNCH4, 0, 0),        // S_PUNCH3
             new state_t(spritenum_t.SPR_PUNG, 2, 4, null, StateNum.S_PUNCH5, 0, 0),        // S_PUNCH4
             new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 0),    // S_PUNCH5
+
+            new state_t(spritenum_t.SPR_PUNG, 1, 4, null, StateNum.S_PUNCH7, 0, 0),        // S_PUNCH6
+            new state_t(spritenum_t.SPR_PUNG, 2, 4, think_t.A_PunchAlternate, StateNum.S_PUNCH3, 0, 0),    // S_PUNCH7
+
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_WeaponReady, StateNum.S_PISTOL, 0, 0),// S_PISTOL
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Lower, StateNum.S_PISTOLDOWN, 0, 0),    // S_PISTOLDOWN
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Raise, StateNum.S_PISTOLUP, 0, 0),    // S_PISTOLUP
@@ -194,6 +213,11 @@ public class info {
             new state_t(spritenum_t.SPR_CHGG, 0, 4, think_t.A_FireCGun, StateNum.S_CHAIN2, 0, 0),    // S_CHAIN1
             new state_t(spritenum_t.SPR_CHGG, 1, 4, think_t.A_FireCGun, StateNum.S_CHAIN3, 0, 0),    // S_CHAIN2
             new state_t(spritenum_t.SPR_CHGG, 1, 0, think_t.A_ReFire, StateNum.S_CHAIN, 0, 0),    // S_CHAIN3
+
+			new state_t(spritenum_t.SPR_CHGG, 0, 2, think_t.A_FireCGunAltern, StateNum.S_CHAIN5, 0, 0),    // S_CHAIN4
+			new state_t(spritenum_t.SPR_CHGG, 1, 2, think_t.A_FireCGunAltern, StateNum.S_CHAIN3, 0, 0),    // S_CHAIN5
+
+
             new state_t(spritenum_t.SPR_CHGF, 32768, 5, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH1
             new state_t(spritenum_t.SPR_CHGF, 32769, 5, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_CHAINFLASH2
             new state_t(spritenum_t.SPR_MISG, 0, 1, think_t.A_WeaponReady, StateNum.S_MISSILE, 0, 0),    // S_MISSILE
@@ -202,6 +226,11 @@ public class info {
             new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE2, 0, 0),    // S_MISSILE1
             new state_t(spritenum_t.SPR_MISG, 1, 12, think_t.A_FireMissile, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE2
             new state_t(spritenum_t.SPR_MISG, 1, 0, think_t.A_ReFire, StateNum.S_MISSILE, 0, 0),    // S_MISSILE3
+
+            new state_t(spritenum_t.SPR_MISG, 1, 8, think_t.A_GunFlash, StateNum.S_MISSILE5, 0, 0),    // S_MISSILE4
+            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE6, 0, 0),    // S_MISSILE5
+            new state_t(spritenum_t.SPR_MISG, 1, 5, think_t.A_FireMissileAltern, StateNum.S_MISSILE3, 0, 0),    // S_MISSILE6
+
             new state_t(spritenum_t.SPR_MISF, 32768, 3, think_t.A_Light1, StateNum.S_MISSILEFLASH2, 0, 0),    // S_MISSILEFLASH1
             new state_t(spritenum_t.SPR_MISF, 32769, 4, null, StateNum.S_MISSILEFLASH3, 0, 0),    // S_MISSILEFLASH2
             new state_t(spritenum_t.SPR_MISF, 32770, 4, think_t.A_Light2, StateNum.S_MISSILEFLASH4, 0, 0),    // S_MISSILEFLASH3
@@ -220,6 +249,13 @@ public class info {
             new state_t(spritenum_t.SPR_PLSG, 1, 20, think_t.A_ReFire, StateNum.S_PLASMA, 0, 0),    // S_PLASMA2
             new state_t(spritenum_t.SPR_PLSF, 32768, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH1
             new state_t(spritenum_t.SPR_PLSF, 32769, 4, think_t.A_Light1, StateNum.S_LIGHTDONE, 0, 0),    // S_PLASMAFLASH2
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, null, StateNum.S_PLASMA4, 0, 0),    // S_PLASMA3
+            new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA1, 0, 0),    // S_PLASMA4
+            //new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
+   			//new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
+
+
+
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_WeaponReady, StateNum.S_BFG, 0, 0),    // S_BFG
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Lower, StateNum.S_BFGDOWN, 0, 0),    // S_BFGDOWN
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_Raise, StateNum.S_BFGUP, 0, 0),    // S_BFGUP
@@ -227,6 +263,12 @@ public class info {
             new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_GunFlash, StateNum.S_BFG3, 0, 0),    // S_BFG2
             new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_FireBFG, StateNum.S_BFG4, 0, 0),    // S_BFG3
             new state_t(spritenum_t.SPR_BFGG, 1, 20, think_t.A_ReFire, StateNum.S_BFG, 0, 0),    // S_BFG4
+
+			new state_t(spritenum_t.SPR_BFGG, 0, 20, think_t.A_BFGsound, StateNum.S_BFG6, 0, 0),    // S_BFG5
+			new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_GunFlash, StateNum.S_BFG7, 0, 0),    // S_BFG6
+			new state_t(spritenum_t.SPR_BFGG, 1, 10, think_t.A_FireBFGAltern, StateNum.S_BFG8, 0, 0),    // S_BFG7
+			new state_t(spritenum_t.SPR_BFGG, 1, 20, think_t.A_ReFire, StateNum.S_BFG, 0, 0),    // S_BFG8
+
             new state_t(spritenum_t.SPR_BFGF, 32768, 11, think_t.A_Light1, StateNum.S_BFGFLASH2, 0, 0),    // S_BFGFLASH1
             new state_t(spritenum_t.SPR_BFGF, 32769, 6, think_t.A_Light2, StateNum.S_LIGHTDONE, 0, 0),    // S_BFGFLASH2
             new state_t(spritenum_t.SPR_BLUD, 2, 8, null, StateNum.S_BLOOD2, 0, 0),    // S_BLOOD1
@@ -248,6 +290,8 @@ public class info {
             new state_t(spritenum_t.SPR_BAL2, 32772, 6, null, StateNum.S_NULL, 0, 0),    // S_RBALLX3
             new state_t(spritenum_t.SPR_PLSS, 32768, 6, null, StateNum.S_PLASBALL2, 0, 0),    // S_PLASBALL
             new state_t(spritenum_t.SPR_PLSS, 32769, 6, null, StateNum.S_PLASBALL, 0, 0),    // S_PLASBALL2
+            new state_t(spritenum_t.SPR_PLSS, 32768, 6, null, StateNum.S_PLASBALL4, 0, 0),    // S_PLASBALL
+            new state_t(spritenum_t.SPR_PLSS, 32769, 6, null, StateNum.S_PLASBALL3, 0, 0),    // S_PLASBALL2
             new state_t(spritenum_t.SPR_PLSE, 32768, 4, null, StateNum.S_PLASEXP2, 0, 0),    // S_PLASEXP
             new state_t(spritenum_t.SPR_PLSE, 32769, 4, null, StateNum.S_PLASEXP3, 0, 0),    // S_PLASEXP2
             new state_t(spritenum_t.SPR_PLSE, 32770, 4, null, StateNum.S_PLASEXP4, 0, 0),    // S_PLASEXP3
@@ -1110,11 +1154,11 @@ public class info {
 
     public static mobjinfo_t[] mobjinfo = {
             new MT_Player_t(),
-            
+
             new Possessed_t(),        // MT_POSSESSED
-            
+
             new ShotGuy_t(),        // MT_SHOTGUY
-            
+
             new Vile_t(),        // MT_VILE
 
             new mobjinfo_t(        // MT_FIRE
@@ -1225,10 +1269,10 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new ChainGuy_t(),        // MT_CHAINGUY    
-            
+            new ChainGuy_t(),        // MT_CHAINGUY
+
             new Troop_t(),       // MT_TROOP
-            
+
             new Sergeant_t(),        // MT_SERGEANT
 
             new Shadows_t(),        // MT_SHADOWS
@@ -1236,7 +1280,7 @@ public class info {
             new Head_t(),        // MT_HEAD
 
             new Bruiser_t(),        // MT_BRUISER
-                
+
             new mobjinfo_t(        // MT_BRUISERSHOT
                     -1,        // doomednum
                     StateNum.S_BRBALL1,        // spawnstate
@@ -1264,19 +1308,19 @@ public class info {
             ),
 
             new Knight_t(),        // MT_KNIGHT
-            
+
             new Skull_t(),        // MT_SKULL
-            
+
             new Spider_t(),        // MT_SPIDER
-            
+
             new Baby_t(),        // MT_BABY
 
             new Cyborg_t(),        // MT_CYBORG
 
             new Pain_t(),        // MT_PAIN
-            
+
             new WolfSS_t(),        // MT_WOLFSS
-            
+
             new CommanderKeen_t(),        // MT_KEEN
 
             new BossBrain_t(),        // MT_BOSSBRAIN
@@ -1489,31 +1533,9 @@ public class info {
                     StateNum.S_NULL        // raisestate
             ),
 
-            new mobjinfo_t(        // MT_PLASMA
-                    -1,        // doomednum
-                    StateNum.S_PLASBALL,        // spawnstate
-                    1000,        // spawnhealth
-                    StateNum.S_NULL,        // seestate
-                    sfxenum_t.sfx_plasma,        // seesound
-                    8,        // reactiontime
-                    sfxenum_t.sfx_None,        // attacksound
-                    StateNum.S_NULL,        // painstate
-                    0,        // painchance
-                    sfxenum_t.sfx_None,        // painsound
-                    StateNum.S_NULL,        // meleestate
-                    StateNum.S_NULL,        // missilestate
-                    StateNum.S_PLASEXP,        // deathstate
-                    StateNum.S_NULL,        // xdeathstate
-                    sfxenum_t.sfx_firxpl,        // deathsound
-                    25 * FRACUNIT,        // speed
-                    13 * FRACUNIT,        // radius
-                    8 * FRACUNIT,        // height
-                    100,        // mass
-                    5,        // damage
-                    sfxenum_t.sfx_None,        // activesound
-                    MF_NOBLOCKMAP | MF_MISSILE | MF_DROPOFF | MF_NOGRAVITY,        // flags
-                    StateNum.S_NULL        // raisestate
-            ),
+            new Plasma_t(),
+
+            new AlternatePlasma_t(),
 
             new mobjinfo_t(        // MT_BFG
                     -1,        // doomednum
