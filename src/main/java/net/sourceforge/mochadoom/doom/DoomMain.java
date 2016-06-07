@@ -229,9 +229,9 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     private boolean fullscreen = false;
     private GameState oldgamestate = GameState.GS_MINUS_ONE;
     private int borderdrawcount;
-    
+
     // no background map cheat
-    private char cheat_mymap_seq[] = {'m', 'a', 'r', 'c', 'o', 'p', 'o', 'l', 'o', 0xff};    
+    private char cheat_mymap_seq[] = {'m', 'a', 'r', 'c', 'o', 'p', 'o', 'l', 'o', 0xff};
     cheatseq_t cheat_mymap = new cheatseq_t(cheat_mymap_seq, 0);
     // mytired toggle mode
     private boolean dm_mymap = false;
@@ -281,7 +281,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                 if (automapactive){
                   if (dm_mymap)
                     R.RenderPlayerView(players[displayplayer]);
-                  AM.Drawer();                                      
+                  AM.Drawer();
                 }
                 if (wipe || (!R.isFullHeight() && fullscreen) ||
                         (inhelpscreensstate && !inhelpscreens)
@@ -392,7 +392,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         } while (!done);
 
     }
-    
+
     public boolean isMyMapCheat() {
         return dm_mymap;
     }
@@ -1924,7 +1924,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     }
                 return true; 
             } */
-                if (cheat_mymap.CheckCheat((char) ev.data1)) {                    
+                if (cheat_mymap.CheckCheat((char) ev.data1)) {
                     dm_mymap = !dm_mymap;
                     if(dm_mymap) {
                         players[0].message = String.format("Custom Map On!");

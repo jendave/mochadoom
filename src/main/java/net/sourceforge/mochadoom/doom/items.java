@@ -55,7 +55,7 @@ public class items {
                             StateNum.S_PUNCHDOWN,
                             StateNum.S_PUNCH,
                             StateNum.S_PUNCH1,
-                            StateNum.S_PUNCH1,
+                            StateNum.S_PUNCH6,
                             StateNum.S_NULL
                     ),
                     new weaponinfo_t(
@@ -70,6 +70,7 @@ public class items {
                             StateNum.S_PISTOL1,
                             StateNum.S_PISTOL5,
                             StateNum.S_PISTOLFLASH
+
                     ), new weaponinfo_t(
                     // shotgun
                     AmmoType.am_shell,
@@ -87,7 +88,7 @@ public class items {
                             StateNum.S_CHAINDOWN,
                             StateNum.S_CHAIN,
                             StateNum.S_CHAIN1,
-                            StateNum.S_CHAIN1,
+                            StateNum.S_CHAIN4,
                             StateNum.S_CHAINFLASH1
                     ),
                     new weaponinfo_t(
@@ -97,7 +98,7 @@ public class items {
                             StateNum.S_MISSILEDOWN,
                             StateNum.S_MISSILE,
                             StateNum.S_MISSILE1,
-                            StateNum.S_MISSILE1,
+                            StateNum.S_MISSILE4,
                             StateNum.S_MISSILEFLASH1
                     ),
                     new weaponinfo_t(
@@ -117,7 +118,7 @@ public class items {
                             StateNum.S_BFGDOWN,
                             StateNum.S_BFG,
                             StateNum.S_BFG1,
-                            StateNum.S_BFG1,
+                            StateNum.S_BFG5,
                             StateNum.S_BFGFLASH1
                     ),
                     new weaponinfo_t(
