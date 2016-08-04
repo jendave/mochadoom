@@ -1558,11 +1558,10 @@ public class ActionFunctions implements DoomStatusAware {
     //
     // A_FirePistolAlternate
     //
-    class A_FirePistolAlternate implements ActionType2 {
-        public void invoke(player_t player, pspdef_t psp) {
-            S.StartSound(player.mo, sfxenum_t.sfx_pistol);
 
-            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+    /*
+    *     class A_FirePlasma implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
 
             player.SetPsprite(
@@ -1570,8 +1569,20 @@ public class ActionFunctions implements DoomStatusAware {
                     weaponinfo[player.readyweapon.ordinal()].flashstate,
                     null);
 
-            A.P_BulletSlope(player.mo);
-            A.P_GunShot2(player.mo, !eval(player.refire));
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
+        }
+    }
+    */
+    class A_FirePistolAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+
+            player.SetPsprite(
+                    ps_flash,
+                    weaponinfo[player.readyweapon.ordinal()].flashstate,
+                    null);
+
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_FLARE);
         }
     }
     

@@ -1,16 +1,10 @@
 package net.sourceforge.mochadoom.data;
 
+import net.sourceforge.mochadoom.data.mobjinfo.*;
 import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.think_t;
 import static net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
-import net.sourceforge.mochadoom.data.mobjinfo.AlternatePlasma_t;
-import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Plasma_t;
-import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_DROPOFF;
@@ -31,32 +25,11 @@ import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SPECIAL;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Baby_t;
 import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.BossBrain_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Bruiser_t;
-import net.sourceforge.mochadoom.data.mobjinfo.ChainGuy_t;
-import net.sourceforge.mochadoom.data.mobjinfo.CommanderKeen_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Cyborg_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Fatso_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Head_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Knight_t;
 import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Medikit_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Pain_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Possessed_t;
 import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Sergeant_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Shadows_t;
-import net.sourceforge.mochadoom.data.mobjinfo.ShotGuy_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Skull_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Spider_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Troop_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Undead_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Vile_t;
-import net.sourceforge.mochadoom.data.mobjinfo.WolfSS_t;
 import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.think_t;
 
@@ -4195,7 +4168,8 @@ public class info {
             new GreenZombie_t(),
             new RedZombie_t(),
             new GrayZombie_t(),
-            new BlackZombie_t()
+            new BlackZombie_t(),
+			new Flare_t()
     };
 
     static {
