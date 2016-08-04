@@ -138,6 +138,12 @@ public class player_t /*extends mobj_t */
         this.poisonDamage = 0;
         this.poisonFreq = 0;
         this.lastPoisonDamage = 0;
+        this.damageOverTime = false;
+        this.damage = 0;
+        this.damageFreq = 0;
+        this.lastDamage = 0;
+
+
     }
 
     public final static int CF_NOCLIP = 1; // No damage, no health loss.
@@ -231,6 +237,21 @@ public class player_t /*extends mobj_t */
 
     public int[] maxammo;
 
+
+
+
+
+    // damage over time
+
+    private boolean damageOverTime;
+    private int damage;
+    private int damageFreq;
+    private long lastDamage;
+
+
+
+
+
     /**
      * True if button down last tic.
      */
@@ -316,6 +337,10 @@ public class player_t /*extends mobj_t */
         this.poisonDamage = 0;
         this.poisonFreq = 0;
         this.lastPoisonDamage = 0;
+        this.damageOverTime = false;
+        this.damage = 0;
+        this.damageFreq = 0;
+        this.lastDamage = 0;
 
     }
 
@@ -863,6 +888,16 @@ public class player_t /*extends mobj_t */
         this.poisoned = false;
       }
     }
+
+    public void damagePlayerOverTime(int poison, int frequency){
+        this.damageOverTime = true;
+        this.damage = poison;
+        this.damageFreq = frequency;
+        this.lastDamage = System.currentTimeMillis();
+    }
+
+
+
     /**
      * G_PlayerFinishLevel
      * Called when a player completes a level.
@@ -1518,6 +1553,27 @@ public class player_t /*extends mobj_t */
 
         if (eval(player.bonuscount))
             player.bonuscount--;
+
+
+
+
+
+
+        // apply the damage over time
+
+        if(player.damageOverTime && System.currentTimeMillis() - player.lastDamage > player.damageFreq){
+            player.lastDamage = System.currentTimeMillis();
+            int newHealth = player.health[0] - player.damage;
+            player.health[0] = newHealth > 0? newHealth: 0;
+            if(player.health[0] <= 0){
+                player.playerstate = PST_DEAD;
+            }
+        }
+
+
+
+
+
 
 
         // Handling colormaps.

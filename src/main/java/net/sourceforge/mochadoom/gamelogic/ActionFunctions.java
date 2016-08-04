@@ -2353,6 +2353,14 @@ public class ActionFunctions implements DoomStatusAware {
             for(bfgcount = -1000000000; bfgcount<=1000000000; bfgcount+=200000000){
                 A.SpawnPlayerMissileWithAngle(player.mo, mobjtype_t.MT_BFG, playerPosition + bfgcount);
             }
+            // HERE DAMAGE THE PLAYER
+
+
+            player.poisonPlayer(5, 1000);
+
+
+            // tengo que hacer daño HASTA UN LIMITE luego NO dañar
+
         }
 
     }
@@ -2409,7 +2417,11 @@ public class ActionFunctions implements DoomStatusAware {
             // Damage the player when using the Alternative mode of the MachineGun,
             // this is because it is faster than the normal mode but in exchange
             // it damages the player
-            player.DamagePlayer(1);
+
+
+
+
+            //player.DamagePlayer(1); OVERTIME DAMAGE HERE
 
             // MAES: Code to alternate between two different gun flashes
             // needed a clear rewrite, as it was way too messy.
