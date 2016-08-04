@@ -925,7 +925,7 @@ public class player_t /*extends mobj_t */
     public void DamagePlayer(int n){
 
         this.mo.health = this.mo.health - n;    // health
-        if (this.mo.health - n <= 0 ){
+        if (this.mo.health <= 0 ){
             this.health[0] = 0;
             this.playerstate = PST_DEAD;
         }
@@ -933,7 +933,6 @@ public class player_t /*extends mobj_t */
         else {
             this.health[0] = this.mo.health;        // health UI label
         }
-
 
     }
 

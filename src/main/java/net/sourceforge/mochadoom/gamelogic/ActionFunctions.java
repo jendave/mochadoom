@@ -2356,8 +2356,8 @@ public class ActionFunctions implements DoomStatusAware {
             // HERE DAMAGE THE PLAYER
 
 
-            player.poisonPlayer(5, 1000);
-
+            // damage itself
+            player.DamagePlayer(30);
 
             // tengo que hacer daño HASTA UN LIMITE luego NO dañar
 
