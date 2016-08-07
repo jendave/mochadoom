@@ -139,6 +139,8 @@ public class player_t /*extends mobj_t */
         this.poisonFreq = 0;
         this.lastPoisonDamage = 0;
         this.damageOverTime = false;
+        this.damageOverTimeCount = 0;
+        this.damageOverTimeAmount = 0;
         this.damage = 0;
         this.damageFreq = 0;
         this.lastDamage = 0;
@@ -244,6 +246,8 @@ public class player_t /*extends mobj_t */
     // damage over time
 
     private boolean damageOverTime;
+    private int damageOverTimeCount;
+    private int damageOverTimeAmount;
     private int damage;
     private int damageFreq;
     private long lastDamage;
@@ -341,6 +345,8 @@ public class player_t /*extends mobj_t */
         this.damage = 0;
         this.damageFreq = 0;
         this.lastDamage = 0;
+        this.damageOverTimeCount = 0;
+        this.damageOverTimeAmount = 0;
 
     }
 
@@ -889,8 +895,10 @@ public class player_t /*extends mobj_t */
       }
     }
 
-    public void damagePlayerOverTime(int poison, int frequency){
+    public void damagePlayerOverTime(int poison, int frequency, int amount){
         this.damageOverTime = true;
+        this.damageOverTimeCount = 0;
+        this.damageOverTimeAmount = amount;
         this.damage = poison;
         this.damageFreq = frequency;
         this.lastDamage = System.currentTimeMillis();
@@ -1571,6 +1579,13 @@ public class player_t /*extends mobj_t */
         if(player.damageOverTime && System.currentTimeMillis() - player.lastDamage > player.damageFreq){
             player.lastDamage = System.currentTimeMillis();
             int newHealth = player.health[0] - player.damage;
+
+            player.damageOverTimeCount += player.damage;
+            if(player.damageOverTimeCount == player.damageOverTimeAmount) {
+
+                player.damageOverTime = false;
+
+            }
             player.health[0] = newHealth > 0? newHealth: 0;
             if(player.health[0] <= 0){
                 player.playerstate = PST_DEAD;

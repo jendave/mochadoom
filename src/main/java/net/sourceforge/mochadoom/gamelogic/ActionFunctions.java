@@ -2421,7 +2421,21 @@ public class ActionFunctions implements DoomStatusAware {
 
 
 
-            //player.DamagePlayer(1); OVERTIME DAMAGE HERE
+
+
+
+
+
+
+            //AQUIiIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII OVERTIME DAMAGE HERE
+            player.damagePlayerOverTime(5, 1000, 30);
+
+
+
+
+
+
+
 
             // MAES: Code to alternate between two different gun flashes
             // needed a clear rewrite, as it was way too messy.
