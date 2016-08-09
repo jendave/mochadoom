@@ -73,6 +73,7 @@ public class ActionFunctions implements DoomStatusAware {
         WeaponReady = new A_WeaponReady();
         Lower = new A_Lower();
         Raise = new A_Raise();
+        RaiseLittle = new A_RaiseLittle();
         Punch = new A_Punch();
         PunchAlternate = new A_PunchAlternate();
         ReFire = new A_ReFire();
@@ -198,7 +199,9 @@ public class ActionFunctions implements DoomStatusAware {
 
     ActionType2 WeaponReady;
     ActionType2 Lower;
+    ActionType2 LowerLittle;
     ActionType2 Raise;
+    ActionType2 RaiseLittle;
     ActionType2 Punch;
     ActionType2 PunchAlternate;
     ActionType2 ReFire;
@@ -315,9 +318,15 @@ public class ActionFunctions implements DoomStatusAware {
             case A_Lower:
                 st.acp2 = Lower;
                 break;
+            case A_LowerLittle:
+                st.acp2 = LowerLittle;
+                break;
             case A_Raise:
                 st.acp2 = Raise;
                 break;
+            case A_RaiseLittle:
+                st.acp2 = RaiseLittle;
+                break;    
             case A_Punch:
                 st.acp2 = Punch;
                 break;
@@ -607,8 +616,14 @@ public class ActionFunctions implements DoomStatusAware {
             case A_Lower:
                 st.acp2 = Lower;
                 break;
+            case A_LowerLittle:
+                st.acp2 = LowerLittle;
+                break;
             case A_Raise:
                 st.acp2 = Raise;
+                break;
+            case A_RaiseLittle:
+                st.acp2 = RaiseLittle;
                 break;
             case A_Punch:
                 st.acp2 = Punch;
@@ -2077,6 +2092,33 @@ public class ActionFunctions implements DoomStatusAware {
             player.SetPsprite(ps_weapon, newstate, null);
         }
     }
+    
+    //
+    // A_RaiseLittle
+    //
+    class A_RaiseLittle implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            StateNum newstate;
+
+            //System.out.println("Trying to raise weapon");      
+            //System.out.println(player.readyweapon + " height: "+psp.sy);
+            psp.sy -= 5*RAISESPEED;
+
+            if (psp.sy > WEAPONTOP - 80*FRACUNIT) {
+                //System.out.println("Not on top yet, exit and repeat.");
+                return;
+            }
+
+            psp.sy = WEAPONTOP - 100*FRACUNIT;
+
+            // The weapon has been raised all the way,
+            //  so change to the ready state.
+            newstate = weaponinfo[player.readyweapon.ordinal()].readystate;
+            //System.out.println("Weapon raised, setting new state.");
+
+            player.SetPsprite(ps_weapon, newstate, null);
+        }
+    }
 
 
     //
@@ -2882,6 +2924,31 @@ public class ActionFunctions implements DoomStatusAware {
             player.readyweapon = player.pendingweapon;
 
             player.BringUpWeapon();
+        }
+    }
+    
+    
+    class A_LowerLittle implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            StateNum newstate;
+
+            //System.out.println("Trying to raise weapon");      
+            //System.out.println(player.readyweapon + " height: "+psp.sy);
+            psp.sy += 5*RAISESPEED;
+
+            if (psp.sy < WEAPONTOP) {
+                //System.out.println("Not on top yet, exit and repeat.");
+                return;
+            }
+
+            psp.sy = WEAPONTOP;
+
+            // The weapon has been raised all the way,
+            //  so change to the ready state.
+            newstate = weaponinfo[player.readyweapon.ordinal()].readystate;
+            //System.out.println("Weapon raised, setting new state.");
+
+            player.SetPsprite(ps_weapon, newstate, null);
         }
     }
 
