@@ -72,6 +72,7 @@ public class ActionFunctions implements DoomStatusAware {
         MobjThinker = new P_MobjThinker();
         WeaponReady = new A_WeaponReady();
         Lower = new A_Lower();
+        LowerLittle = new A_LowerLittle();
         Raise = new A_Raise();
         RaiseLittle = new A_RaiseLittle();
         Punch = new A_Punch();
@@ -2100,25 +2101,10 @@ public class ActionFunctions implements DoomStatusAware {
         public void invoke(player_t player, pspdef_t psp) {
             StateNum newstate;
 
-            //System.out.println("Trying to raise weapon");      
-            //System.out.println(player.readyweapon + " height: "+psp.sy);
-            psp.sy -= 5*RAISESPEED;
-
-            if (psp.sy > WEAPONTOP - 80*FRACUNIT) {
-                //System.out.println("Not on top yet, exit and repeat.");
-                return;
-            }
-
-            psp.sy = WEAPONTOP - 100*FRACUNIT;
-
-            // The weapon has been raised all the way,
-            //  so change to the ready state.
-            newstate = weaponinfo[player.readyweapon.ordinal()].readystate;
-            //System.out.println("Weapon raised, setting new state.");
-
-            player.SetPsprite(ps_weapon, newstate, null);
+            psp.sy = WEAPONTOP - 60*FRACUNIT;
         }
     }
+
 
 
     //
@@ -2930,25 +2916,9 @@ public class ActionFunctions implements DoomStatusAware {
     
     class A_LowerLittle implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            StateNum newstate;
 
-            //System.out.println("Trying to raise weapon");      
-            //System.out.println(player.readyweapon + " height: "+psp.sy);
-            psp.sy += 5*RAISESPEED;
-
-            if (psp.sy < WEAPONTOP) {
-                //System.out.println("Not on top yet, exit and repeat.");
-                return;
-            }
-
-            psp.sy = WEAPONTOP;
-
-            // The weapon has been raised all the way,
-            //  so change to the ready state.
-            newstate = weaponinfo[player.readyweapon.ordinal()].readystate;
-            //System.out.println("Weapon raised, setting new state.");
-
-            player.SetPsprite(ps_weapon, newstate, null);
+            psp.sy += 100*FRACUNIT;
+            
         }
     }
 

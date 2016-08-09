@@ -1184,6 +1184,8 @@ public class player_t /*extends mobj_t */
                 psp.sx = (int) (state.misc1 << FRACBITS);
                 psp.sy = (int) (state.misc2 << FRACBITS);
             }
+            
+            if (state.misc2 != 0) psp.sy = (int) (state.misc2 << FRACBITS);
 
             // Call action routine.
             // Modified handling.
