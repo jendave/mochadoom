@@ -16,6 +16,8 @@ public enum StateNum {
     S_PUNCH7,		// <----
     S_PUNCH8,		// <----
     S_PUNCH9,		// <----
+    S_PUNCH10,      // <----
+    S_PUNCH11,		// <----
     
     S_PISTOL,
     S_PISTOLDOWN,
@@ -100,6 +102,8 @@ public enum StateNum {
     
     S_SAW4,			// <---
     S_SAW5,			// <---
+    S_SAW6,			// <---
+    S_SAW7,			// <---
     
     S_PLASMA,
     S_PLASMADOWN,

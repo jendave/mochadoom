@@ -150,6 +150,7 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 0, 1, think_t.A_WeaponReady, StateNum.S_PUNCH, 0, 0),    // S_PUNCH
             new state_t(spritenum_t.SPR_PUNG, 0, 1, think_t.A_Lower, StateNum.S_PUNCHDOWN, 0, 0),    // S_PUNCHDOWN
             new state_t(spritenum_t.SPR_PUNG, 0, 1, think_t.A_Raise, StateNum.S_PUNCHUP, 0, 0),    // S_PUNCHUP
+            
             new state_t(spritenum_t.SPR_PUNG, 1, 4, null, StateNum.S_PUNCH2, 0, 0),        // S_PUNCH1
             new state_t(spritenum_t.SPR_PUNG, 2, 4, think_t.A_Punch, StateNum.S_PUNCH3, 0, 0),    // S_PUNCH2
             new state_t(spritenum_t.SPR_PUNG, 3, 5, null, StateNum.S_PUNCH4, 0, 0),        // S_PUNCH3
@@ -157,9 +158,11 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 0),    // S_PUNCH5
             
             new state_t(spritenum_t.SPR_PUNG, 1, 12, null, StateNum.S_PUNCH7, 0, 0),        // S_PUNCH6
-            new state_t(spritenum_t.SPR_PUNG, 2, 1, think_t.A_PunchAlternate, StateNum.S_PUNCH8, 0, 0),    // S_PUNCH7
-            new state_t(spritenum_t.SPR_PUNG, 3, 15, null, StateNum.S_PUNCH9, 0, 0),        // S_PUNCH8
-            new state_t(spritenum_t.SPR_PUNG, 2, 1, null, StateNum.S_PUNCH5, 0, 0),        // S_PUNCH9
+            new state_t(spritenum_t.SPR_PUNG, 2, 1, think_t.A_PunchAlternate, StateNum.S_PUNCH8, 0, 0),    // S_PUNCH8
+            new state_t(spritenum_t.SPR_PUNG, 3, 1, think_t.A_RaiseLittle, StateNum.S_PUNCH9, 0, 0),  // S_PUNCH7
+            new state_t(spritenum_t.SPR_PUNG, 3, 15, null, StateNum.S_PUNCH10, 0, 0),        // S_PUNCH9
+            new state_t(spritenum_t.SPR_PUNG, 3, 1, think_t.A_LowerLittle, StateNum.S_PUNCH11, 0, 0),
+            new state_t(spritenum_t.SPR_PUNG, 2, 1, null, StateNum.S_PUNCH, 0, 0),        // S_PUNCH11
             
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_WeaponReady, StateNum.S_PISTOL, 0, 0),// S_PISTOL
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Lower, StateNum.S_PISTOLDOWN, 0, 0),    // S_PISTOLDOWN
@@ -243,8 +246,10 @@ public class info {
             new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_Saw, StateNum.S_SAW3, 0, 0),    // S_SAW2
             new state_t(spritenum_t.SPR_SAWG, 1, 0, think_t.A_ReFire, StateNum.S_SAW, 0, 0),    // S_SAW3
             
-            new state_t(spritenum_t.SPR_SAWG, 0, 16, think_t.A_SawAlternate, StateNum.S_SAW5, 0, 0),    // S_SAW4
-            new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_SawAlternate, StateNum.S_SAW3, 0, 0),    // S_SAW5
+            new state_t(spritenum_t.SPR_SAWG, 1, 3, think_t.A_RaiseLittle, StateNum.S_SAW5, 0, 0),  // S_SAW4
+            new state_t(spritenum_t.SPR_SAWG, 0, 16, think_t.A_SawAlternate, StateNum.S_SAW6, 0, 0),    // S_SAW5
+            new state_t(spritenum_t.SPR_SAWG, 1, 3, think_t.A_LowerLittle, StateNum.S_SAW7, 0, 0),	// S_SAW6
+            new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_SawAlternate, StateNum.S_SAW3, 0, 0),    // S_SAW7
             
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_WeaponReady, StateNum.S_PLASMA, 0, 0),    // S_PLASMA
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Lower, StateNum.S_PLASMADOWN, 0, 0),    // S_PLASMADOWN
@@ -257,7 +262,6 @@ public class info {
             new state_t(spritenum_t.SPR_PLSG, 0, 3, think_t.A_FirePlasmaAlternate, StateNum.S_PLASMA1, 0, 0),    // S_PLASMA4
             //new state_t(spritenum_t.SPR_SHTG, 0, 3, null, StateNum.S_EXAMPLE2, 0, 0),    // S_EXAMPLE1
    			//new state_t(spritenum_t.SPR_SHTG, 0, 7, think_t.A_FireExample, StateNum.S_SGUN3, 0, 0),// S_EXAMPLE2
-
 
 
             new state_t(spritenum_t.SPR_BFGG, 0, 1, think_t.A_WeaponReady, StateNum.S_BFG, 0, 0),    // S_BFG
