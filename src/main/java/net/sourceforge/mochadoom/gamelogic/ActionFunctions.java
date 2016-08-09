@@ -1574,11 +1574,10 @@ public class ActionFunctions implements DoomStatusAware {
     //
     // A_FirePistolAlternate
     //
-    class A_FirePistolAlternate implements ActionType2 {
-        public void invoke(player_t player, pspdef_t psp) {
-            S.StartSound(player.mo, sfxenum_t.sfx_pistol);
 
-            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+    /*
+    *     class A_FirePlasma implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
 
             player.SetPsprite(
@@ -1586,8 +1585,20 @@ public class ActionFunctions implements DoomStatusAware {
                     weaponinfo[player.readyweapon.ordinal()].flashstate,
                     null);
 
-            A.P_BulletSlope(player.mo);
-            A.P_GunShot2(player.mo, !eval(player.refire));
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
+        }
+    }
+    */
+    class A_FirePistolAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+
+            player.SetPsprite(
+                    ps_flash,
+                    weaponinfo[player.readyweapon.ordinal()].flashstate,
+                    null);
+
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_FLARE);
         }
     }
     
@@ -2378,14 +2389,18 @@ public class ActionFunctions implements DoomStatusAware {
             int bfgcount = -800000000;
             long playerPosition = player.mo.angle;
             //missiles arround the player
+
+            // damage itself
+            player.DamagePlayer(30);
+
+
             for(bfgcount = -1000000000; bfgcount<=1000000000; bfgcount+=200000000){
                 A.SpawnPlayerMissileWithAngle(player.mo, mobjtype_t.MT_BFG, playerPosition + bfgcount);
             }
             // HERE DAMAGE THE PLAYER
 
 
-            // damage itself
-            player.DamagePlayer(30);
+
 
             // tengo que hacer daño HASTA UN LIMITE luego NO dañar
 
@@ -2448,21 +2463,8 @@ public class ActionFunctions implements DoomStatusAware {
 
 
 
-
-
-
-
-
-
-
             //AQUIiIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII OVERTIME DAMAGE HERE
             player.damagePlayerOverTime(5, 1000, 30);
-
-
-
-
-
-
 
 
             // MAES: Code to alternate between two different gun flashes

@@ -143,6 +143,7 @@ public enum mobjtype_t {
     MT_REDZOMBIE,
     MT_GRAYZOMBIE,
     MT_BLACKZOMBIE,
+    MT_FLARE,
     NUMMOBJTYPES
 };
 
