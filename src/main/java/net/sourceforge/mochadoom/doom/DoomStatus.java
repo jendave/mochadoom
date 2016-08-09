@@ -87,8 +87,7 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
     }
 
     public boolean isShareware() {
-       // return (gamemode == GameMode.shareware);
-    	return false;
+        return (gamemode == GameMode.shareware);
     }
 
     /**
@@ -507,6 +506,10 @@ public abstract class DoomStatus<T, V> extends DoomContext<T, V> implements IUse
 
     protected int MAXPLMOVE() {
         return forwardmove[1];
+    }
+    
+    protected int SLOWPLMOVE() {
+      return forwardmove[0];
     }
 
     protected static final int TURBOTHRESHOLD = 0x32;

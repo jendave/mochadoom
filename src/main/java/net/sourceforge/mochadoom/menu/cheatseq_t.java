@@ -176,7 +176,6 @@ public class cheatseq_t {
     public boolean CheckCheat(char key) {
         boolean rc = false;
 
-
         if (this.p < 0)
             this.p = 0; // initialize if first time
 
@@ -186,6 +185,9 @@ public class cheatseq_t {
             sequence[p++] = key;
             //p++;  //_D_: this fixed cheat with parm problem (IDCLIP)
         else if (cheat_xlate_table[(char) key] == sequence[p])
+            p++;
+        // if the key is char and the sequence too.
+        else if (key == sequence[p])
             p++;
         else
             // Failure: back to the beginning.

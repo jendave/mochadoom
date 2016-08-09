@@ -329,11 +329,8 @@ public abstract class AbstractThings<T, V>
                         psp.state.sprite, psp.state.frame);
         }
         sprframe = null;
-        try{
         sprframe = sprdef.spriteframes[psp.state.frame & FF_FRAMEMASK];
-        }catch(Exception e){
-        	System.out.println("Me caigo");
-        }
+       
         // Base frame for "angle 0" aka viewed from dead-front.
         lump = sprframe.lump[0];
         // Q: where can this be set? A: at sprite loadtime.

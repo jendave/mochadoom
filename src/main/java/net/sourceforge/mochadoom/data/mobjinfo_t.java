@@ -2,41 +2,10 @@ package net.sourceforge.mochadoom.data;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.defines.StateNum;
+import net.sourceforge.mochadoom.rendering.LightsAndColors;
 
 public class mobjinfo_t {
-
-    /*
-    public mobjinfo_t(int doomednum, int spawnstate, int spawnhealth,
-            int seestate, int seesound, int reactiontime, int attacksound,
-            int painstate, int painchance, int painsound, int meleestate,
-            int missilestate, int deathstate, int xdeathstate,
-            int deathsound, int speed, int radius, int height, int mass,
-            int damage, int activesound, int flags, int raisestate) {
-        super();
-        this.doomednum = doomednum;
-        this.spawnstate = spawnstate;
-        this.spawnhealth = spawnhealth;
-        this.seestate = seestate;
-        this.seesound = seesound;
-        this.reactiontime = reactiontime;
-        this.attacksound = attacksound;
-        this.painstate = painstate;
-        this.painchance = painchance;
-        this.painsound = painsound;
-        this.meleestate = meleestate;
-        this.missilestate = missilestate;
-        this.deathstate = deathstate;
-        this.xdeathstate = xdeathstate;
-        this.deathsound = deathsound;
-        this.speed = speed;
-        this.radius = radius;
-        this.height = height;
-        this.mass = mass;
-        this.damage = damage;
-        this.activesound = activesound;
-        this.flags = flags;
-        this.raisestate = raisestate;
-    }*/
+    
     public mobjinfo_t(int doomednum, StateNum spawnstate, int spawnhealth,
                       StateNum seestate, sfxenum_t seesound, int reactiontime,
                       sfxenum_t attacksound, StateNum painstate,
@@ -46,7 +15,6 @@ public class mobjinfo_t {
                       sfxenum_t deathsound, int speed, int radius, int height,
                       int mass, int damage, sfxenum_t activesound, int flags,
                       StateNum raisestate) {
-        super();
         this.doomednum = doomednum;
         this.spawnstate = spawnstate;
         this.spawnhealth = spawnhealth;
@@ -95,4 +63,28 @@ public class mobjinfo_t {
     public sfxenum_t activesound;
     public int flags;
     public StateNum raisestate;
+    /**
+     * Used to get specific type of object.
+     * @return String with name of class object.
+     */
+    public String getsubType(){
+      return "";
+    }
+    /**
+     * getType, returns mobjtype_t of object.
+     * @return string with type of object.
+     */
+    public String getType(){
+      return "mobjinfo_t";
+    }
+    /**
+     * isMonster, asks if object is monster.
+     * @return true if it is a monster object.
+     */
+    public boolean isMonster(){
+      return false;
+    }
+    public <V> V getColorMap(LightsAndColors<V> colormaps){
+      return colormaps.colormaps[colormaps.colormaps.length - 1];
+    }
 }

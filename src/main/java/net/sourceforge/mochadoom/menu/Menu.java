@@ -337,6 +337,7 @@ public class Menu extends AbstractDoomMenu {
                         new menuitem_t(1, "M_ROUGH", ChooseSkill, 'h'),
                         new menuitem_t(1, "M_HURT", ChooseSkill, 'h'),
                         new menuitem_t(1, "M_ULTRA", ChooseSkill, 'u'),
+                        new menuitem_t(1, "M_HRDM", ChooseSkill, 'h') , 
                         new menuitem_t(1, "M_NMARE", ChooseSkill, 'n')};
 
         NewDef = new menu_t(newg_end, // # of menu items
@@ -1592,13 +1593,14 @@ public class Menu extends AbstractDoomMenu {
 
     class M_DrawOptions
             implements DrawRoutine {
-
+      
         private String detailNames[] = {"M_GDHIGH", "M_GDLOW"};
 
         private String msgNames[] = {"M_MSGOFF", "M_MSGON"};
 
         @Override
         public void invoke() {
+
             V.DrawScaledPatch(108, 15, 0, vs, W.CachePatchName("M_OPTTTL"));
 
             V.DrawScaledPatch(OptionsDef.x + 175, OptionsDef.y + LINEHEIGHT
@@ -1764,7 +1766,6 @@ public class Menu extends AbstractDoomMenu {
                 StartMessage(NIGHTMARE, VerifyNightmare, true);
                 return;
             }
-
             DG.DeferedInitNew(Skill.values()[choice], epi + 1, 1);
             ClearMenus();
         }
@@ -1921,7 +1922,7 @@ public class Menu extends AbstractDoomMenu {
      * newgame_e enum;
      */
     public static final int killthings = 0, toorough = 1, hurtme = 2, violence = 3,
-            nightmare = 4, newg_end = 5;
+            nightmare = 5, horde = 4, newg_end = 6;
 
     private static final String[] gammamsg = {"GAMMALVL0",
 
