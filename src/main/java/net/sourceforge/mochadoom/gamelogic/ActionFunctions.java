@@ -2350,14 +2350,18 @@ public class ActionFunctions implements DoomStatusAware {
             int bfgcount = -800000000;
             long playerPosition = player.mo.angle;
             //missiles arround the player
+
+            // damage itself
+            player.DamagePlayer(30);
+
+
             for(bfgcount = -1000000000; bfgcount<=1000000000; bfgcount+=200000000){
                 A.SpawnPlayerMissileWithAngle(player.mo, mobjtype_t.MT_BFG, playerPosition + bfgcount);
             }
             // HERE DAMAGE THE PLAYER
 
 
-            // damage itself
-            player.DamagePlayer(30);
+
 
             // tengo que hacer daño HASTA UN LIMITE luego NO dañar
 
@@ -2420,21 +2424,8 @@ public class ActionFunctions implements DoomStatusAware {
 
 
 
-
-
-
-
-
-
-
             //AQUIiIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII OVERTIME DAMAGE HERE
             player.damagePlayerOverTime(5, 1000, 30);
-
-
-
-
-
-
 
 
             // MAES: Code to alternate between two different gun flashes

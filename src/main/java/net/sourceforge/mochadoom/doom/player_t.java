@@ -1587,7 +1587,8 @@ public class player_t /*extends mobj_t */
 
             }
             player.health[0] = newHealth > 0? newHealth: 0;
-            if(player.health[0] <= 0){
+            player.mo.health = player.health[0];
+            if(player.mo.health <= 0){
                 player.playerstate = PST_DEAD;
             }
         }
@@ -1620,7 +1621,8 @@ public class player_t /*extends mobj_t */
               player.lastPoisonDamage = System.currentTimeMillis();
             int newHealth = player.health[0] - player.poisonDamage;
             player.health[0] = newHealth > 0? newHealth: 0;
-            if(player.health[0] == 0){
+            player.mo.health = player.health[0];
+            if(player.mo.health == 0){
                 player.playerstate = PST_DEAD;
             }
         }
