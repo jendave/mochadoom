@@ -6,5 +6,6 @@ public enum Skill {
     sk_easy,
     sk_medium,
     sk_hard,
+    sk_horde,
     sk_nightmare
 }

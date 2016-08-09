@@ -27,6 +27,7 @@ public class weaponinfo_t {
         this.downstate = downstate;
         this.readystate = readystate;
         this.atkstate = atkstate;
+        this.atkaltern = atkaltern;
         this.flashstate = flashstate;
     }*/
     public AmmoType ammo;
@@ -34,13 +35,15 @@ public class weaponinfo_t {
 
     public weaponinfo_t(AmmoType ammo, StateNum upstate,
                         StateNum downstate, StateNum readystate,
-                        StateNum atkstate, StateNum flashstate) {
+                        StateNum atkstate, StateNum atkaltern,
+                        StateNum flashstate) {
         super();
         this.ammo = ammo;
         this.upstate = upstate;
         this.downstate = downstate;
         this.readystate = readystate;
         this.atkstate = atkstate;
+        this.atkaltern = atkaltern;
         this.flashstate = flashstate;
     }
 
@@ -48,6 +51,7 @@ public class weaponinfo_t {
     public StateNum downstate;
     public StateNum readystate;
     public StateNum atkstate;
+    public StateNum atkaltern;
     public StateNum flashstate;
 
 

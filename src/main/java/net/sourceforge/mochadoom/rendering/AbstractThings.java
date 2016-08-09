@@ -328,9 +328,9 @@ public abstract class AbstractThings<T, V>
                 I.Error("R_ProjectSprite: invalid sprite frame %d : %d ",
                         psp.state.sprite, psp.state.frame);
         }
-
+        sprframe = null;
         sprframe = sprdef.spriteframes[psp.state.frame & FF_FRAMEMASK];
-
+       
         // Base frame for "angle 0" aka viewed from dead-front.
         lump = sprframe.lump[0];
         // Q: where can this be set? A: at sprite loadtime.
@@ -463,6 +463,10 @@ public abstract class AbstractThings<T, V>
      */
 
     protected final void DrawSprite(vissprite_t<V> spr) {
+    	if(spr==null){
+    		System.out.println("No existe");
+    	}
+    		
         int ds;
         drawseg_t dss;
 

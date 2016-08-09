@@ -214,6 +214,8 @@ import static net.sourceforge.mochadoom.rendering.line_t.ML_MAPPED;
 import static net.sourceforge.mochadoom.rendering.line_t.ML_SECRET;
 import static net.sourceforge.mochadoom.video.DoomVideoRenderer.V_NOSCALESTART;
 
+import net.sourceforge.mochadoom.data.mobjtype_t;
+
 public abstract class Map<T, V>
         implements IAutoMap<T, V> {
 
@@ -921,7 +923,6 @@ public abstract class Map<T, V>
     /**
      * Handle events (user inputs) in automap mode
      */
-
     public final boolean Responder(event_t ev) {
 
         boolean rc;
@@ -1593,11 +1594,46 @@ public abstract class Map<T, V>
             // MAES: get first on the list.
             t = LL.sectors[i].thinglist;
             while (t != null) {
+              if(t.info.getType().equals("MT_ZOMBIE")) {
+                drawZombie(t);
+              } else {
                 drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
                         16 << FRACBITS, toBAMIndex(t.angle), color, t.x, t.y);
-                t = (mobj_t) t.snext;
+              }
+              t = (mobj_t) t.snext;
             }
         }
+    }
+    
+    /**
+     * Draws a zombie with his correspondant color. The black zombie in the map
+     * is showed yellow.
+     * @param zombie the zombie that has to be drawed.
+     */
+    private void drawZombie(mobj_t zombie) {
+      String type = zombie.info.getsubType();
+      int green = V.getBaseColor(GREENS);
+      int red = V.getBaseColor(REDS);
+      int gray = V.getBaseColor(GRAYS);
+      int yellow = V.getBaseColor(YELLOWS);
+      switch(type) {
+        case "MT_GREENZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), green, zombie.x, zombie.y);
+          break;
+        case "MT_REDZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), red, zombie.x, zombie.y);
+          break;
+        case "MT_GRAYZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), gray, zombie.x, zombie.y);
+          break;
+        case "MT_BLACKZOMBIE":
+          drawLineCharacter(thintriangle_guy, NUMTHINTRIANGLEGUYLINES,
+              16 << FRACBITS, toBAMIndex(zombie.angle), yellow, zombie.x, zombie.y);
+          break;
+      }
     }
 
     public final void drawMarks() {
@@ -1626,8 +1662,7 @@ public abstract class Map<T, V>
     public final void Drawer() {
         if (!DM.automapactive)
             return;
-        // System.out.println("Drawing map");
-        if (overlay < 1)
+        if (overlay < 1 && !DM.isMyMapCheat())
             V.FillRect(BACKGROUND, FB, 0, 0, f_w, f_h); // BACKGROUND
         if (grid)
             drawGrid(V.getBaseColor(GRIDCOLORS));
@@ -1673,6 +1708,15 @@ public abstract class Map<T, V>
         finit_width = SCREENWIDTH;
         finit_height = SCREENHEIGHT - 32 * vs.getSafeScaling();
     }
+    
+    /* Displace the map by moveMapX pixels to the right and by moveMapY pixels down */
+    private static int moveMapX = 0;
+    private static int moveMapY = 0;
+    
+    private void setMoveMap(int x, int y) {
+      moveMapX = x;
+      moveMapY = y;
+    }
 
     public static final class HiColor
             extends Map<byte[], short[]> {
@@ -1682,7 +1726,10 @@ public abstract class Map<T, V>
         }
 
         protected final void PUTDOT(int xx, int yy, int cc) {
-            fb[(yy) * f_w + (xx)] = (short) (cc);
+          /* If the point is not out of the window and not over the status bar */
+          if (!((yy + moveMapY) >= (SCREENHEIGHT - ST.getHeight()) || (xx + moveMapX)>=SCREENWIDTH)) {
+            fb[(yy + moveMapY) * f_w + (xx + moveMapX)] = (short) (cc);
+          }
         }
 
         protected final void drawCrosshair(int color) {

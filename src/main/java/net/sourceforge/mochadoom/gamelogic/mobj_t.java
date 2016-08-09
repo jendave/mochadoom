@@ -15,6 +15,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.mochadoom.rendering.subsector_t;
 import net.sourceforge.mochadoom.sound.ISoundOrigin;
 import net.sourceforge.mochadoom.wad.IPackableDoomObject;
@@ -86,6 +89,11 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
 
     public mobj_t() {
         this.spawnpoint = new mapthing_t();
+        this.burned = false;
+        this.burnDamage = 0;
+        this.burnFreq = 0;
+        this.lastBurnDamage = 0;
+        
     }
 
     public mobj_t(Actions A) {
@@ -164,6 +172,7 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     public state_t state;
     public int flags;
     public int health;
+    public short[] zombiecolormap = null;
 
     /**
      * Movement direction, movement generation (zig-zagging).
@@ -295,12 +304,29 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
     public static final int MF_TRANSLATION = 0xc000000;
     // Hmm ???.
     public static final int MF_TRANSSHIFT = 26;
+    
+    // Variables for alternative shot for plasma gun
+    public boolean burned;
+    public int burnDamage;
+    public int burnFreq;
+    public long lastBurnDamage;
+    
+    public void burnMobj(int burn, int frequency){
+    	 this.burned = true;
+    	 this.burnDamage = burn;
+    	 this.burnFreq = frequency;
+    	 this.lastBurnDamage = System.currentTimeMillis();
+    }
 
     /*
       * The following methods were for the most part "contextless" and
       * instance-specific, so they were implemented here rather that being
       * scattered all over the package.
       */
+    /* just to use A to zombiefy player*/
+    public Actions getActions(){
+      return A;
+    }
 
     /**
      * P_SetMobjState Returns true if the mobj is still present.
@@ -308,7 +334,13 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
 
     public boolean SetMobjState(StateNum state) {
         state_t st;
-
+        List<mobjtype_t> zombiearray= new ArrayList<mobjtype_t>();
+        
+        //Create array with zombie types.
+        zombiearray.add(mobjtype_t.MT_REDZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GREENZOMBIE);
+        zombiearray.add(mobjtype_t.MT_GRAYZOMBIE);
+        zombiearray.add(mobjtype_t.MT_BLACKZOMBIE);
         do {
             if (state == StateNum.S_NULL) {
                 state = null;
@@ -320,7 +352,13 @@ public class mobj_t extends thinker_t implements ISoundOrigin, Interceptable,
             st = states[state.ordinal()];
             this.state = st;
             tics = st.tics;
-            sprite = st.sprite;
+            // BJPR: MEELEE ATTACK
+            if(!(zombiearray.contains(this.type))){
+              sprite = st.sprite;
+            }
+            else{
+              //System.out.println(st.nextstate);
+            }
             frame = (int) st.frame;
 
             // Modified handling.
