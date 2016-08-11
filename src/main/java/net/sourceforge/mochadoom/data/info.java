@@ -1,16 +1,10 @@
 package net.sourceforge.mochadoom.data;
 
+import net.sourceforge.mochadoom.data.mobjinfo.*;
 import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.think_t;
 import static net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
-import net.sourceforge.mochadoom.data.mobjinfo.AlternatePlasma_t;
-import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Plasma_t;
-import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTITEM;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_COUNTKILL;
 import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_DROPOFF;
@@ -31,32 +25,11 @@ import static net.sourceforge.mochadoom.gamelogic.mobj_t.MF_SPECIAL;
 import static net.sourceforge.mochadoom.menu.fixed_t.FRACUNIT;
 
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Baby_t;
 import net.sourceforge.mochadoom.data.mobjinfo.BlackZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.BossBrain_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Bruiser_t;
-import net.sourceforge.mochadoom.data.mobjinfo.ChainGuy_t;
-import net.sourceforge.mochadoom.data.mobjinfo.CommanderKeen_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Cyborg_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Fatso_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GrayZombie_t;
 import net.sourceforge.mochadoom.data.mobjinfo.GreenZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Head_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Knight_t;
 import net.sourceforge.mochadoom.data.mobjinfo.MT_Player_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Medikit_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Pain_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Possessed_t;
 import net.sourceforge.mochadoom.data.mobjinfo.RedZombie_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Sergeant_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Shadows_t;
-import net.sourceforge.mochadoom.data.mobjinfo.ShotGuy_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Skull_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Spider_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Troop_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Undead_t;
-import net.sourceforge.mochadoom.data.mobjinfo.Vile_t;
-import net.sourceforge.mochadoom.data.mobjinfo.WolfSS_t;
 import net.sourceforge.mochadoom.defines.StateNum;
 import net.sourceforge.mochadoom.doom.think_t;
 
@@ -151,18 +124,17 @@ public class info {
             new state_t(spritenum_t.SPR_PUNG, 0, 1, think_t.A_Lower, StateNum.S_PUNCHDOWN, 0, 0),    // S_PUNCHDOWN
             new state_t(spritenum_t.SPR_PUNG, 0, 1, think_t.A_Raise, StateNum.S_PUNCHUP, 0, 0),    // S_PUNCHUP
             
-            new state_t(spritenum_t.SPR_PUNG, 1, 4, null, StateNum.S_PUNCH2, 0, 0),        // S_PUNCH1
+            new state_t(spritenum_t.SPR_PUNG, 1, 4, null, StateNum.S_PUNCH2, 0, 32),        // S_PUNCH1
             new state_t(spritenum_t.SPR_PUNG, 2, 4, think_t.A_Punch, StateNum.S_PUNCH3, 0, 0),    // S_PUNCH2
             new state_t(spritenum_t.SPR_PUNG, 3, 5, null, StateNum.S_PUNCH4, 0, 0),        // S_PUNCH3
             new state_t(spritenum_t.SPR_PUNG, 2, 4, null, StateNum.S_PUNCH5, 0, 0),        // S_PUNCH4
-            new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 0),    // S_PUNCH5
+            new state_t(spritenum_t.SPR_PUNG, 1, 5, think_t.A_ReFire, StateNum.S_PUNCH, 0, 32),    // S_PUNCH5
             
-            new state_t(spritenum_t.SPR_PUNG, 1, 12, null, StateNum.S_PUNCH7, 0, 0),        // S_PUNCH6
+            new state_t(spritenum_t.SPR_PUNG, 1, 12, null, StateNum.S_PUNCH7, 0, 32),        // S_PUNCH6
             new state_t(spritenum_t.SPR_PUNG, 2, 1, think_t.A_PunchAlternate, StateNum.S_PUNCH8, 0, 0),    // S_PUNCH8
             new state_t(spritenum_t.SPR_PUNG, 3, 1, think_t.A_RaiseLittle, StateNum.S_PUNCH9, 0, 0),  // S_PUNCH7
             new state_t(spritenum_t.SPR_PUNG, 3, 15, null, StateNum.S_PUNCH10, 0, 0),        // S_PUNCH9
-            new state_t(spritenum_t.SPR_PUNG, 3, 1, think_t.A_LowerLittle, StateNum.S_PUNCH11, 0, 0),
-            new state_t(spritenum_t.SPR_PUNG, 2, 1, null, StateNum.S_PUNCH, 0, 0),        // S_PUNCH11
+            new state_t(spritenum_t.SPR_PUNG, 2, 1, null, StateNum.S_PUNCH, 0, 0),        // S_PUNCH10
             
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_WeaponReady, StateNum.S_PISTOL, 0, 0),// S_PISTOL
             new state_t(spritenum_t.SPR_PISG, 0, 1, think_t.A_Lower, StateNum.S_PISTOLDOWN, 0, 0),    // S_PISTOLDOWN
@@ -242,14 +214,13 @@ public class info {
             new state_t(spritenum_t.SPR_SAWG, 3, 4, think_t.A_WeaponReady, StateNum.S_SAW, 0, 0),    // S_SAWB
             new state_t(spritenum_t.SPR_SAWG, 2, 1, think_t.A_Lower, StateNum.S_SAWDOWN, 0, 0),    // S_SAWDOWN
             new state_t(spritenum_t.SPR_SAWG, 2, 1, think_t.A_Raise, StateNum.S_SAWUP, 0, 0),    // S_SAWUP
-            new state_t(spritenum_t.SPR_SAWG, 0, 4, think_t.A_Saw, StateNum.S_SAW2, 0, 0),    // S_SAW1
-            new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_Saw, StateNum.S_SAW3, 0, 0),    // S_SAW2
-            new state_t(spritenum_t.SPR_SAWG, 1, 0, think_t.A_ReFire, StateNum.S_SAW, 0, 0),    // S_SAW3
+            new state_t(spritenum_t.SPR_SAWG, 0, 4, think_t.A_Saw, StateNum.S_SAW2, 0, 32),    // S_SAW1
+            new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_Saw, StateNum.S_SAW3, 0, 32),    // S_SAW2
+            new state_t(spritenum_t.SPR_SAWG, 1, 0, think_t.A_ReFire, StateNum.S_SAW, 0, 32),    // S_SAW3
             
-            new state_t(spritenum_t.SPR_SAWG, 1, 3, think_t.A_RaiseLittle, StateNum.S_SAW5, 0, 0),  // S_SAW4
-            new state_t(spritenum_t.SPR_SAWG, 0, 16, think_t.A_SawAlternate, StateNum.S_SAW6, 0, 0),    // S_SAW5
-            new state_t(spritenum_t.SPR_SAWG, 1, 3, think_t.A_LowerLittle, StateNum.S_SAW7, 0, 0),	// S_SAW6
-            new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_SawAlternate, StateNum.S_SAW3, 0, 0),    // S_SAW7
+            new state_t(spritenum_t.SPR_SAWG, 1, 10, null, StateNum.S_SAW5, 0, 1),  // S_SAW4
+            new state_t(spritenum_t.SPR_SAWG, 0, 16, think_t.A_SawAlternate, StateNum.S_SAW6, 0, 1),    // S_SAW5
+            new state_t(spritenum_t.SPR_SAWG, 1, 4, think_t.A_SawAlternate, StateNum.S_SAW3, 0, 1),    // S_SAW6
             
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_WeaponReady, StateNum.S_PLASMA, 0, 0),    // S_PLASMA
             new state_t(spritenum_t.SPR_PLSG, 0, 1, think_t.A_Lower, StateNum.S_PLASMADOWN, 0, 0),    // S_PLASMADOWN
@@ -4199,7 +4170,8 @@ public class info {
             new GreenZombie_t(),
             new RedZombie_t(),
             new GrayZombie_t(),
-            new BlackZombie_t()
+            new BlackZombie_t(),
+			new Flare_t()
     };
 
     static {

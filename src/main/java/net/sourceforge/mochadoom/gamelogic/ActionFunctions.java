@@ -72,6 +72,7 @@ public class ActionFunctions implements DoomStatusAware {
         MobjThinker = new P_MobjThinker();
         WeaponReady = new A_WeaponReady();
         Lower = new A_Lower();
+        LowerLittle = new A_LowerLittle();
         Raise = new A_Raise();
         RaiseLittle = new A_RaiseLittle();
         Punch = new A_Punch();
@@ -1573,11 +1574,10 @@ public class ActionFunctions implements DoomStatusAware {
     //
     // A_FirePistolAlternate
     //
-    class A_FirePistolAlternate implements ActionType2 {
-        public void invoke(player_t player, pspdef_t psp) {
-            S.StartSound(player.mo, sfxenum_t.sfx_pistol);
 
-            player.mo.SetMobjState(StateNum.S_PLAY_ATK2);
+    /*
+    *     class A_FirePlasma implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
             player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
 
             player.SetPsprite(
@@ -1585,8 +1585,20 @@ public class ActionFunctions implements DoomStatusAware {
                     weaponinfo[player.readyweapon.ordinal()].flashstate,
                     null);
 
-            A.P_BulletSlope(player.mo);
-            A.P_GunShot2(player.mo, !eval(player.refire));
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_PLASMA);
+        }
+    }
+    */
+    class A_FirePistolAlternate implements ActionType2 {
+        public void invoke(player_t player, pspdef_t psp) {
+            player.ammo[weaponinfo[player.readyweapon.ordinal()].ammo.ordinal()]--;
+
+            player.SetPsprite(
+                    ps_flash,
+                    weaponinfo[player.readyweapon.ordinal()].flashstate,
+                    null);
+
+            A.SpawnPlayerMissile(player.mo, mobjtype_t.MT_FLARE);
         }
     }
     
@@ -2100,25 +2112,10 @@ public class ActionFunctions implements DoomStatusAware {
         public void invoke(player_t player, pspdef_t psp) {
             StateNum newstate;
 
-            //System.out.println("Trying to raise weapon");      
-            //System.out.println(player.readyweapon + " height: "+psp.sy);
-            psp.sy -= 5*RAISESPEED;
-
-            if (psp.sy > WEAPONTOP - 80*FRACUNIT) {
-                //System.out.println("Not on top yet, exit and repeat.");
-                return;
-            }
-
-            psp.sy = WEAPONTOP - 100*FRACUNIT;
-
-            // The weapon has been raised all the way,
-            //  so change to the ready state.
-            newstate = weaponinfo[player.readyweapon.ordinal()].readystate;
-            //System.out.println("Weapon raised, setting new state.");
-
-            player.SetPsprite(ps_weapon, newstate, null);
+            psp.sy = WEAPONTOP - 60*FRACUNIT;
         }
     }
+
 
 
     //
@@ -2392,9 +2389,21 @@ public class ActionFunctions implements DoomStatusAware {
             int bfgcount = -800000000;
             long playerPosition = player.mo.angle;
             //missiles arround the player
+
+            // damage itself
+            player.DamagePlayer(30);
+
+
             for(bfgcount = -1000000000; bfgcount<=1000000000; bfgcount+=200000000){
                 A.SpawnPlayerMissileWithAngle(player.mo, mobjtype_t.MT_BFG, playerPosition + bfgcount);
             }
+            // HERE DAMAGE THE PLAYER
+
+
+
+
+            // tengo que hacer daño HASTA UN LIMITE luego NO dañar
+
         }
 
     }
@@ -2451,7 +2460,12 @@ public class ActionFunctions implements DoomStatusAware {
             // Damage the player when using the Alternative mode of the MachineGun,
             // this is because it is faster than the normal mode but in exchange
             // it damages the player
-            player.DamagePlayer(1);
+
+
+
+            //AQUIiIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII OVERTIME DAMAGE HERE
+            player.damagePlayerOverTime(5, 1000, 30);
+
 
             // MAES: Code to alternate between two different gun flashes
             // needed a clear rewrite, as it was way too messy.
@@ -2904,25 +2918,9 @@ public class ActionFunctions implements DoomStatusAware {
     
     class A_LowerLittle implements ActionType2 {
         public void invoke(player_t player, pspdef_t psp) {
-            StateNum newstate;
 
-            //System.out.println("Trying to raise weapon");      
-            //System.out.println(player.readyweapon + " height: "+psp.sy);
-            psp.sy += 5*RAISESPEED;
-
-            if (psp.sy < WEAPONTOP) {
-                //System.out.println("Not on top yet, exit and repeat.");
-                return;
-            }
-
-            psp.sy = WEAPONTOP;
-
-            // The weapon has been raised all the way,
-            //  so change to the ready state.
-            newstate = weaponinfo[player.readyweapon.ordinal()].readystate;
-            //System.out.println("Weapon raised, setting new state.");
-
-            player.SetPsprite(ps_weapon, newstate, null);
+            psp.sy += 100*FRACUNIT;
+            
         }
     }
 

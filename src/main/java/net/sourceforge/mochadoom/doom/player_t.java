@@ -138,6 +138,14 @@ public class player_t /*extends mobj_t */
         this.poisonDamage = 0;
         this.poisonFreq = 0;
         this.lastPoisonDamage = 0;
+        this.damageOverTime = false;
+        this.damageOverTimeCount = 0;
+        this.damageOverTimeAmount = 0;
+        this.damage = 0;
+        this.damageFreq = 0;
+        this.lastDamage = 0;
+
+
     }
 
     public final static int CF_NOCLIP = 1; // No damage, no health loss.
@@ -231,6 +239,23 @@ public class player_t /*extends mobj_t */
 
     public int[] maxammo;
 
+
+
+
+
+    // damage over time
+
+    private boolean damageOverTime;
+    private int damageOverTimeCount;
+    private int damageOverTimeAmount;
+    private int damage;
+    private int damageFreq;
+    private long lastDamage;
+
+
+
+
+
     /**
      * True if button down last tic.
      */
@@ -316,6 +341,12 @@ public class player_t /*extends mobj_t */
         this.poisonDamage = 0;
         this.poisonFreq = 0;
         this.lastPoisonDamage = 0;
+        this.damageOverTime = false;
+        this.damage = 0;
+        this.damageFreq = 0;
+        this.lastDamage = 0;
+        this.damageOverTimeCount = 0;
+        this.damageOverTimeAmount = 0;
 
     }
 
@@ -863,6 +894,18 @@ public class player_t /*extends mobj_t */
         this.poisoned = false;
       }
     }
+
+    public void damagePlayerOverTime(int poison, int frequency, int amount){
+        this.damageOverTime = true;
+        this.damageOverTimeCount = 0;
+        this.damageOverTimeAmount = amount;
+        this.damage = poison;
+        this.damageFreq = frequency;
+        this.lastDamage = System.currentTimeMillis();
+    }
+
+
+
     /**
      * G_PlayerFinishLevel
      * Called when a player completes a level.
@@ -888,10 +931,17 @@ public class player_t /*extends mobj_t */
 
     // Function to damage the player when using some Weapons
     public void DamagePlayer(int n){
-        if(this.mo.health-n > 0) {
-            this.mo.health = this.mo.health - n;    // health
+
+        this.mo.health = this.mo.health - n;    // health
+        if (this.mo.health <= 0 ){
+            this.health[0] = 0;
+            this.playerstate = PST_DEAD;
+        }
+
+        else {
             this.health[0] = this.mo.health;        // health UI label
         }
+
     }
 
     protected void PlayerInSpecialSector() {
@@ -1134,6 +1184,8 @@ public class player_t /*extends mobj_t */
                 psp.sx = (int) (state.misc1 << FRACBITS);
                 psp.sy = (int) (state.misc2 << FRACBITS);
             }
+            
+            if (state.misc2 != 0) psp.sy = (int) (state.misc2 << FRACBITS);
 
             // Call action routine.
             // Modified handling.
@@ -1520,6 +1572,35 @@ public class player_t /*extends mobj_t */
             player.bonuscount--;
 
 
+
+
+
+
+        // apply the damage over time
+
+        if(player.damageOverTime && System.currentTimeMillis() - player.lastDamage > player.damageFreq){
+            player.lastDamage = System.currentTimeMillis();
+            int newHealth = player.health[0] - player.damage;
+
+            player.damageOverTimeCount += player.damage;
+            if(player.damageOverTimeCount == player.damageOverTimeAmount) {
+
+                player.damageOverTime = false;
+
+            }
+            player.health[0] = newHealth > 0? newHealth: 0;
+            player.mo.health = player.health[0];
+            if(player.mo.health <= 0){
+                player.playerstate = PST_DEAD;
+            }
+        }
+
+
+
+
+
+
+
         // Handling colormaps.
         if (eval(player.powers[pw_invulnerability])) {
             if (player.powers[pw_invulnerability] > 4 * 32
@@ -1542,7 +1623,8 @@ public class player_t /*extends mobj_t */
               player.lastPoisonDamage = System.currentTimeMillis();
             int newHealth = player.health[0] - player.poisonDamage;
             player.health[0] = newHealth > 0? newHealth: 0;
-            if(player.health[0] == 0){
+            player.mo.health = player.health[0];
+            if(player.mo.health == 0){
                 player.playerstate = PST_DEAD;
             }
         }
