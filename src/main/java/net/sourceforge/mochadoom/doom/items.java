@@ -55,25 +55,33 @@ public class items {
                             StateNum.S_PUNCHDOWN,
                             StateNum.S_PUNCH,
                             StateNum.S_PUNCH1,
+                            StateNum.S_PUNCH6,
                             StateNum.S_NULL
                     ),
                     new weaponinfo_t(
                             // pistol
+                    		// Code.102
+                    		// Se agrego StateNum.S_PISTOL5 para asignar el disparo secundario
+                    		// Intercambiar en los demas weaponinfo por los nuevos StateNum
                             AmmoType.am_clip,
                             StateNum.S_PISTOLUP,
                             StateNum.S_PISTOLDOWN,
                             StateNum.S_PISTOL,
                             StateNum.S_PISTOL1,
+                            StateNum.S_PISTOL5,
                             StateNum.S_PISTOLFLASH
-                    ), new weaponinfo_t(
-                    // shotgun
-                    AmmoType.am_shell,
-                    StateNum.S_SGUNUP,
-                    StateNum.S_SGUNDOWN,
-                    StateNum.S_SGUN,
-                    StateNum.S_SGUN1,
-                    StateNum.S_SGUNFLASH1
-            ),
+
+                    ), 
+		            new weaponinfo_t(
+		                    // shotgun
+		                    AmmoType.am_shell,
+		                    StateNum.S_SGUNUP,
+		                    StateNum.S_SGUNDOWN,
+		                    StateNum.S_SGUN,
+		                    StateNum.S_SGUN1,
+		                    StateNum.S_EXAMPLE1,
+		                    StateNum.S_SGUNFLASH1
+		            ),
                     new weaponinfo_t(
                             // chaingun
                             AmmoType.am_clip,
@@ -81,6 +89,7 @@ public class items {
                             StateNum.S_CHAINDOWN,
                             StateNum.S_CHAIN,
                             StateNum.S_CHAIN1,
+                            StateNum.S_CHAIN4,
                             StateNum.S_CHAINFLASH1
                     ),
                     new weaponinfo_t(
@@ -90,6 +99,7 @@ public class items {
                             StateNum.S_MISSILEDOWN,
                             StateNum.S_MISSILE,
                             StateNum.S_MISSILE1,
+                            StateNum.S_MISSILE4,
                             StateNum.S_MISSILEFLASH1
                     ),
                     new weaponinfo_t(
@@ -99,6 +109,7 @@ public class items {
                             StateNum.S_PLASMADOWN,
                             StateNum.S_PLASMA,
                             StateNum.S_PLASMA1,
+                            StateNum.S_PLASMA3,		//S_PLASMA1 reemplazado por S_PLASMA3 para disparo secundario
                             StateNum.S_PLASMAFLASH1
                     ),
                     new weaponinfo_t(
@@ -108,6 +119,7 @@ public class items {
                             StateNum.S_BFGDOWN,
                             StateNum.S_BFG,
                             StateNum.S_BFG1,
+                            StateNum.S_BFG5,
                             StateNum.S_BFGFLASH1
                     ),
                     new weaponinfo_t(
@@ -117,6 +129,7 @@ public class items {
                             StateNum.S_SAWDOWN,
                             StateNum.S_SAW,
                             StateNum.S_SAW1,
+                            StateNum.S_SAW4,
                             StateNum.S_NULL
                     ),
                     new weaponinfo_t(
@@ -125,6 +138,7 @@ public class items {
                             StateNum.S_DSGUNUP,
                             StateNum.S_DSGUNDOWN,
                             StateNum.S_DSGUN,
+                            StateNum.S_DSGUN1,
                             StateNum.S_DSGUN1,
                             StateNum.S_DSGUNFLASH1
                     )

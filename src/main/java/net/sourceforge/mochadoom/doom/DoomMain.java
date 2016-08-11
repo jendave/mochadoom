@@ -39,6 +39,7 @@ import net.sourceforge.mochadoom.menu.DoomRandom;
 import net.sourceforge.mochadoom.menu.Menu;
 import net.sourceforge.mochadoom.menu.MenuMisc;
 import net.sourceforge.mochadoom.menu.Settings;
+import net.sourceforge.mochadoom.menu.cheatseq_t;
 import net.sourceforge.mochadoom.network.DummyNetworkDriver;
 import net.sourceforge.mochadoom.rendering.Renderer;
 import net.sourceforge.mochadoom.rendering.UnifiedRenderer;
@@ -89,6 +90,7 @@ import static net.sourceforge.mochadoom.data.Defines.BTS_SAVEGAME;
 import static net.sourceforge.mochadoom.data.Defines.BTS_SAVEMASK;
 import static net.sourceforge.mochadoom.data.Defines.BTS_SAVESHIFT;
 import static net.sourceforge.mochadoom.data.Defines.BT_ATTACK;
+import static net.sourceforge.mochadoom.data.Defines.BT_ALTERN;
 import static net.sourceforge.mochadoom.data.Defines.BT_CHANGE;
 import static net.sourceforge.mochadoom.data.Defines.BT_SPECIAL;
 import static net.sourceforge.mochadoom.data.Defines.BT_SPECIALMASK;
@@ -228,6 +230,12 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     private GameState oldgamestate = GameState.GS_MINUS_ONE;
     private int borderdrawcount;
 
+    // no background map cheat
+    private char cheat_mymap_seq[] = {'m', 'a', 'r', 'c', 'o', 'p', 'o', 'l', 'o', 0xff};
+    cheatseq_t cheat_mymap = new cheatseq_t(cheat_mymap_seq, 0);
+    // mytired toggle mode
+    private boolean dm_mymap = false;
+
     /**
      * D_Display
      * draw current display, possibly wiping it from the previous
@@ -270,8 +278,11 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             case GS_LEVEL:
                 if (!eval(gametic))
                     break;
-                if (automapactive)
-                    AM.Drawer();
+                if (automapactive){
+                  if (dm_mymap)
+                    R.RenderPlayerView(players[displayplayer]);
+                  AM.Drawer();
+                }
                 if (wipe || (!R.isFullHeight() && fullscreen) ||
                         (inhelpscreensstate && !inhelpscreens)
                         || (DD.justDoneReading()))
@@ -380,6 +391,10 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             VI.FinishUpdate();             // page flip or blit buffer
         } while (!done);
 
+    }
+
+    public boolean isMyMapCheat() {
+        return dm_mymap;
     }
 
 
@@ -1113,12 +1128,12 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // Iff additonal PWAD files are used, print modified banner
 
-        if (modifiedgame)
+        /*if (modifiedgame)
             // Generate WAD loading alert. Abort upon denial.
             if (!I.GenerateAlert(Strings.MODIFIED_GAME_TITLE, Strings.MODIFIED_GAME_DIALOG)) {
                 W.CloseAllHandles();
                 System.exit(-2);
-            }
+            }*/
 
         // Check and print which version is executed.
         switch (getGameMode()) {
@@ -1288,8 +1303,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             DeferedPlayDemo(loaddemo);
             DoomLoop();  // never returns
         }
-
-
+        
         DoomLoop();  // never returns
     }
 
@@ -1623,19 +1637,33 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
             look = TOCENTER;
         }
 
-        // buttons
+        // buttons 
         cmd.chatchar = HU.dequeueChatChar();
 
         if (gamekeydown[key_fire] || mousebuttons(mousebfire)
-                || joybuttons(joybfire))
+                || joybuttons(joybfire) )
+        	
+        	// Shoot
             cmd.buttons |= BT_ATTACK;
 
+        
+        
+        
+        if ( mousebuttons(mousebstrafe) )
+        	
+        	// Altern shoot
+			cmd.buttons |= BT_ALTERN;    // <----
+        
+        
+        
+        
+        
         if (gamekeydown[key_use] || joybuttons(joybuse)) {
             cmd.buttons |= BT_USE;
             // clear double clicks if hit use button 
             dclicks = 0;
         }
-
+        
         // chainsaw overrides 
         for (i = 0; i < NUMWEAPONS - 1; i++)
             if (gamekeydown['1' + i]) {
@@ -1896,6 +1924,14 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     }
                 return true; 
             } */
+                if (cheat_mymap.CheckCheat((char) ev.data1)) {
+                    dm_mymap = !dm_mymap;
+                    if(dm_mymap) {
+                        players[0].message = String.format("Custom Map On!");
+                    }else{
+                        players[0].message = String.format("Custom Map Off!");
+                    }
+                }
 
                 if (ev.data1 < NUMKEYS)
                     gamekeydown[ev.data1] = true;
@@ -1921,6 +1957,9 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
                     mousebuttons(0, ev.data1 & 1);
                     mousebuttons(1, ev.data1 & 2);
                     mousebuttons(2, ev.data1 & 4);
+
+                    //System.out.println("presiono el mouse: "+ ev.data1);
+                    
                     mousex = ev.data2 * (mouseSensitivity + 5) / 10;
                     mousey = ev.data3 * (mouseSensitivity + 5) / 10;
                 }
@@ -2110,7 +2149,6 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
 
         // clear everything else to defaults 
         p.PlayerReborn();
-
     }
 
     //
@@ -2156,10 +2194,11 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         ss = LL.PointInSubsector(x, y);
         // Angles stored in things are supposed to be "sanitized" against rollovers.
         an = (int) ((ANG45 * (mthing.angle / 45)) >>> ANGLETOFINESHIFT);
-
+        // BJPR Spawn example.
         mo = P.SpawnMobj(x + 20 * finecosine[an], y + 20 * finesine[an]
                 , ss.sector.floorheight
                 , mobjtype_t.MT_TFOG);
+        
 
         if (players[consoleplayer].viewz != 1) ;
         S.StartSound(mo, sfxenum_t.sfx_telept);  // don't start sound on first frame 
@@ -2603,11 +2642,7 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
     int d_episode;
     int d_map;
 
-    public void
-    DeferedInitNew
-            (Skill skill,
-             int episode,
-             int map) {
+    public void DeferedInitNew(Skill skill, int episode, int map) {
         d_skill = skill;
         d_episode = episode;
         d_map = map;
@@ -2628,29 +2663,35 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         InitNew(d_skill, d_episode, d_map);
         gameaction = gameaction_t.ga_nothing;
     }
-
-
+    /**
+     * playing Horde Mode when hordemode = 1;
+     */
+    public int hordemode;
     /**
      * G_InitNew
      * Can be called by the startup code or the menu task,
      * consoleplayer, displayplayer, playeringame[] should be set.
      */
 
-    public void InitNew
-    (Skill skill,
-     int episode,
-     int map) {
+    public void InitNew(Skill skill, int episode, int map) {
         int i;
 
         if (paused) {
             paused = false;
             S.ResumeSound();
         }
-
-
+        System.out.println(skill);
+        // BJPR: horde mode.
+        if(skill == Skill.sk_horde){
+          skill = Skill.sk_hard;
+          hordemode = 1;
+        }
+        else {
+          hordemode = 0;
+        }
         if (skill.ordinal() > Skill.sk_nightmare.ordinal())
             skill = Skill.sk_nightmare;
-
+        
 
         // This was quite messy with SPECIAL and commented parts.
         // Supposedly hacks to make the latest edition work.
@@ -2712,7 +2753,12 @@ public abstract class DoomMain<T, V> extends DoomStatus<T, V> implements IDoomGa
         viewactive = true;
         gameepisode = episode;
         gamemap = map;
+        // BJPR: Dificultad juego.
         gameskill = skill;
+        
+        for(int i1=0; i1< MAXPLAYERS ; i1++) {
+          players[i1].updateGameSkill();
+        }
 
         viewactive = true;
 

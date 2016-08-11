@@ -239,6 +239,12 @@ public final class Defines {
     // Use button, to open doors, activate switches.
     public static final int BT_USE = 2;
 
+   
+    // Altern Fire
+    public static final int BT_ALTERN = 64;		// <---
+
+    
+    
     // Flag: game events, not really buttons.
     public static final int BT_SPECIAL = 128;
     public static final int BT_SPECIALMASK = 3;

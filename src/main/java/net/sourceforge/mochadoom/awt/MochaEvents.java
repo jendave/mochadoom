@@ -275,7 +275,13 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
                                 (MEV.getButton() == MouseEvent.BUTTON2 ? 2 : 0) |
                                 (MEV.getButton() == MouseEvent.BUTTON3 ? 4 : 0);
                 event.data2 = event.data3 = 0;
-
+                
+                // detecta que boton se esta presionando
+                // 1: click izquierdo
+                // 2: click rueda
+                // 4: click derecho
+                //System.out.println("Boton de mouse: " + event.data1);	// commit antiguo
+                
                 DM.PostEvent(event);
                 //System.err.println( "b");
                 break;
@@ -291,6 +297,7 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
                                 (MEV.getButton() == MouseEvent.BUTTON2 ? 2 : 0) |
                                 (MEV.getButton() == MouseEvent.BUTTON3 ? 4 : 0);
                 // A PURE mouse up event has no movement.
+
                 event.data2 = event.data3 = 0;
                 DM.PostEvent(event);
                 //System.err.println("bu");
@@ -698,6 +705,7 @@ public class MochaEvents implements WindowListener, ComponentListener, KeyEventD
             Map.Entry<Integer, Boolean> entry = it.next();
             Integer keyCode = entry.getKey();
             Boolean oldState = entry.getValue();
+            
             try {
                 if (D) System.err.println("Trying");
                 boolean newState = toolkit.getLockingKeyState(keyCode);

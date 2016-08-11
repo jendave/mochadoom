@@ -11,6 +11,15 @@ public enum StateNum {
     S_PUNCH3,
     S_PUNCH4,
     S_PUNCH5,
+    
+    S_PUNCH6,		// <----
+    S_PUNCH7,		// <----
+    S_PUNCH8,		// <----
+    S_PUNCH9,		// <----
+    S_PUNCH10,      // <----
+    //S_PUNCH11,		// <----
+    //S_PUNCH12,		// <----
+    
     S_PISTOL,
     S_PISTOLDOWN,
     S_PISTOLUP,
@@ -18,6 +27,10 @@ public enum StateNum {
     S_PISTOL2,
     S_PISTOL3,
     S_PISTOL4,
+    
+    S_PISTOL5,    // <----
+    S_PISTOL6,    // <----
+    
     S_PISTOLFLASH,
     S_SGUN,
     S_SGUNDOWN,
@@ -31,6 +44,10 @@ public enum StateNum {
     S_SGUN7,
     S_SGUN8,
     S_SGUN9,
+    //Code.109 Se Agreg el StateNum de example 1 y 2
+    S_EXAMPLE1,
+    S_EXAMPLE2,
+    
     S_SGUNFLASH1,
     S_SGUNFLASH2,
     S_DSGUN,
@@ -56,6 +73,10 @@ public enum StateNum {
     S_CHAIN1,
     S_CHAIN2,
     S_CHAIN3,
+
+    S_CHAIN4,	// <---
+    S_CHAIN5,	// <---
+
     S_CHAINFLASH1,
     S_CHAINFLASH2,
     S_MISSILE,
@@ -64,6 +85,10 @@ public enum StateNum {
     S_MISSILE1,
     S_MISSILE2,
     S_MISSILE3,
+    
+    S_MISSILE4,		// <---
+    S_MISSILE5,		// <---
+    
     S_MISSILEFLASH1,
     S_MISSILEFLASH2,
     S_MISSILEFLASH3,
@@ -75,6 +100,11 @@ public enum StateNum {
     S_SAW1,
     S_SAW2,
     S_SAW3,
+    
+    S_SAW4,			// <---
+    S_SAW5,			// <---
+    S_SAW6,			// <---
+    
     S_PLASMA,
     S_PLASMADOWN,
     S_PLASMAUP,
@@ -82,6 +112,9 @@ public enum StateNum {
     S_PLASMA2,
     S_PLASMAFLASH1,
     S_PLASMAFLASH2,
+    S_PLASMA3,	// secundario plasma
+    S_PLASMA4,	// secundario plasma
+    
     S_BFG,
     S_BFGDOWN,
     S_BFGUP,
@@ -89,6 +122,10 @@ public enum StateNum {
     S_BFG2,
     S_BFG3,
     S_BFG4,
+    S_BFG5,
+    S_BFG6,
+    S_BFG7,
+    S_BFG8,
     S_BFGFLASH1,
     S_BFGFLASH2,
     S_BLOOD1,
@@ -110,6 +147,8 @@ public enum StateNum {
     S_RBALLX3,
     S_PLASBALL,
     S_PLASBALL2,
+    S_PLASBALL3, // FIXME: 
+    S_PLASBALL4,
     S_PLASEXP,
     S_PLASEXP2,
     S_PLASEXP3,

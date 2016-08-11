@@ -3,6 +3,7 @@ package net.sourceforge.mochadoom.gamelogic;
 import net.sourceforge.mochadoom.automap.IAutoMap;
 import net.sourceforge.mochadoom.data.Limits;
 import net.sourceforge.mochadoom.data.mapthing_t;
+import net.sourceforge.mochadoom.data.mobjinfo.Flare_t;
 import net.sourceforge.mochadoom.data.mobjtype_t;
 import net.sourceforge.mochadoom.data.sounds.sfxenum_t;
 import net.sourceforge.mochadoom.data.state_t;
@@ -19,7 +20,9 @@ import net.sourceforge.mochadoom.doom.weapontype_t;
 import net.sourceforge.mochadoom.hud.HU;
 import net.sourceforge.mochadoom.system.DoomStatusAware;
 import net.sourceforge.mochadoom.system.IDoomSystem;
+
 import java.util.Arrays;
+
 import net.sourceforge.mochadoom.menu.IRandom;
 import net.sourceforge.mochadoom.rendering.ISpriteManager;
 import net.sourceforge.mochadoom.rendering.Renderer;
@@ -725,6 +728,19 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
         }
 
         /**
+         * P_NoiseAlert
+         * If a monster yells at a player,
+         * it will alert other monsters to the player.
+         */
+
+        public void NoiseAlert(mobj_t emmiter) {
+
+            soundtarget = emmiter;
+            R.increaseValidCount(1);
+            RecursiveSound(emmiter.subsector.sector, 0);
+        }
+
+        /**
          * P_FireWeapon. Originally in pspr
          */
         public void FireWeapon(player_t player) {
@@ -735,7 +751,22 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
 
             player.mo.SetMobjState(StateNum.S_PLAY_ATK1);
             newstate = weaponinfo[player.readyweapon.ordinal()].atkstate;
-            player.SetPsprite(player_t.ps_weapon, newstate);
+            player.SetPsprite(player_t.ps_weapon, newstate, null);
+            NoiseAlert(player.mo, player.mo);
+        }
+
+        /**
+         * P_FireWeapon. Originally in pspr
+         */
+        public void AlternateFire(player_t player) {
+            StateNum newstate;
+
+            if (!player.CheckAmmo())
+                return;
+
+            player.mo.SetMobjState(StateNum.S_PLAY_ATK1);
+            newstate = weaponinfo[player.readyweapon.ordinal()].atkaltern;
+            player.SetPsprite(player_t.ps_weapon, newstate, null);
             NoiseAlert(player.mo, player.mo);
         }
 
@@ -1807,11 +1838,16 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
      */
 
     protected void ExplodeMissile(mobj_t mo) {
+        if (mo.type == mobjtype_t.MT_FLARE && ((Flare_t) mo.info).getCounter() <= 10) {
+            ((Flare_t) mo.info).addCounter();
+            EN.NoiseAlert(mo);
+
+            return;
+        }
         mo.momx = mo.momy = mo.momz = 0;
 
         // MAES 9/5/2011: using mobj code for that.
         mo.SetMobjState(mobjinfo[mo.type.ordinal()].deathstate);
-
         mo.tics -= RND.P_Random() & 3;
 
         if (mo.tics < 1)
@@ -2031,6 +2067,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             // bonus items
             case SPR_BON1:
                 player.health[0]++; // can go over 100%
+                player.PickedMedikit(1); // BJPR: Small medikit
                 if (player.health[0] > 200)
                     player.health[0] = 200;
                 player.mo.health = player.health[0];
@@ -2048,6 +2085,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
 
             case SPR_SOUL:
                 player.health[0] += 100;
+                player.PickedMedikit(3); // BJPR: soul medikit
                 if (player.health[0] > 200)
                     player.health[0] = 200;
                 player.mo.health = player.health[0];
@@ -2058,6 +2096,7 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
             case SPR_MEGA:
                 if (!DM.isCommercial())
                     return;
+                player.PickedMedikit(3); // BJPR: mega medikit
                 player.health[0] = 200;
                 player.mo.health = player.health[0];
                 player.GiveArmor(2);
@@ -2117,12 +2156,14 @@ public abstract class UnifiedGameMap implements ThinkerList, DoomStatusAware {
 
             // medikits, heals
             case SPR_STIM:
+                player.PickedMedikit(2); // BJPR: medium medikit
                 if (!player.GiveBody(10))
                     return;
                 player.message = GOTSTIM;
                 break;
 
             case SPR_MEDI:
+                player.PickedMedikit(3); // BJPR: normal medikit
                 if (!player.GiveBody(25))
                     return;
 
